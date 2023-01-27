@@ -98,3 +98,12 @@ for transform in transforms {
     // Apply transform
 }
 
+enum Season: String {
+    case sprint
+    case summer
+    case autumn
+    case winter
+    func displayString() -> String { return self.rawValue.capitalized }
+}
+print(Season.summer.displayString()) // Summer
+

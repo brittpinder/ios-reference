@@ -150,3 +150,17 @@ for transform in transforms {
 }
 ```
 
+## Enum Functions
+Functions can be added to enums like so
+
+```swift
+enum Season: String {
+    case sprint
+    case summer
+    case autumn
+    case winter
+    func displayString() -> String { return self.rawValue.capitalized }
+}
+print(Season.summer.displayString()) // Summer
+```
+
