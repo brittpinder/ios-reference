@@ -57,6 +57,7 @@ enum Color: Int {
     case blue = 1
     case red
     case yellow
+    case green
 }
 
 print(Color.yellow.rawValue) // 3
@@ -69,3 +70,31 @@ enum Suit: String {
 }
 
 print(Suit.diamond.rawValue) // diamond
+
+let possibleColor = Color(rawValue: 2)
+print(possibleColor) // Optional(Color.red)
+
+let anotherPossibleColor = Color(rawValue: 7)
+print(anotherPossibleColor) // nil
+
+
+enum Mark {
+    case gpa(Float)
+    case grade(String)
+}
+
+var mark = Mark.gpa(3.8)
+mark = Mark.grade("A+")
+
+enum Transform {
+    case position(x: Double, y: Double, z: Double)
+    case rotation(x: Double, y: Double, z: Double)
+    case scale(Double)
+}
+
+let transforms = [Transform.position(x: 2.0, y: 0.0, z: 10.0), Transform.scale(0.5)]
+
+for transform in transforms {
+    // Apply transform
+}
+

@@ -91,6 +91,7 @@ enum Color: Int {
     case blue = 1
     case red
     case yellow
+    case green
 }
 
 print(Color.yellow.rawValue) // 3
@@ -108,4 +109,44 @@ enum Suit: String {
 print(Suit.diamond.rawValue) // diamond
 ```
 
+### Initializing from a Raw Value
+You can attempt to convert a raw value to an enumeration type using the "rawValue" initializer. When doing so you will receive an optional enum value. In the example below, the variables are of type `Color?`
+
+```swift
+let possibleColor = Color(rawValue: 2)
+print(possibleColor) // Optional(Color.red)
+
+let anotherPossibleColor = Color(rawValue: 7)
+print(anotherPossibleColor) // nil
+```
+
+## Associated Values of Different Types
+In Swift it is possible to store associated values that are different for each case of the enumeration.
+
+In the below example, a Mark can be stored as a gpa (ex: 3.5, 4.0, 2.6) or a grade (ex: A+, B-, F)
+
+```swift
+enum Mark {
+    case gpa(Float)
+    case grade(String)
+}
+
+var mark = Mark.gpa(3.8)
+mark = Mark.grade("A+")
+```
+You can even store tuples as the value of an enumeration. For example, a transformation type that only allows uniform scaling (equal x, y and z) could be expressed like this:
+
+```swift
+enum Transform {
+    case position(x: Double, y: Double, z: Double)
+    case rotation(x: Double, y: Double, z: Double)
+    case scale(Double)
+}
+
+let transforms = [Transform.position(x: 2.0, y: 0.0, z: 10.0), Transform.scale(0.5)]
+
+for transform in transforms {
+    // Apply transform
+}
+```
 
