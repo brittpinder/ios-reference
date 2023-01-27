@@ -68,13 +68,17 @@ print(Pet.cat.rawValue) // 2
 Here is an example of an enumeration that stores strings:
 
 ```swift
-enum Beverage: String {
-    case water = "Water"
-    case juice = "Juice"
-    case tea = "Tea"
+enum Weekday: String {
+    case mon = "Monday"
+    case tue = "Tuesday"
+    case wed = "Wednesday"
+    case thu = "Thursday"
+    case fri = "Friday"
+    case sat = "Saturday"
+    case sun = "Sunday"
 }
 
-print(Beverage.juice.rawValue) // Juice
+print(Weekday.fri.rawValue) // Friday
 ```
 
 ### Implicitly Assigned Raw Values
