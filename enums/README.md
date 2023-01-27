@@ -19,7 +19,7 @@ enum Planet {
 }
 ```
 
-You can easily iterate over the values of an enum by having it inherit from 'CaseIterable' and then accessing the '.allValues' property.
+You can easily iterate over the values of an enum by having it inherit from `CaseIterable` and then accessing the `.allCases` property.
 
 ```swift
 enum Direction: CaseIterable {
