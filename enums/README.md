@@ -121,9 +121,7 @@ print(anotherPossibleColor) // nil
 ```
 
 ## Associated Values of Different Types
-In Swift it is possible to store associated values that are different for each case of the enumeration.
-
-In the below example, a Mark can be stored as a gpa (ex: 3.5, 4.0, 2.6) or a grade (ex: A+, B-, F)
+In Swift it is possible to store associated values that are different for each case of the enumeration. In the below example, a Mark can be stored as a gpa (ex: 3.5, 4.0, 2.6) or a grade (ex: A+, B-, F)
 
 ```swift
 enum Mark {
@@ -134,6 +132,7 @@ enum Mark {
 var mark = Mark.gpa(3.8)
 mark = Mark.grade("A+")
 ```
+
 You can even store tuples as the value of an enumeration. For example, a transformation type that only allows uniform scaling (equal x, y and z) could be expressed like this:
 
 ```swift
@@ -149,6 +148,33 @@ for transform in transforms {
     // Apply transform
 }
 ```
+When evaluating enum cases in a switch statement, the associated values can be extracted using the `let` or `var` prefix. You will have to give the associated values names.
+
+```swift
+enum YearMark {
+    case gpa(Float, Float)
+    case grade(String, String)
+}
+
+let yearMark = YearMark.grade("B+", "C-")
+
+switch yearMark {
+    case .gpa(let firstSemester, let secondSemester):
+        print("GPA: \(firstSemester), \(secondSemester)")
+    case .grade(var firstSemester, var secondSemester):
+        print("Grade: \(firstSemester), \(secondSemester)")
+}
+```
+If all of the associated values for an enumeration case are extracted as constants, or if all are extracted as variables, you can place a single `var` or `let` annotation before the case name, for brevity:
+
+```swift
+switch yearMark {
+    case let .gpa(firstSemester, secondSemester):
+        print("GPA: \(firstSemester), \(secondSemester)")
+    case var .grade(firstSemester, secondSemester):
+        print("Grade: \(firstSemester), \(secondSemester)")
+}
+```
 
 ## Enum Functions
 Functions can be added to enums like so
@@ -162,5 +188,49 @@ enum Season: String {
     func displayString() -> String { return self.rawValue.capitalized }
 }
 print(Season.summer.displayString()) // Summer
+```
+## Recursive Enumerations
+
+A recursive enumeration is an enumeration that has another instance of the enumeration as the associated value for one or more of the enumeration cases. You indicate that an enumeration case is recursive by writing `indirect` before it, which tells the compiler to insert the necessary layer of indirection.
+
+For example, here is an enumeration that stores simple arithmetic expressions:
+
+```swift
+enum ArithmeticExpression {
+    case number(Int)
+    indirect case addition(ArithmeticExpression, ArithmeticExpression)
+    indirect case multiplication(ArithmeticExpression, ArithmeticExpression)
+}
+```
+You can also write indirect before the beginning of the enumeration to enable indirection for all of the enumeration’s cases that have an associated value:
+
+```swift
+indirect enum ArithmeticExpression {
+    case number(Int)
+    case addition(ArithmeticExpression, ArithmeticExpression)
+    case multiplication(ArithmeticExpression, ArithmeticExpression)
+}
+
+```
+The power of recursive enums can be shown in the following example:
+
+```swift
+func evaluate(_ expression: ArithmeticExpression) -> Int {
+    switch expression {
+    case let .number(value):
+        return value
+    case let .addition(left, right):
+        return evaluate(left) + evaluate(right)
+    case let .multiplication(left, right):
+        return evaluate(left) * evaluate(right)
+    }
+}
+
+let five = ArithmeticExpression.number(5)
+let four = ArithmeticExpression.number(4)
+let sum = ArithmeticExpression.addition(five, four)
+let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.number(2))
+
+print(evaluate(product)) // (5 + 4) * 2 = 18
 ```
 

@@ -77,14 +77,34 @@ print(possibleColor) // Optional(Color.red)
 let anotherPossibleColor = Color(rawValue: 7)
 print(anotherPossibleColor) // nil
 
-
 enum Mark {
-    case gpa(Float)
-    case grade(String)
+    case gpa(Float, Float)
+    case grade(String, String)
 }
 
-var mark = Mark.gpa(3.8)
-mark = Mark.grade("A+")
+var mark = Mark.gpa(3.8, 4.0)
+mark = Mark.grade("A+", "C-")
+
+enum YearMark {
+    case gpa(Float, Float)
+    case grade(String, String)
+}
+
+let yearMark = YearMark.grade("B+", "C-")
+
+switch yearMark {
+    case .gpa(let firstSemester, let secondSemester):
+        print("GPA: \(firstSemester), \(secondSemester)")
+    case .grade(var firstSemester, var secondSemester):
+        print("Grade: \(firstSemester), \(secondSemester)")
+}
+
+switch yearMark {
+    case let .gpa(firstSemester, secondSemester):
+        print("GPA: \(firstSemester), \(secondSemester)")
+    case var .grade(firstSemester, secondSemester):
+        print("Grade: \(firstSemester), \(secondSemester)")
+}
 
 enum Transform {
     case position(x: Double, y: Double, z: Double)
@@ -107,3 +127,32 @@ enum Season: String {
 }
 print(Season.summer.displayString()) // Summer
 
+enum ArithmeticExpression {
+    case number(Int)
+    indirect case addition(ArithmeticExpression, ArithmeticExpression)
+    indirect case multiplication(ArithmeticExpression, ArithmeticExpression)
+}
+
+//indirect enum ArithmeticExpression {
+//    case number(Int)
+//    case addition(ArithmeticExpression, ArithmeticExpression)
+//    case multiplication(ArithmeticExpression, ArithmeticExpression)
+//}
+
+func evaluate(_ expression: ArithmeticExpression) -> Int {
+    switch expression {
+    case let .number(value):
+        return value
+    case let .addition(left, right):
+        return evaluate(left) + evaluate(right)
+    case let .multiplication(left, right):
+        return evaluate(left) * evaluate(right)
+    }
+}
+
+let five = ArithmeticExpression.number(5)
+let four = ArithmeticExpression.number(4)
+let sum = ArithmeticExpression.addition(five, four)
+let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.number(2))
+
+print(evaluate(product)) // (5 + 4) * 2 = 18
