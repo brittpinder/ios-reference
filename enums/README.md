@@ -176,19 +176,6 @@ switch yearMark {
 }
 ```
 
-## Enum Functions
-Functions can be added to enums like so
-
-```swift
-enum Season: String {
-    case sprint
-    case summer
-    case autumn
-    case winter
-    func displayString() -> String { return self.rawValue.capitalized }
-}
-print(Season.summer.displayString()) // Summer
-```
 ## Recursive Enumerations
 
 A recursive enumeration is an enumeration that has another instance of the enumeration as the associated value for one or more of the enumeration cases. You indicate that an enumeration case is recursive by writing `indirect` before it, which tells the compiler to insert the necessary layer of indirection.
@@ -233,4 +220,101 @@ let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.numb
 
 print(evaluate(product)) // (5 + 4) * 2 = 18
 ```
+## Enums with Computed Properties
+Enums cannot have stored properties, but they can have computed properties:
 
+```swift
+enum Device {
+  case iPad
+  case iPhone
+
+  var year: Int {
+    switch self {
+      case .iPhone: return 2007
+      case .iPad: return 2010
+    }
+  }
+}
+
+let device = Device.iPhone
+print(device.year) // 2007
+```
+
+## Enums with Functions
+Functions can be added to enums like so
+
+```swift
+enum Season: String {
+    case sprint
+    case summer
+    case autumn
+    case winter
+    func displayString() -> String { return self.rawValue.capitalized }
+}
+print(Season.summer.displayString()) // Summer
+```
+## Enums with Static Functions
+
+```swift
+enum Currency {
+    case cad
+    case sek
+    case usd
+
+    static func getDisplayString(currency: Currency) -> String {
+        switch currency {
+            case .cad: return "Canadian Dollars"
+            case .sek: return "Swedish Krona"
+            case .usd: return "US Dollars"
+        }
+    }
+}
+
+print(Currency.getDisplayString(currency: Currency.sek)) // Swedish Krona
+```
+
+## Enums with Mutating Functions
+You can simulate an enum having a state by having it mutate itself:
+
+```swift
+enum TrafficLight {
+    case red
+    case green
+    case yellow
+
+    mutating func next() {
+        switch self {
+            case .red: self = .green
+            case .green: self = .yellow
+            case .yellow: self = .red
+        }
+    }
+}
+
+var light = TrafficLight.red
+light.next() // light is now equal to .green
+light.next() // light is now equal to .yellow
+```
+
+## Enums with Initializers
+```
+enum LifeStage {
+    case infant
+    case child
+    case adult
+
+    init(age: UInt) {
+        switch age {
+            case 0...1: self = .infant
+            case 2...17: self = .child
+            default: self = .adult
+        }
+    }
+}
+
+let lifeStage = LifeStage(age: 4)
+print(lifeStage) // child
+```
+## Helpful Links
+* [Swift Documentation](https://docs.swift.org/swift-book/LanguageGuide/Enumerations.html)
+* [ios-starter-kit](https://github.com/jrasmusson/ios-starter-kit/blob/master/basics/Enums/README.md)
