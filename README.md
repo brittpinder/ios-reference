@@ -25,7 +25,6 @@
 	* Tuples
 	* Dictionaries
 * Properties
-	* Computed vs Stored
 	* Getters & Setters
 	* Observed
 * Access Levels
