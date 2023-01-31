@@ -1,7 +1,8 @@
 # ios-reference
 
 ## Swift
-* [Enums](https://github.com/brittpinder/ios-reference/tree/main/enums#enums)
+* [Enums](https://github.com/brittpinder/ios-reference/tree/main/enums)
+* [Properties](https://github.com/brittpinder/ios-reference/tree/main/properties)
 
 
 # To Learn
