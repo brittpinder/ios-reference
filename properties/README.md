@@ -117,7 +117,7 @@ set(newEnd) {
 
 > Note: Computed properties can only be declared with the `var` keyword because their values aren't fixed.
 
-Computed properties can be used to control access to private variables within a class.:
+Computed properties can be used to control access to private variables within a class. In this example, the details of the file class are hidden and just the name is exposed:
 
 ```swift
 struct Content {
@@ -134,7 +134,52 @@ struct Content {
 }
 ```
 
+> Important: Computed properties perform their operation *every* time they are called which means that heavy operations (ex: sorting) can easily result in a performance decrease. If your computed property is making its calculations using static data, consider making this calculation once during initialization and storing the result in a stored property instead.
+
+### Computed Properties within an Extension
+Another useful thing about computed properties is that they can be used within extensions. In this example, we can create quick access to the width and height of a view:
+
+```swift
+extension UIView {
+    var width: CGFloat {
+        return frame.size.width
+    }
+
+    var height: CGFloat {
+        return frame.size.height
+    }
+}
+```
+
+### Overriding Computed Properties
+Within subclasses, you can override read-only properties computed properties:
+
+```swift
+class University {
+    var tuition: Int {
+        return 1000
+    }
+}
+
+class Carleton: University {
+    override var tuition: Int {
+        return 2000
+    }
+}
+```
+It is important to note that you cannot override stored properties. The following code would fail:
+
+```swift
+class University {
+    var tuition: Int = 1000
+}
+
+class Carleton: University {
+    override var tuition: Int = 2000 // Cannot override stored property 'tuition'
+}
+```
 
 ## Helpful Links
 * [Swift Documentation](https://docs.swift.org/swift-book/LanguageGuide/Properties.html)
+* [SwiftLee](https://www.avanderlee.com/swift/computed-property/)
 

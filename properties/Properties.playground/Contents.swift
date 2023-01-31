@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 //struct Person {
 //    let name: String
@@ -75,4 +75,34 @@ struct Content {
             file.name = newValue
         }
     }
+}
+
+extension UIView {
+    var width: CGFloat {
+        return frame.size.width
+    }
+
+    var height: CGFloat {
+        return frame.size.height
+    }
+}
+
+//class University {
+//    var tuition: Int {
+//        return 1000
+//    }
+//}
+//
+//class Carleton: University {
+//    override var tuition: Int {
+//        return 2000
+//    }
+//}
+
+class University {
+    var tuition: Int = 1000
+}
+
+class Carleton: University {
+    override var tuition: Int = 2000 // Cannot override stored property 'tuition'
 }
