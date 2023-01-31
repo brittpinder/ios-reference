@@ -32,13 +32,17 @@
 * Unknown keywords
 	* `#selector`
 	* `required`
+	* `required init?`
 	* `@escaping`
 	* `@discardableResult`
 	* `weak`
+	* `open`
 	* `dynamic`
 	* `try`, `try!`, `try?`
 	* `lazy`
 	* `final`
+	* `@available(iOS 16.0, *)`
+	* `@MainActor`
 
 ## UIKit
 
