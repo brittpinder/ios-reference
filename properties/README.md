@@ -23,7 +23,7 @@ constantPerson.age = 70 // Error: constantPerson is a let constant
 However, if you create an instance of a *class* using `let`, you can modify its variable properties. This is because classes are *reference* types.
 
 ```swift
-class Employee {
+class Person {
     let name: String
     var age: Int
 
@@ -33,12 +33,19 @@ class Employee {
     }
 }
 
-let constantEmployee = Employee(name: "Michael", age: 42)
-constantEmployee.age = 39 // This is ok
+var person = Person(name: "Audrey", age: 25)
+person.name = "Barbara" // Error: name is a let constant
+person.age = 33
+
+let constantPerson = Person(name: "Jake", age: 12)
+constantPerson.age = 70 // This is ok
 ```
 When `let` is used to create an instance of a class, it means that the reference cannot be changed. So you can modify the variable values but you cannot reassign the reference:
 
 ```swift
-constantEmployee = Employee("Dwight", 39) // Error: Cannot assign to value: constantEmployee is a let constant
+constantPerson = Person("Amy", 39) // Error: Cannot assign to value: constantPerson is a let constant
 ```
+
+## Helpful Links
+* [Swift Documentation](https://docs.swift.org/swift-book/LanguageGuide/Properties.html)
 
