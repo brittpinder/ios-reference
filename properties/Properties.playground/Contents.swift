@@ -12,22 +12,22 @@ import UIKit
 //let constantPerson = Person(name: "Jake", age: 12)
 //constantPerson.age = 70 // Error: constantPerson is a let constant
 
-class Person {
-    let name: String
-    var age: Int
-
-    init(name: String, age: Int) {
-        self.name = name
-        self.age = age
-    }
-}
-
-var person = Person(name: "Audrey", age: 25)
+//class Person {
+//    let name: String
+//    var age: Int
+//
+//    init(name: String, age: Int) {
+//        self.name = name
+//        self.age = age
+//    }
+//}
+//
+//var person = Person(name: "Audrey", age: 25)
 //person.name = "Barbara" // Error: name is a let constant
-person.age = 33
-
-let constantPerson = Person(name: "Jake", age: 12)
-constantPerson.age = 70 // This is ok
+//person.age = 33
+//
+//let constantPerson = Person(name: "Jake", age: 12)
+//constantPerson.age = 70 // This is ok
 //constantPerson = Person("Amy", 39) // Error: Cannot assign to value: constantPerson is a let constant
 
 struct File {
@@ -87,22 +87,83 @@ extension UIView {
     }
 }
 
-//class University {
-//    var tuition: Int {
-//        return 1000
-//    }
-//}
-//
-//class Carleton: University {
-//    override var tuition: Int {
-//        return 2000
-//    }
-//}
-
 class University {
-    var tuition: Int = 1000
+    var tuition: Int {
+        return 1000
+    }
 }
 
 class Carleton: University {
-    override var tuition: Int = 2000 // Cannot override stored property 'tuition'
+    override var tuition: Int {
+        return 2000
+    }
 }
+
+//class University {
+//    var tuition: Int = 1000
+//}
+//
+//class Carleton: University {
+//    override var tuition: Int = 2000 // Cannot override stored property 'tuition'
+//}
+
+//struct Person {
+//    let name: String
+//    let age: Int
+//}
+//
+//struct Family {
+//    let members: [Person]
+//
+//    lazy var youngest: Person? = {
+//        print("Youngest initialized")
+//        return members.min(by: {$0.age < $1.age})
+//    }()
+//
+//    init(members: [Person]) {
+//        self.members = members
+//        print("Family initialized")
+//    }
+//}
+//
+//var family = Family(members: [Person(name: "Dianne", age: 60),
+//                              Person(name: "Harry", age: 58),
+//                              Person(name: "Brittany", age: 33),
+//                              Person(name: "Warren", age: 31)]) // Prints: "Family initialized"
+//
+//print(family.youngest)
+//// Prints: "Youngest initialized"
+//// Prints: "Person(name: "Warren", age: 31)"
+
+
+struct Person {
+    let name: String
+    let age: Int
+}
+
+struct Family {
+    var members: [Person]
+
+    lazy var youngest: Person? = {
+        print("Youngest initialized")
+        return members.min(by: {$0.age < $1.age})
+    }()
+
+    init(members: [Person]) {
+        self.members = members
+        print("Family initialized")
+    }
+}
+
+var family = Family(members: [Person(name: "Dianne", age: 60),
+                              Person(name: "Harry", age: 58),
+                              Person(name: "Brittany", age: 33),
+                              Person(name: "Warren", age: 31)]) // Prints: "Family initialized"
+
+print(family.youngest)
+// Prints: "Youngest initialized"
+// Prints: "Person(name: "Warren", age: 31)"
+
+family.members.append(Person(name: "Baby", age: 1))
+print(family.youngest)
+// Prints: "Person(name: "Warren", age: 31)"

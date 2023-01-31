@@ -84,7 +84,7 @@ var filename: String {
     }
 }
 ```
-
+### Setting Computed Properties
 Here is an example of a computed property with a setter. Notice that whenever the `end` property is set, the `start` property gets updated accordingly.
 
 ```swift
@@ -178,8 +178,82 @@ class Carleton: University {
     override var tuition: Int = 2000 // Cannot override stored property 'tuition'
 }
 ```
+## Lazy Stored Properties
+A *lazy stored property* is a property whose initial value isn't calculated until the first time it's used. It is indicated by using the `lazy` modifier before its declaration.
+
+> Note: A lazy property must always be declared with `var` because its initial value might not be retrieved until after instance initialization completes. Constant properties must always have a value before initialization completes, and therefore can't be declared as lazy.
+
+Lazy properties are useful when the initial value for a property is dependent on outside factors whose values aren’t known until after an instance’s initialization is complete. They are also useful when the initial value for a property requires complex or computationally expensive setup that shouldn’t be performed unless or until it’s needed. In the following example, `oldest` is only calculated once it's referenced.
+
+```swift
+struct Person {
+    let name: String
+    let age: Int
+}
+
+struct Family {
+    let members: [Person]
+
+    lazy var youngest: Person? = {
+        print("Youngest initialized")
+        return members.min(by: {$0.age < $1.age})
+    }()
+
+    init(members: [Person]) {
+        self.members = members
+        print("Family initialized")
+    }
+}
+
+var family = Family(members: [Person(name: "Dianne", age: 60),
+                              Person(name: "Harry", age: 58),
+                              Person(name: "Brittany", age: 33),
+                              Person(name: "Warren", age: 31)]) // Prints: "Family initialized"
+
+print(family.youngest)
+// Prints: "Youngest initialized"
+// Prints: "Person(name: "Warren", age: 31)"
+```
+An advantage of using lazy stored properties is that if the property is never used, you can avoid unnecssary allocation and computation.
+
+### Differences Between Lazy Stored and Computed Properties
+Lazy stored variables are calculated the first time they are referenced whereas computed properties are caluclated *every* time they are referenced. Lazy stored variables are therefore more performant than computed properties, but this performance gain comes with a cost: it is calculated using the state at the moment it is called.
+
+Consider the example above with `members` being declared with `var` instead of `let`:
+
+```swift
+struct Family {
+    var members: [Person]
+
+    lazy var youngest: Person? = {
+        print("Youngest initialized")
+        return members.min(by: {$0.age < $1.age})
+    }()
+
+    init(members: [Person]) {
+        self.members = members
+        print("Family initialized")
+    }
+}
+
+var family = Family(members: [Person(name: "Dianne", age: 60),
+                              Person(name: "Harry", age: 58),
+                              Person(name: "Brittany", age: 33),
+                              Person(name: "Warren", age: 31)]) // Prints: "Family initialized"
+
+print(family.youngest)
+// Prints: "Youngest initialized"
+// Prints: "Person(name: "Warren", age: 31)"
+
+family.members.append(Person(name: "Baby", age: 1))
+print(family.youngest)
+// Prints: "Person(name: "Warren", age: 31)"
+```
+After adding "Baby" with an age of 1, you would expect `youngest` to return "Baby". However, as `youngest` has already been initialized before the mutation took place, the stored value is set to Warren with age 31. In this scenario a computed property would be more appropriate.
+
 
 ## Helpful Links
 * [Swift Documentation](https://docs.swift.org/swift-book/LanguageGuide/Properties.html)
-* [SwiftLee](https://www.avanderlee.com/swift/computed-property/)
+* [SwiftLee - Computed Properties](https://www.avanderlee.com/swift/computed-property/)
+* [SwiftLee - Lazy Stored Properties](https://www.avanderlee.com/swift/lazy-var-property/)
 
