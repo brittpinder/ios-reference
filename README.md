@@ -39,7 +39,6 @@
 	* `open`
 	* `dynamic`
 	* `try`, `try!`, `try?`
-	* `lazy`
 	* `final`
 	* `@available(iOS 16.0, *)`
 	* `@MainActor`
