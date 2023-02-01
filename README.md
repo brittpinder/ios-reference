@@ -25,8 +25,10 @@
 	* Tuples
 	* Dictionaries
 * Properties
-	* Getters & Setters
-	* Observed
+	* Wrappers
+	* Global vs Local
+	* Type Properties
+* [In-out parameters](https://docs.swift.org/swift-book/ReferenceManual/Declarations.html#ID545)
 * Access Levels
 * Memory Safety
 * Unknown keywords

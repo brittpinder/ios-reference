@@ -167,3 +167,28 @@ print(family.youngest)
 family.members.append(Person(name: "Baby", age: 1))
 print(family.youngest)
 // Prints: "Person(name: "Warren", age: 31)"
+
+struct Hero {
+    var strength: Int {
+        willSet {
+            print("Strength is about to be changed from \(strength) to \(newValue)")
+        }
+        didSet {
+            print("Strength was changed from \(oldValue) to \(strength)")
+        }
+    }
+}
+
+var hero = Hero(strength: 10)
+hero.strength = 20
+// Prints: "Strength is about to be changed from 10 to 20"
+// Prints: "Strength was changed from 10 to 20"
+
+func doSomething(strength: inout Int) {
+    print("Doing something")
+}
+
+doSomething(strength: &hero.strength)
+// Prints: "Doing something"
+// Prints: "Strength is about to be changed from 20 to 20"
+// Prints: "Strength was changed from 20 to 20"

@@ -251,6 +251,55 @@ print(family.youngest)
 ```
 After adding "Baby" with an age of 1, you would expect `youngest` to return "Baby". However, as `youngest` has already been initialized before the mutation took place, the stored value is set to Warren with age 31. In this scenario a computed property would be more appropriate.
 
+## Property Observers
+Property observers allow you to observe and respond to changes in properties. There are two property observers:
+
+* `willSet` - called right before a property is set
+* `didSet` - called right after a property is set
+
+```swift
+struct Hero {
+    var strength: Int {
+        willSet(newStrength) {
+            print("Strength is about to be changed from \(strength) to \(newStrength)")
+        }
+        didSet(oldStrength) {
+            print("Strength was changed from \(oldStrength) to \(strength)")
+        }
+    }
+}
+
+var hero = Hero(strength: 10)
+hero.strength = 20
+// Prints: "Strength is about to be changed from 10 to 20"
+// Prints: "Strength was changed from 10 to 20"
+```
+In the above example we are assigning the names `newStrength` and `oldStrength` to the new and old values, but these can be omitted:
+
+```swift
+var strength: Int {
+    willSet {
+        print("Strength is about to be changed from \(strength) to \(newValue)")
+    }
+    didSet {
+        print("Strength was changed from \(oldValue) to \(strength)")
+    }
+}
+```
+Notice how, the property observers aren't called when the property is first initialized. This is because a property has to already contain a value before its property observers will be called. This means that property observers can't be used with lazy properties.
+
+Keep in mind that if you pass a property that has observers to a function as an in-out parameter, the `willSet` and `didSet` observers will be called. This is because of the copy-in copy-out memory model for in-out parameters. The value is always written back to the property at the end of the function.
+
+```swift
+func doSomething(strength: inout Int) {
+    print("Doing something")
+}
+
+doSomething(strength: &hero.strength)
+// Prints: "Doing something"
+// Prints: "Strength is about to be changed from 20 to 20"
+// Prints: "Strength was changed from 20 to 20"
+```
 
 ## Helpful Links
 * [Swift Documentation](https://docs.swift.org/swift-book/LanguageGuide/Properties.html)
