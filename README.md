@@ -44,8 +44,19 @@
 	* `final`
 	* `@available(iOS 16.0, *)`
 	* `@MainActor`
+* [Patterns](https://docs.swift.org/swift-book/ReferenceManual/Patterns.html#)
+
+## Foundation
+* Dates
 
 ## UIKit
+* UICalendarView
+* UIDatePicker
+* Modal presentation that covers part of the screen (adaptiveSheetPresentationController)
+* Table View
+	* Swipeable actions
+	* Sections
+	* UITableViewDiffableDataSource
 
 ## Advanced Topics
 * CoreData

@@ -192,3 +192,4 @@ doSomething(strength: &hero.strength)
 // Prints: "Doing something"
 // Prints: "Strength is about to be changed from 20 to 20"
 // Prints: "Strength was changed from 20 to 20"
+
