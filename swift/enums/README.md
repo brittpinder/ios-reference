@@ -297,7 +297,7 @@ light.next() // light is now equal to .yellow
 ```
 
 ## Enums with Initializers
-```
+```swift
 enum LifeStage {
     case infant
     case child
