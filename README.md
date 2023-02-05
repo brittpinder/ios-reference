@@ -1,8 +1,8 @@
 # ios-reference
 
 ## Swift
-* [Enums](https://github.com/brittpinder/ios-reference/tree/main/enums)
-* [Properties](https://github.com/brittpinder/ios-reference/tree/main/properties)
+* [Enums](https://github.com/brittpinder/ios-reference/tree/main/swift/enums)
+* [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties)
 
 
 # To Learn
@@ -60,7 +60,9 @@
 * UICalendarView
 * UIDatePicker
 * Modal presentation that covers part of the screen (adaptiveSheetPresentationController)
-* Table View
+* [UIScrollView](https://github.com/jrasmusson/ios-professional-course/tree/main/Bankey/5-Scrollable-ViewControllers)
+* UICollectionView
+* UITableView
 	* Swipeable actions
 	* Sections
 	* UITableViewDiffableDataSource
@@ -68,7 +70,12 @@
 * Autolayout
 	* Constraints
 	* Points vs Pixels
-* UIPageViewController
+* [Container View Controllers](https://developer.apple.com/library/archive/featuredarticles/ViewControllerPGforiPhoneOS/ImplementingaContainerViewController.html#//apple_ref/doc/uid/TP40007457-CH11-SW1)
+	* UINavigationController
+		* Stack: Push/Pop vs Modal: Present/Dismiss 
+	* UITabBarController
+	* UIPageViewController
+	* SplitView (iPad only)
 
 ## Advanced Topics
 * Persistence
@@ -94,3 +101,6 @@
 * Simulate slow neetwork connections with Network link conditioner
 * Tested on a real device
 * Tested on different device sizes
+
+## Design
+* [Create your own SF symbols](https://www.david-smith.org/blog/2023/01/23/design-notes-18/?utm_campaign=iOS%2BDev%2BWeekly&utm_medium=email&utm_source=iOS%2BDev%2BWeekly%2BIssue%2B595)
