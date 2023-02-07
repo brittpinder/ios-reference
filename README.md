@@ -2,6 +2,7 @@
 
 ## Swift
 * [Enums](https://github.com/brittpinder/ios-reference/tree/main/swift/enums)
+* [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes)
 * [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties)
 
 ## UIKit
