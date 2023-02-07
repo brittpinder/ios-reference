@@ -16,12 +16,15 @@
 	* Implicitly unwrapped optionals
 * If let vs guard let
 * Classes vs Structs
+* Inheritance
+	* **`final`**
 * References vs Values
 * Generics
 * Error Handling
 * Protocols
 * Extensions
 * Type Casting
+* Subscripts
 * Ranges
 * [Bool.toggle](https://www.hackingwithswift.com/example-code/language/how-to-toggle-a-boolean-value)
 * Argument Labels
@@ -42,13 +45,12 @@
 	* `#selector`
 	* `required`
 	* `required init?`
-	* `@escaping`
+	* **`@escaping`**
 	* `@discardableResult`
-	* `weak var` and retain cycles
+	* **`weak var` and retain cycles, unowned self**
 	* `open`
 	* `dynamic`
 	* `try`, `try!`, `try?`
-	* `final`
 	* `@available(iOS 16.0, *)`
 	* `@MainActor`
 * [Patterns](https://docs.swift.org/swift-book/ReferenceManual/Patterns.html#)
@@ -96,6 +98,8 @@
 * Race Conditions
 * Core Animation
 * Core Graphics
+* **Dispatch Methods**
+* **Race Conditions**
 
 ## New Feature Checklist
 * Meets requirements

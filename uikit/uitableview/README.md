@@ -115,7 +115,7 @@ In the above example, a checkmark is added to every row that is selected.
 
 
 ## To Do
-* Custom cell (with and without nib)
+* [Custom cell (with and without nib)](https://www.youtube.com/watch?v=bXHinfFMkFw&list=PL8seg1JPkqgGCLhYmf-zwG2Y2f06yJOyc&ab_channel=SeanAllen)
 * Adding and removing
 * Search and filter
 * Sections
