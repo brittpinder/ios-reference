@@ -49,7 +49,7 @@ struct Dog {
 
 var dog = Dog(name: "Aayla", age: 5)
 ```
-When defining a class, you **must** provide an `init()` method:
+When defining a class, you **must** provide an `init()` method. If you don't, you will get a compiler error:
 
 ```swift
 class Dog {
@@ -70,7 +70,7 @@ var dog = Dog(name: "Aayla", age: 5)
 ```
 
 ## Value vs. Reference Types
-It is very important to remember that structs are *value* types and classes are *references* types.
+It is very important to remember that structs are *value* types whereas classes are *references* types.
 
 A *value* type is a type whose value is *copied* when it's assigned to a variable or constant, or when it's passed to a function. In the following example, when the var `otherDog` is created and assigned to `dog`, a copy of `dog` is created and assigned to `otherDog`:
 
@@ -92,7 +92,7 @@ otherDog.name = "Jango"
 print(dog.name) // "Aayla"
 print(otherDog.name) // "Jango"
 ```
-However, notice what happens when we change the structure to a class. *Reference types* are not copied when they’re assigned to a variable or constant, or when they’re passed to a function. Rather than a copy, a reference to the same existing instance is used. So in this example, `otherDog` is a reference to `dog` which means that any changes we make changes to `otherDog` are also made to `dog`:
+However, notice what happens when we change the structure to a class. *Reference types* are not copied when they’re assigned to a variable or constant, or when they’re passed to a function. Rather than a copy, a reference to the same existing instance is used. So in this example, `otherDog` is a reference to `dog` which means that any changes we make to `otherDog` are also made to `dog`:
 
 ```swift
 class Dog {
