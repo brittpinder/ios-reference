@@ -1,4 +1,6 @@
-# Structs and Classes
+# Structures and Classes
+
+Structs in Swift are much more powerful than structs in other languages like C++. Here is an overview of capabilities of structs and classes:
 
 Feature | Struct | Class
 ---|---|---
@@ -19,5 +21,17 @@ Threadsafe | :heavy_check_mark: |
 Compatible with Objective-C code |  | :heavy_check_mark:
 Pass by value/reference | value | reference
 Live on the stack/heap | stack | heap
+
+## Choosing Between Structures and Classes
+It can be difficult to know whether or not to use a Struct or a Class. Below are some recommendations:
+
+* Use structures by default
+* Use classes when you need Objective-C interoperability
+* Use classes when you need to control the identity of the data you're modeling
+* Use structures along with protocols to adopt behavior by sharing implementations. Prefer protocol inheritance first whether you are using structs or classes. If you need non-protocol inheritance, then use a class.
+
+## Helpful Links
+* [Choosing Between Structures and Classes](https://developer.apple.com/documentation/swift/choosing-between-structures-and-classes)
+* [Structs vs Classes Video](https://www.youtube.com/watch?v=LtlbB4-6k_U&ab_channel=SeanAllen)
 
 
