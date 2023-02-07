@@ -2,7 +2,7 @@
 
 ## Swift
 * [Enums](https://github.com/brittpinder/ios-reference/tree/main/swift/enums)
-* [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes)
+* [Structures and Classes - wip](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes)
 * [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties)
 
 ## UIKit
@@ -16,7 +16,6 @@
 * Optionals
 	* Implicitly unwrapped optionals
 * If let vs guard let
-* Classes vs Structs
 * Inheritance
 	* **`final`**
 * References vs Values
