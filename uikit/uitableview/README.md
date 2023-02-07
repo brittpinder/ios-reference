@@ -7,7 +7,7 @@ Here is the bare minimum needed to create a table view:
 ```swift
 import UIKit
 
-class BasicTableViewController: UIViewController {
+class BasicTableVC: UIViewController {
 
     var data = ["Apples", "Bananas", "Oranges", "Carrots", "Kale"]
 
@@ -27,7 +27,7 @@ class BasicTableViewController: UIViewController {
     }
 }
 
-extension BasicTableViewController: UITableViewDataSource {
+extension BasicTableVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
     }
@@ -48,7 +48,7 @@ Besides adding the tableview to your view controller and applying layout and con
 Implement the `UITableViewDataSource` and the two required functions, `numberOfRowsInSection` and `cellForRowAt` which define what information will be displayed in the table view.
 
 ```swift
-extension BasicTableViewController: UITableViewDataSource {
+extension BasicTableVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
     }
@@ -84,6 +84,14 @@ tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 
 The first argument is the `UITableViewCell` class. In this example we are using the default class but you can register custom classes if you want. The second argument is the "reuseIdentifier" which can be whatever you want as long as it matches the reuse identifier used in `dequeueReusableCell`.
 
+## Cell Accessory Types
+The default table view cell has five different accessory options that can be enabled which display an icon on the right hand side of the cell:
+
+```swift
+cell.accessoryType = .detailButton
+```
+![](images/1.png)
+
 ## Selecting Table Rows
 In order to select table rows, you need to implement the `UITableViewDelegate` protocol, implement the `didSelectRowAt` function and set your table view's delegate to `self`:
 
@@ -92,7 +100,7 @@ tableView.delegate = self
 ```
 
 ```swift
-extension BasicTableViewController: UITableViewDelegate {
+extension BasicTableVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         tableView.deselectRow(at: indexPath, animated: true)
@@ -101,11 +109,12 @@ extension BasicTableViewController: UITableViewDelegate {
 ```
 In the above example, a checkmark is added to every row that is selected.
 
-![](images/1.png)
+![](images/2.png)
+
+## Helpful Links
 
 
 ## To Do
-* Select row
 * Custom cell (with and without nib)
 * Adding and removing
 * Search and filter
@@ -114,3 +123,6 @@ In the above example, a checkmark is added to every row that is selected.
 * Moving cells
 * Notes about reuse of cells
 * section and table headers/footers
+* [prepareForReuse()](https://developer.apple.com/documentation/uikit/views_and_controls/table_views/configuring_the_cells_for_your_table)
+* UITableViewDiffableDataSource
+* beginUpdates, endUpdates, reloadData()

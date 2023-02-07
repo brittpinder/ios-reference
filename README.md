@@ -71,11 +71,6 @@
 * Modal presentation that covers part of the screen (adaptiveSheetPresentationController)
 * [UIScrollView](https://github.com/jrasmusson/ios-professional-course/tree/main/Bankey/5-Scrollable-ViewControllers)
 * UICollectionView
-* UITableView
-	* Swipeable actions
-	* Sections
-	* UITableViewDiffableDataSource
-	* beginUpdates, endUpdates, reloadData()
 * Autolayout
 	* Constraints * Priorities
 	* Points vs Pixels

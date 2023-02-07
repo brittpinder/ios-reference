@@ -12,14 +12,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    var basicTableViewController = BasicTableViewController()
+    var basicTableVC = BasicTableVC()
+    var cellAccessoryVC = CellAccessoryVC()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
-        window?.rootViewController = basicTableViewController
+        window?.rootViewController = basicTableVC
 
         return true
     }
