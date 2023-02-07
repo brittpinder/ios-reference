@@ -6,6 +6,7 @@
 
 ## UIKit
 * [Creating a Project Without Storyboards](https://github.com/brittpinder/ios-reference/tree/main/uikit/no-storyboards)
+* [UITableView](https://github.com/brittpinder/ios-reference/tree/main/uikit/uitableview)
 
 
 # To Learn
@@ -22,6 +23,7 @@
 * Extensions
 * Type Casting
 * Ranges
+* [Bool.toggle](https://www.hackingwithswift.com/example-code/language/how-to-toggle-a-boolean-value)
 * Argument Labels
 * Closures
 * Containers
@@ -52,13 +54,17 @@
 * [Patterns](https://docs.swift.org/swift-book/ReferenceManual/Patterns.html#)
 	* Protocol Delegate Pattern
 	* DataSource Pattern
+	* **Notification Center** (Observer Pattern)
 * fatalError, assertionFailure, throw (what are the differences?)
 
 ## Foundation
 * Dates
+* NSAttributedString and NSMutableAttributedString
 
 ## UIKit
 * Instantiating views and components through code instead of storyboard
+	* intrinsicContentSize
+* Nibs and Bundles
 * Segues: Through storyboard (drag and drop) and through code
 * UICalendarView
 * UIDatePicker
@@ -71,8 +77,10 @@
 	* UITableViewDiffableDataSource
 	* beginUpdates, endUpdates, reloadData()
 * Autolayout
-	* Constraints
+	* Constraints * Priorities
 	* Points vs Pixels
+	* Content Hugging Compression Resistance
+	* [Interesting way of pinning to view](https://www.youtube.com/watch?v=2yVzeFIMtyc&ab_channel=iOSAcademy)
 * [Container View Controllers](https://developer.apple.com/library/archive/featuredarticles/ViewControllerPGforiPhoneOS/ImplementingaContainerViewController.html#//apple_ref/doc/uid/TP40007457-CH11-SW1)
 	* UINavigationController
 		* Stack: Push/Pop vs Modal: Present/Dismiss 
@@ -91,6 +99,8 @@
 * Provisioning Profiles
 * pList
 * Race Conditions
+* Core Animation
+* Core Graphics
 
 ## New Feature Checklist
 * Meets requirements
