@@ -6,7 +6,7 @@
 
 ## UIKit
 * [Creating a Project Without Storyboards](https://github.com/brittpinder/ios-reference/tree/main/uikit/no-storyboards)
-* [UITableView](https://github.com/brittpinder/ios-reference/tree/main/uikit/uitableview)
+* [UITableView - wip](https://github.com/brittpinder/ios-reference/tree/main/uikit/uitableview)
 
 
 # To Learn

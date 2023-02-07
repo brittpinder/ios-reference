@@ -39,7 +39,7 @@ extension BasicTableViewController: UITableViewDataSource {
     }
 }
 ```
-![](images/1.png)
+![](images/0.png)
 
 Besides adding the tableview to your view controller and applying layout and constraints, there are two more required steps:
 
@@ -84,7 +84,32 @@ tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 
 The first argument is the `UITableViewCell` class. In this example we are using the default class but you can register custom classes if you want. The second argument is the "reuseIdentifier" which can be whatever you want as long as it matches the reuse identifier used in `dequeueReusableCell`.
 
-### To Do
+## Interacting with Table Rows
+In order to interact with the table rows, you need to implement the `UITableViewDelegate` protocol and set your table view's delegate to `self`:
+
+```swift
+extension BasicTableViewController: UITableViewDelegate {
+
+}
+```
+```swift
+tableView.delegate = self
+```
+
+There are dozens of optional functions you can override. One of the most common is `didSelectRowAt` which gets called every time a row is tapped. In the below example, a checkmark is added to every row that is selected:
+
+```swift
+extension BasicTableViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+```
+![](images/1.png)
+
+
+## To Do
 * Select row
 * Custom cell (with and without nib)
 * Adding and removing

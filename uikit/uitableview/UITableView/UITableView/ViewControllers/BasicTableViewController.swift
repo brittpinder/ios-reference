@@ -21,6 +21,7 @@ class BasicTableViewController: UIViewController {
     private func configureTableView() {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.dataSource = self
+        tableView.delegate = self
 
         view.addSubview(tableView)
         tableView.pin(to: view)
@@ -36,5 +37,12 @@ extension BasicTableViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = data[indexPath.row]
         return cell
+    }
+}
+
+extension BasicTableViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
