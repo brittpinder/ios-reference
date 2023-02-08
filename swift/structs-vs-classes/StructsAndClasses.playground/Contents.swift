@@ -41,24 +41,74 @@ class SomeClass {
 //print(otherDog.name) // "Jango"
 
 
+
+//class Dog {
+//    var name: String
+//    var age: Int
+//
+//    init(name: String, age: Int) {
+//        self.name = name
+//        self.age = age
+//    }
+//
+//    func bark() {
+//        print("Woof")
+//    }
+//}
+//
+//var dog = Dog(name: "Aayla", age: 5)
+//var otherDog = dog
+//otherDog.name = "Jango"
+//
+//print(dog.name) // "Jango"
+//print(otherDog.name) // "Jango"
+//print(dog === otherDog) // true
+//print(dog !== otherDog) // false
+
+
+
+//struct Dog {
+//    var name: String
+//    var age: Int
+//    var toys: [String]
+//
+//    init(name: String, age: Int) {
+//        self.name = name
+//        self.age = age
+//        self.toys = [String]()
+//    }
+//
+//    mutating func addToy(toy: String) { // This is ok
+//        toys.append(toy)
+//    }
+//}
+//
+//var dog = Dog(name: "Aayla", age: 5)
+//dog.toys.append("Simba")
+//
+//let otherDog = Dog(name: "Jango", age: 1)
+//otherDog.addToy(toy: "Rooster") // Error: Cannot use mutating member on immutable value `otherDog`
+
+
+
 class Dog {
     var name: String
     var age: Int
+    var toys: [String]
 
     init(name: String, age: Int) {
         self.name = name
         self.age = age
+        self.toys = [String]()
     }
 
-    func bark() {
-        print("Woof")
+    func addToy(toy: String) {
+        toys.append(toy)
     }
 }
 
 var dog = Dog(name: "Aayla", age: 5)
-var otherDog = dog
-otherDog.name = "Jango"
+dog.addToy(toy: "Simba")
 
-print(dog.name) // "Jango"
-print(otherDog.name) // "Jango"
-
+let otherDog = Dog(name: "Jango", age: 1)
+otherDog.addToy(toy: "Rooster")

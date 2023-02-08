@@ -112,8 +112,82 @@ otherDog.name = "Jango"
 print(dog.name) // "Jango"
 print(otherDog.name) // "Jango"
 ```
+You can compare two variables using the identity operators `===` and `!==` to see if they are referencing the same class instance:
+
+```swift
+print(dog === otherDog) // true
+print(dog !== otherDog) // false
+```
 
 ## Mutability
+
+The `self` of a struct is defined using `let` which means that structs are inherently *immutable*. This means that a struct can't have any functions that change its properties. In the below example, the function `addToy` will cause a compiler error:
+
+```swift
+struct Dog {
+    var name: String
+    var age: Int
+    var toys: [String]
+
+    init(name: String, age: Int) {
+        self.name = name
+        self.age = age
+        self.toys = [String]()
+    }
+
+    func addToy(toy: String) {
+        toys.append(toy) // Error: Cannot use mutating member on immutable value 'self'
+    }
+}
+```
+You can however, append to the `toys` array manually:
+
+```swift
+var dog = Dog(name: "Aayla", age: 5)
+dog.toys.append("Simba")
+```
+
+If you want a struct function to be able to change its properties, you can mark it with the `mutating` keyword:
+
+```swift
+mutating func addToy(toy: String) { // This is ok
+    toys.append(toy)
+}
+```
+It is important to note that if your struct instance is defined with `let`, you *cannot* call mutating functions:
+
+```swift
+let otherDog = Dog(name: "Jango", age: 1)
+otherDog.addToy(toy: "Rooster") // Error: Cannot use mutating member on immutable value `otherDog`
+```
+
+Classes are inherently mutable, so you do not need to use the `mutating` keyword on a class's functions:
+
+```swift
+class Dog {
+    var name: String
+    var age: Int
+    var toys: [String]
+
+    init(name: String, age: Int) {
+        self.name = name
+        self.age = age
+        self.toys = [String]()
+    }
+
+    func addToy(toy: String) {
+        toys.append(toy)
+    }
+}
+```
+Remember that classes are reference types, so you can call mutable functions even if a class instance is defined with `let`.
+
+```swift
+let otherDog = Dog(name: "Jango", age: 1)
+otherDog.addToy(toy: "Rooster") // This is ok
+```
+Read more about using `var` and `let` with classes and structs in the [Properties Section](https://github.com/brittpinder/ios-reference/tree/main/swift/properties)
+
 
 ## Comparing Structures and Classes
 
