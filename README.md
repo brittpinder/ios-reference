@@ -2,7 +2,7 @@
 
 ## Swift
 * [Enums](https://github.com/brittpinder/ios-reference/tree/main/swift/enums)
-* [Structures and Classes - wip](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes)
+* [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes)
 * [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties)
 
 ## UIKit
@@ -28,6 +28,8 @@
 * Ranges
 * [Bool.toggle](https://www.hackingwithswift.com/example-code/language/how-to-toggle-a-boolean-value)
 * Argument Labels
+* **inout**
+	* Is it possible to pass parameter as const reference?
 * Closures
 * Containers
 	* Arrays
@@ -39,7 +41,7 @@
 	* Global vs Local
 	* Type Properties
 * [In-out parameters](https://docs.swift.org/swift-book/ReferenceManual/Declarations.html#ID545)
-* Access Levels
+* **Access Levels**
 * Memory Safety
 * Unknown keywords
 	* `#selector`
@@ -64,20 +66,28 @@
 * NSAttributedString and NSMutableAttributedString
 
 ## UIKit
-* Instantiating views and components through code instead of storyboard
-	* intrinsicContentSize
+* **Instantiating views and components through code instead of storyboard**
 * Nibs and Bundles
 * Segues: Through storyboard (drag and drop) and through code
 * UICalendarView
 * UIDatePicker
+* **Labels and fonts**
 * Modal presentation that covers part of the screen (adaptiveSheetPresentationController)
 * [UIScrollView](https://github.com/jrasmusson/ios-professional-course/tree/main/Bankey/5-Scrollable-ViewControllers)
+	* [Scrollview video explanation](https://www.youtube.com/watch?v=TYM65qxEQNs&ab_channel=SwiftArcade)
 * UICollectionView
-* Autolayout
+* **Autolayout**
 	* Constraints * Priorities
 	* Points vs Pixels
 	* Content Hugging Compression Resistance
 	* [Interesting way of pinning to view](https://www.youtube.com/watch?v=2yVzeFIMtyc&ab_channel=iOSAcademy)
+	* willLayoutSubviews()
+	* adaptive layouts
+	* sizeToFit()
+	* sizeThatFits()
+	* intrinsicContentSize
+* **StackViews**
+	* Alignment and Distribution options
 * [Container View Controllers](https://developer.apple.com/library/archive/featuredarticles/ViewControllerPGforiPhoneOS/ImplementingaContainerViewController.html#//apple_ref/doc/uid/TP40007457-CH11-SW1)
 	* UINavigationController
 		* Stack: Push/Pop vs Modal: Present/Dismiss 

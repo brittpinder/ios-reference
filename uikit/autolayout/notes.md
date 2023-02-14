@@ -1,0 +1,91 @@
+# AutoLayout
+
+## Anchors
+
+An anchor is a constraint that defines how a control gets positioned.
+
+Every control needs a postion (x, y), and dimensions (width and height). Some controls have intrinsic size (ex: a label) so you don't need to define it explictly. You will still need to provide a position though.
+
+Framebased approach: You define exactly where on the screen something is positioned:
+
+```swift
+let nameLabel = UILabel()
+nameLabel.frame = CGRect(x: 100, y: 100, width: 200, height: 50)
+```
+
+This would work if we had only one device with one screen size, but nowadays that is not the case.
+
+Anchor Types
+
+* Top
+* Leading
+* Trailing
+* Bottom
+* Height (dimension)
+* Width (dimension)
+* CenterX (alignment)
+* CenterY (alignment)
+* FirstBaseline (for aligning elements relative to text)
+* LastBaseline (for aligning elements relative to text)
+
+`translatesAutoresizingMaskIntoConstraints` needs to be set to false on any component being positioned with AutoLayout
+
+2 ways of setting constraints:
+
+* `NSLayoutConstraints.activate([])`
+* `.isActive = true`
+
+## UILayoutGuides
+
+* SafeAreas - areas where controls won't be blocked or hidden from status bars, navigation bars, tab bars, tool bars etc.
+* LayoutMargins - Rectangular layout guide used to provide default margins for spacing as well as custom layout areas for extra space
+* ReadableContent - A dynamically calculated area that tries to preserve content for reading based on orientation and font size. Looks similar to LayoutMargins but the big difference happens when you add text and go into landscape mode. Most noticeable on iPad
+* You can make your own using UILayoutGuide()
+
+## Intrinsic Content Size
+
+* Every component has one
+* The natural size that a control wants to be
+* Allows controls to lay themselves out without requiring full constraints
+* Some controls such as labels and buttons can calculate their intrinsic content size based on their content
+* UIView has no intrinsic content size
+* Can set programmatically:
+
+```swift
+override var intrinsicContentSize: CGSize {
+	return CGSize(width: 50, height: 20)
+}
+```
+
+Content Hugging and Compression Resistance (CHCR)
+
+* Optional constraints that apply to intrinsic content size
+* What gives our components the ability to flex
+* Content Hugging controls how a control should grow. ex: width <= 50
+* Compression Resistance controls how a control should shrink. ex: width >= 50
+* Priorities are set on these constraints to control how much the component should shrink/grow
+* `UILayoutPriority`
+	* `.required = 1000`
+	* `.defaultHigh = 750`
+	* `.defaultLow = 250`
+	* Anchor priorities are set to `.required`
+	* Intrinsic Size is optional (`.defaultHigh` or `.defaultLow`)
+	* Therefore Anchors will always override the intrinsic content size
+	* By changing the priorities we can resolve ambiguity
+* `view.setContentHuggingPriority(.defaultHigh, for: .horizontal)`
+* By default iOS controls are set to stretch:
+	* Content Hugging is set to `.defaultLow` (allowing it to stretch)
+	* Compression Resistance is set to `.defaultHigh` (dislikes being compressed)
+* Working with ImageViews
+
+## Links
+
+* [AutoLayout](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/)
+* [Anatomy of a Constraint](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/AnatomyofaConstraint.html#//apple_ref/doc/uid/TP40010853-CH9-SW1)
+* [LayoutGuides](https://developer.apple.com/documentation/uikit/uilayoutguide)
+* [Views with Intrinsic Content Size](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/ViewswithIntrinsicContentSize.html)
+* [CHCR](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/AnatomyofaConstraint.html#//apple_ref/doc/uid/TP40010853-CH9-SW21)
+* [IntrinsicContentSize](https://developer.apple.com/documentation/uikit/uiview/1622600-intrinsiccontentsize)
+* [InvalidateIntrinsicContentSize](https://developer.apple.com/documentation/uikit/uiview/1622457-invalidateintrinsiccontentsize)
+* [UILayoutPriority](https://developer.apple.com/documentation/uikit/uilayoutpriority)
+
