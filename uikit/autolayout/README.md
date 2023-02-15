@@ -71,7 +71,7 @@ NSLayoutConstraint.activate([
     rectangle.widthAnchor.constraint(equalToConstant: 200),
     rectangle.heightAnchor.constraint(equalToConstant: 100)
 ])
-```
+>```
 
 The following shows how you can pin views to the top, bottom, leading and trailing edges of a view:
 
