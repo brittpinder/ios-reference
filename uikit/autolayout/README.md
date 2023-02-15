@@ -136,12 +136,14 @@ When defining constraints, there are a variety of options available depending on
 
 Constraint Signature | Width/Height | Top/Bottom/Leading/Trailing/CenterY/CenterX 
 ---|---|---
-`equalTo:` | :heavy_check_mark: | :heavy_check_mark:
-`equalToConstant:` | :heavy_check_mark: |
-`equalTo: constant:` | :heavy_check_mark: | :heavy_check_mark:
-`equalTo: multiplier:` | :heavy_check_mark: |
-`equalTo: multiplier: constant:` | :heavy_check_mark: |
-`equalToSystemSpacingBelow/After: multiplier:` |  | :heavy_check_mark:
+[`equalTo:`](https://developer.apple.com/documentation/uikit/nslayoutanchor/1500946-constraint) | :heavy_check_mark: | :heavy_check_mark:
+[`equalTo: constant:`](https://developer.apple.com/documentation/uikit/nslayoutanchor/1500937-constraint) | :heavy_check_mark: | :heavy_check_mark:
+[`equalTo: multiplier:`](https://developer.apple.com/documentation/uikit/nslayoutdimension/1500951-constraint) | :heavy_check_mark: |
+[`equalTo: multiplier: constant:`](https://developer.apple.com/documentation/uikit/nslayoutdimension/1500934-constraint) | :heavy_check_mark: |
+[`equalToConstant:`](https://developer.apple.com/documentation/uikit/nslayoutdimension/1500941-constraint) | :heavy_check_mark: |
+[`equalToSystemSpacingBelow/After: multiplier:`](https://developer.apple.com/documentation/uikit/nslayoutxaxisanchor/2866112-constraint) |  | :heavy_check_mark:
+
+> Each of the six constraint signatures above contains two variations, "greaterThanOrEqualTo" and "lessThanOrEqualTo", which were omitted for brevity
 
 ## Intrinsic Content Size
 
