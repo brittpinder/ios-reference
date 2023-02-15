@@ -63,14 +63,14 @@ rectangle.heightAnchor.constraint(equalToConstant: 100).isActive = true
 ![](images/4.png)
 
 > Constraints can be activated one at a time as shown above but you can also activate an array of constraints:
-
+>
 > ```swift
-NSLayoutConstraint.activate([
-    rectangle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-    rectangle.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-    rectangle.widthAnchor.constraint(equalToConstant: 200),
-    rectangle.heightAnchor.constraint(equalToConstant: 100)
-])
+>NSLayoutConstraint.activate([
+>    rectangle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+>    rectangle.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+>    rectangle.widthAnchor.constraint(equalToConstant: 200),
+>    rectangle.heightAnchor.constraint(equalToConstant: 100)
+>])
 >```
 
 The following shows how you can pin views to the top, bottom, leading and trailing edges of a view:
