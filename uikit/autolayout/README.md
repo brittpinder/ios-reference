@@ -134,14 +134,14 @@ Every constraint represents a linear equation (y = mx + b). We define the relati
 
 When defining constraints, there are a variety of options available depending on the type of attribute you are applying the constraint to.
 
-Constraint Signature | Top/Bottom/Leading/Trailing/CenterY/CenterX | Width/Height
+Constraint Signature | Width/Height | Top/Bottom/Leading/Trailing/CenterY/CenterX 
 ---|---|---
 `equalTo:` | :heavy_check_mark: | :heavy_check_mark:
-`equalToConstant:` |  | :heavy_check_mark:
+`equalToConstant:` | :heavy_check_mark: |
 `equalTo: constant:` | :heavy_check_mark: | :heavy_check_mark:
-`equalTo: multiplier:` |  | :heavy_check_mark:
-`equalTo: multiplier: constant:` |  | :heavy_check_mark:
-`equalToSystemSpacingBelow/After: multiplier:` | :heavy_check_mark: | 
+`equalTo: multiplier:` | :heavy_check_mark: |
+`equalTo: multiplier: constant:` | :heavy_check_mark: |
+`equalToSystemSpacingBelow/After: multiplier:` |  | :heavy_check_mark:
 
 ## Intrinsic Content Size
 
