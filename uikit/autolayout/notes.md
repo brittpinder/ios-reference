@@ -2,40 +2,9 @@
 
 ## Anchors
 
-An anchor is a constraint that defines how a control gets positioned.
 
-Every control needs a postion (x, y), and dimensions (width and height). Some controls have intrinsic size (ex: a label) so you don't need to define it explictly. You will still need to provide a position though.
 
-Framebased approach: You define exactly where on the screen something is positioned:
-
-```swift
-let nameLabel = UILabel()
-nameLabel.frame = CGRect(x: 100, y: 100, width: 200, height: 50)
-```
-
-This would work if we had only one device with one screen size, but nowadays that is not the case.
-
-Anchor Types
-
-* Top
-* Leading
-* Trailing
-* Bottom
-* Height (dimension)
-* Width (dimension)
-* CenterX (alignment)
-* CenterY (alignment)
-* FirstBaseline (for aligning elements relative to text)
-* LastBaseline (for aligning elements relative to text)
-
-`translatesAutoresizingMaskIntoConstraints` needs to be set to false on any component being positioned with AutoLayout
-
-2 ways of setting constraints:
-
-* `NSLayoutConstraints.activate([])`
-* `.isActive = true`
-
-Different options for setting constraints (equalToSystemSpacingBelow, equalTo, constant, mutliplier etc.)
+Different options (relationships) for setting constraints (equalToSystemSpacingBelow, equalTo, constant, mutliplier etc.)
 
 ## UILayoutGuides
 
@@ -43,6 +12,7 @@ Different options for setting constraints (equalToSystemSpacingBelow, equalTo, c
 * LayoutMargins - Rectangular layout guide used to provide default margins for spacing as well as custom layout areas for extra space
 * ReadableContent - A dynamically calculated area that tries to preserve content for reading based on orientation and font size. Looks similar to LayoutMargins but the big difference happens when you add text and go into landscape mode. Most noticeable on iPad
 * You can make your own using UILayoutGuide()
+* Use instead of placeholder views as they are less expensive
 
 ## Intrinsic Content Size
 

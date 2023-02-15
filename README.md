@@ -78,6 +78,7 @@
 	* [Scrollview video explanation](https://www.youtube.com/watch?v=TYM65qxEQNs&ab_channel=SwiftArcade)
 * UICollectionView
 * **Autolayout**
+	* More detail about predefined layout guides and creating your own
 	* Constraints * Priorities
 	* Points vs Pixels
 	* Content Hugging Compression Resistance

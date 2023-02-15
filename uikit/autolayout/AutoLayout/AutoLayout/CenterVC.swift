@@ -21,16 +21,9 @@ class CenterVC: UIViewController {
         rectangle.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(rectangle)
 
-//        rectangle.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        rectangle.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-//        rectangle.widthAnchor.constraint(equalToConstant: 200).isActive = true
-//        rectangle.heightAnchor.constraint(equalToConstant: 100).isActive = true
-
-        NSLayoutConstraint.activate([
-            rectangle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            rectangle.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            rectangle.widthAnchor.constraint(equalToConstant: 200),
-            rectangle.heightAnchor.constraint(equalToConstant: 100)
-        ])
+        rectangle.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        rectangle.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        rectangle.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        rectangle.heightAnchor.constraint(equalToConstant: 100).isActive = true
     }
 }

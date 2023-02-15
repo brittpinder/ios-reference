@@ -22,17 +22,28 @@ class CornersVC: UIViewController {
         view.addSubview(yellow)
         view.addSubview(green)
 
-        blue.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        blue.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        blue.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        blue.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
 
-        red.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        red.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        red.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        red.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
 
-        yellow.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        yellow.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        yellow.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        yellow.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
 
-        green.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        green.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        green.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        green.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+
+//        NSLayoutConstraint.activate([
+//            blue.topAnchor.constraint(equalTo: view.topAnchor),
+//            blue.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            red.topAnchor.constraint(equalTo: view.topAnchor),
+//            red.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//            yellow.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+//            yellow.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            green.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+//            green.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+//        ])
     }
     
 
