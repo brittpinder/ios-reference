@@ -14,6 +14,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let centerVC = CenterVC()
     let cornersVC = CornersVC()
 
+    let equalToVC = EqualToVC()
+    let equalToConstantVC = EqualToConstantVC()
+    let equalToMultiplierVC = EqualToMultiplierVC()
+    let equalToMultiplierConstantVC = EqualToMultiplierConstantVC()
+
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -21,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
-        window?.rootViewController = cornersVC
+        window?.rootViewController = equalToMultiplierConstantVC
 
         return true
     }

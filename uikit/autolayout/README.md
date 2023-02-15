@@ -136,14 +136,76 @@ When defining constraints, there are a variety of options available depending on
 
 Constraint Signature | Width/Height | Top/Bottom/Leading/Trailing/CenterY/CenterX 
 ---|---|---
-[`equalTo:`](https://developer.apple.com/documentation/uikit/nslayoutanchor/1500946-constraint) | :heavy_check_mark: | :heavy_check_mark:
-[`equalTo: constant:`](https://developer.apple.com/documentation/uikit/nslayoutanchor/1500937-constraint) | :heavy_check_mark: | :heavy_check_mark:
-[`equalTo: multiplier:`](https://developer.apple.com/documentation/uikit/nslayoutdimension/1500951-constraint) | :heavy_check_mark: |
-[`equalTo: multiplier: constant:`](https://developer.apple.com/documentation/uikit/nslayoutdimension/1500934-constraint) | :heavy_check_mark: |
-[`equalToConstant:`](https://developer.apple.com/documentation/uikit/nslayoutdimension/1500941-constraint) | :heavy_check_mark: |
-[`equalToSystemSpacingBelow/After: multiplier:`](https://developer.apple.com/documentation/uikit/nslayoutxaxisanchor/2866112-constraint) |  | :heavy_check_mark:
+[`constraint(equalTo:)`](https://developer.apple.com/documentation/uikit/nslayoutanchor/1500946-constraint) | :heavy_check_mark: | :heavy_check_mark:
+[`constraint(equalTo: constant:)`](https://developer.apple.com/documentation/uikit/nslayoutanchor/1500937-constraint) | :heavy_check_mark: | :heavy_check_mark:
+[`constraint(equalTo: multiplier:)`](https://developer.apple.com/documentation/uikit/nslayoutdimension/1500951-constraint) | :heavy_check_mark: |
+[`constraint(equalTo: multiplier: constant:)`](https://developer.apple.com/documentation/uikit/nslayoutdimension/1500934-constraint) | :heavy_check_mark: |
+[`constraint(equalToConstant:)`](https://developer.apple.com/documentation/uikit/nslayoutdimension/1500941-constraint) | :heavy_check_mark: |
+[`constraint(equalToSystemSpacingBelow/After: multiplier:)`](https://developer.apple.com/documentation/uikit/nslayoutxaxisanchor/2866112-constraint) |  | :heavy_check_mark:
 
 > Each of the six constraint signatures above contains two variations, "greaterThanOrEqualTo" and "lessThanOrEqualTo", which were omitted for brevity
+
+### constraint(equalTo:)
+
+Returns a constraint that defines one item’s attribute as equal to another. Often used to pin the edges of views to the edges of other views. It can also be used to maintain uniform width and height between different views. Refer to the code snippets above for examples.
+
+### constraint(equalTo: constant:)
+
+Returns a constraint that defines one item’s attribute as equal to another item’s attribute plus a constant offset. It's often used to apply padding between views. In this example, all views are positioned 20 points from the edge of the screen. The blue and yellow views are positioned 20 points away from their neighbours and their dimensions are 40 points more than their neighbours. Notice that when working with the bottom and trailing constraints you need to provide negative values for the `constant`.
+
+```swift
+red.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
+red.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+
+blue.topAnchor.constraint(equalTo: red.bottomAnchor, constant: 20).isActive = true
+blue.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+blue.widthAnchor.constraint(equalTo: red.widthAnchor, constant: 40).isActive = true
+blue.heightAnchor.constraint(equalTo: red.heightAnchor, constant: 40).isActive = true
+
+green.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+green.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
+
+yellow.trailingAnchor.constraint(equalTo: green.leadingAnchor, constant: -20).isActive = true
+yellow.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
+yellow.widthAnchor.constraint(equalTo: green.widthAnchor, constant: 40).isActive = true
+yellow.heightAnchor.constraint(equalTo: green.heightAnchor, constant: 40).isActive = true
+```
+![](images/7.png)
+
+### constraint(equalTo: multiplier:)
+
+Returns a constraint that defines the anchor’s size attribute as equal to the specified anchor multiplied by the constant. In the below example, the purple view's width and height are exactly half of the parent view's width and height respectively.
+
+```swift
+purple.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+purple.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+purple.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5).isActive = true
+purple.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5).isActive = true
+```
+![](images/8.png)
+
+### constraint(equalTo: multiplier: constant:)
+
+Returns a constraint that defines the anchor’s size attribute as equal to the specified size attribute multiplied by a constant plus an offset. In the below example, the blue view's width is twice the red view's width, plus 10. It's height is 3 times the red view's height, plus 20.
+
+```swift
+red.bottomAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+red.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+
+blue.topAnchor.constraint(equalTo: red.bottomAnchor, constant: 8).isActive = true
+blue.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+blue.widthAnchor.constraint(equalTo: red.widthAnchor, multiplier: 2, constant: 10).isActive = true
+blue.heightAnchor.constraint(equalTo: red.heightAnchor, multiplier: 3, constant: 20).isActive = true
+```
+![](images/9.png)
+
+### constraint(equalToConstant:)
+
+Returns a constraint that defines a constant size for the anchor’s size attribute.
+
+### constraint(equalToSystemSpacingBelow/After: multiplier:)
+
+Returns a constraint that defines by how much the current anchor trails the specified anchor.
 
 ## Intrinsic Content Size
 
