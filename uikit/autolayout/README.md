@@ -100,7 +100,7 @@ green.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 
 ### Layout Guides
 
-[Layout Guides](https://developer.apple.com/documentation/uikit/uilayoutguide) are rectangular regions defined in their owning view's coordinate system that can interact with Auto Layout. There are some predefined layout guides or you can create your own. The most commonly used one is the "Safe Area Layout Guide" which defines the region of the screen where views won't be blocked or hidden by navigation bars, tab bars, tool bars etc. We can now update the previous example so that the squares are placed within the safe area of the screen:
+[Layout Guides](https://developer.apple.com/documentation/uikit/uilayoutguide) are rectangular regions defined in their owning view's coordinate system that can interact with Auto Layout. You can use predefined layout guides or you can create your own. The most commonly used one is the "Safe Area Layout Guide" which defines the region of the screen where views won't be blocked or hidden by navigation bars, tab bars, tool bars etc. Using `view.safeAreaLayoutGuide`, we can now update the previous example so that the squares are placed within the safe area of the screen:
 
 ```swift
 blue.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
@@ -124,7 +124,24 @@ Other predefined layout guides include:
 * `readableContentGuide`
 * `keyboardLayoutGuide`
 
-All of the different constraint relationship options
+## How Constraints Work
+
+Every constraint represents a linear equation (y = mx + b). We define the relationship (=, <=, >=), the multiplier (m) and the constant (b) and Auto Layout solves the equation, finding values for y and x (the view attributes that we want to constrain).
+
+![](images/3.png)
+
+> This constraint states that the red view’s leading edge must be 8.0 points after the blue view’s trailing edge.
+
+When defining constraints, there are a variety of options available depending on the type of attribute you are applying the constraint to.
+
+Constraint Signature | Top/Bottom/Leading/Trailing/CenterY/CenterX | Width/Height
+---|---|---
+`equalTo:` | :heavy_check_mark: | :heavy_check_mark:
+`equalToConstant:` |  | :heavy_check_mark:
+`equalTo: constant:` | :heavy_check_mark: | :heavy_check_mark:
+`equalTo: multiplier:` |  | :heavy_check_mark:
+`equalTo: multiplier: constant:` |  | :heavy_check_mark:
+`equalToSystemSpacingBelow/After: multiplier:` | :heavy_check_mark: | 
 
 ## Intrinsic Content Size
 
@@ -134,7 +151,7 @@ Each view in your hierarchy requires a position and a size. Some views will have
 
 Each constraint represents a linear equation, so your view hierarchy is simply a series of linear equations. Your goal is to declare a series of equations that have one and only one possible solution. Ambiguous constraints have more than one possible solution and unsatisfiable constraints don't have a valid solution.
 
-![](images/3.png)
+
 
 All constraints have a priority between 1 and 1000. Constraints with a priority of 1000 are required. All other constraints are optional.
 

@@ -2,9 +2,8 @@
 
 ## Anchors
 
-
-
 Different options (relationships) for setting constraints (equalToSystemSpacingBelow, equalTo, constant, mutliplier etc.)
+
 
 ## UILayoutGuides
 
