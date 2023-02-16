@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let intrinsicVC = IntrinsicVC()
     let intrinsicOverrideVC = IntrinsicOverrideVC()
     let contentHuggingVC = ContentHuggingVC()
+    let compressionResistanceVC = CompressionResistanceVC()
 
     var window: UIWindow?
 
@@ -31,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
-        window?.rootViewController = contentHuggingVC
+        window?.rootViewController = compressionResistanceVC
 
         return true
     }

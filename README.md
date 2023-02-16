@@ -7,7 +7,7 @@
 
 ## UIKit
 * [Creating a Project Without Storyboards](https://github.com/brittpinder/ios-reference/tree/main/uikit/no-storyboards)
-* [Auto Layout - wip](https://github.com/brittpinder/ios-reference/tree/main/uikit/autolayout)
+* [Auto Layout](https://github.com/brittpinder/ios-reference/tree/main/uikit/autolayout)
 * [UITableView - wip](https://github.com/brittpinder/ios-reference/tree/main/uikit/uitableview)
 
 
@@ -79,15 +79,12 @@
 * UICollectionView
 * **Autolayout**
 	* More detail about predefined layout guides and creating your own
-	* Constraints * Priorities
 	* Points vs Pixels
-	* Content Hugging Compression Resistance
 	* [Interesting way of pinning to view](https://www.youtube.com/watch?v=2yVzeFIMtyc&ab_channel=iOSAcademy)
 	* willLayoutSubviews()
 	* adaptive layouts
 	* sizeToFit()
 	* sizeThatFits()
-	* intrinsicContentSize
 * **StackViews**
 	* Alignment and Distribution options
 * [Container View Controllers](https://developer.apple.com/library/archive/featuredarticles/ViewControllerPGforiPhoneOS/ImplementingaContainerViewController.html#//apple_ref/doc/uid/TP40007457-CH11-SW1)

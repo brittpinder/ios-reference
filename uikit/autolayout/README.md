@@ -124,7 +124,7 @@ Other predefined layout guides include:
 * `readableContentGuide`
 * `keyboardLayoutGuide`
 
-## How Constraints Work
+### Constraints are Linear Equations
 
 Every constraint represents a linear equation (y = mx + b). We define the relationship (=, <=, >=), the multiplier (m) and the constant (b) and Auto Layout solves the equation, finding values for y and x (the view attributes that we want to constrain).
 
@@ -145,11 +145,11 @@ Constraint Signature | Width/Height | Top/Bottom/Leading/Trailing/CenterY/Center
 
 > Each of the six constraint signatures above contains two variations, "greaterThanOrEqualTo" and "lessThanOrEqualTo", which were omitted for brevity
 
-### constraint(equalTo:)
+#### constraint(equalTo:)
 
 Returns a constraint that defines one item’s attribute as equal to another. Often used to pin the edges of views to the edges of other views. It can also be used to maintain uniform width and height between different views. Refer to the code snippets above for examples.
 
-### constraint(equalTo: constant:)
+#### constraint(equalTo: constant:)
 
 Returns a constraint that defines one item’s attribute as equal to another item’s attribute plus a constant offset. It's often used to apply padding between views. In this example, all views are positioned 20 points from the edge of the screen. The blue and yellow views are positioned 20 points away from their neighbours and their dimensions are 40 points more than their neighbours. Notice that when working with the bottom and trailing constraints you need to provide negative values for the `constant`.
 
@@ -172,7 +172,7 @@ yellow.heightAnchor.constraint(equalTo: green.heightAnchor, constant: 40).isActi
 ```
 ![](images/7.png)
 
-### constraint(equalTo: multiplier:)
+#### constraint(equalTo: multiplier:)
 
 Returns a constraint that defines the anchor’s size attribute as equal to the specified anchor multiplied by the constant. In the below example, the purple view's width and height are exactly half of the parent view's width and height respectively.
 
@@ -184,7 +184,7 @@ purple.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5).isAc
 ```
 ![](images/8.png)
 
-### constraint(equalTo: multiplier: constant:)
+#### constraint(equalTo: multiplier: constant:)
 
 Returns a constraint that defines the anchor’s size attribute as equal to the specified size attribute multiplied by a constant plus an offset. In the below example, the blue view's width is twice the red view's width, plus 10. It's height is 3 times the red view's height, plus 20.
 
@@ -199,11 +199,11 @@ blue.heightAnchor.constraint(equalTo: red.heightAnchor, multiplier: 3, constant:
 ```
 ![](images/9.png)
 
-### constraint(equalToConstant:)
+#### constraint(equalToConstant:)
 
 Returns a constraint that defines a constant size for the anchor’s size attribute. Refer to the example in the [Layout Anchors Section](#layout-anchors)
 
-### constraint(equalToSystemSpacingBelow/After: multiplier:)
+#### constraint(equalToSystemSpacingBelow/After: multiplier:)
 
 Returns a constraint that defines by how much the current anchor trails the specified anchor. In this case, `multiplier` is a multiple of the system spacing which by default is 8 points. In the below example, the orange view is pinned 16 points (2 * 8) from the edges of the safe area. Note that when dealing with the trailing and bottom anchor you need to reverse the order of the attributes.
 
@@ -214,7 +214,6 @@ view.safeAreaLayoutGuide.trailingAnchor.constraint(equalToSystemSpacingAfter: or
 view.safeAreaLayoutGuide.bottomAnchor.constraint(equalToSystemSpacingBelow: orange.bottomAnchor, multiplier: 2).isActive = true
 ```
 ![](images/10.png)
-
 
 ## Intrinsic Content Size
 
@@ -237,7 +236,7 @@ print(label.intrinsicContentSize) // (88.0, 20.33)
 ```
 ![](images/11.png)
 
-`UIView` doesn't have a default intrinsic content size so unless you are sizing a view solely through constraints, you will need to provide an intrinsic content size. You can do this by overriding the `intrinsicContentSize` property:
+`UIView` doesn't have a default intrinsic content size so unless you are sizing a view solely through constraints, you will need to provide an intrinsic content size. You can do this by overriding the [`intrinsicContentSize`](https://developer.apple.com/documentation/uikit/uiview/1622600-intrinsiccontentsize) property:
 
 ```swift
 class CustomView: UIView {
@@ -259,7 +258,7 @@ customView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
 
 Whenever possible, you should provided an intrinsic content size for your views as it lets your layout dynamically adapt to views' content changes. It also reduces the number of constraints you need to create a nonambiguous, nonconflicting layout.
 
-## Content Hugging and Compression Resistance (CHCR)
+### Content Hugging and Compression Resistance (CHCR)
 
 Auto Layout represents a view's intrinsic content size using a pair of constraints for each dimension (vertical and horizontal). These constraints are called *Content Hugging* and *Compression Resistance*.
 
@@ -271,14 +270,16 @@ Auto Layout represents a view's intrinsic content size using a pair of constrain
 Under the hood, content hugging and compression resistance are defined using the following inequalities:
 
 ```swift
-// Compression Resistance
-View.height >= 0.0 * NotAnAttribute + IntrinsicHeight
-View.width >= 0.0 * NotAnAttribute + IntrinsicWidth
-
 // Content Hugging
 View.height <= 0.0 * NotAnAttribute + IntrinsicHeight
 View.width <= 0.0 * NotAnAttribute + IntrinsicWidth
+
+// Compression Resistance
+View.height >= 0.0 * NotAnAttribute + IntrinsicHeight
+View.width >= 0.0 * NotAnAttribute + IntrinsicWidth
 ```
+
+Content Hugging is important when you have more room than you need and Auto Layout needs to decide which views to stretch whereas Compression Resistance is important when you don't have enough space and Auto Layout needs to decide which views to shrink.
 
 ### Priorities
 
@@ -295,6 +296,10 @@ You can set priorities using raw values or using some predefined priorities:
 * `.defaultLow` = 250
 
 By default, views have `.defaultLow` priority for their content hugging and `.defaultHigh` priority for their compression resistance making it easier for them to stretch rather than shrink. Anchor constraints have a priority of `.required` by default. Therefore anchors will always override intrinsic content size.
+
+#### Content Hugging Example
+
+When Auto Layout has determined there is more than enough space to accommodate all your views at their natural size, it has to make a decision about which view to stretch to fill the extra space. The lower you set a view's content hugging priority, the more likely it will be stretched.
 
 In the below example we have two labels. The first label is pinned to the top, leading and trailing edges of its parent view and the second label is pinned to the bottom, leading and trailing edges of its parent view. The bottom of the first label is pinned to the top of the second label. The height of each label is ambiguous so Auto Layout will attempt to resolve the ambiguity by looking at the priorities. But as you can see in the print statements, each label has the same priorities for content hugging and compression resistance. In this situation, Auto Layout simply chooses one label to stretch (`label2`).
 
@@ -326,6 +331,33 @@ label1.setContentHuggingPriority(UILayoutPriority(rawValue: 249), for: .vertical
 ```
 ![](images/15.png)
 
+#### Compression Resistance Example
+
+When Auto Layout has determined there isn't enough space to accommodate all your views at their natural size, it has to make a decision about which view to squash to make space for the others. The lower you set a view's compression resistance priority, the more likely it is to be squashed.
+
+In the below example we have have two labels pinned to the top, leading and trailing edges of their parent view. The first label's trailing edge is pinned to the second label's leading edge. Because of the length of the text in each label, the view simply cannot accomodate both of their intrinsic widths, so Auto Layout needs to decide which one to squash. In this case it chooses to squash the first label:
+
+```swift
+NSLayoutConstraint.activate([
+    label1.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+    label1.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+    label1.trailingAnchor.constraint(equalTo: label2.leadingAnchor),
+
+    label2.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+    label2.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+])
+```
+![](images/16.png)
+
+If we would prefer that the second label gets squashed, we would need to change the compression resistance priority on either label so that the second label has a lower compression resistance priority than the first label. Either of these would do the trick:
+
+```swift
+label1.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 751), for: .horizontal)
+label2.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 749), for: .horizontal)
+```
+![](images/17.png)
+
 ## Links
 * [Auto Layout Documentation](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/)
 * [Anatomy of a Constraint](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/AnatomyofaConstraint.html)
+* [Views with Intrinsic Content Size](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/ViewswithIntrinsicContentSize.html)

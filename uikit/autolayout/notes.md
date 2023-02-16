@@ -45,21 +45,14 @@
 	* `stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 40, leading: 16, bottom: 40, trailing: -16)`
 * Spacer Views trick
 
-When making custom views...
+When making custom views... 
 
 * Give them an intrinsic content size
 * Lay them out flush so they go right to the edges of yoru UIView container
 
 ## Links
 
-* [AutoLayout](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/)
-* [Anatomy of a Constraint](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/AnatomyofaConstraint.html#//apple_ref/doc/uid/TP40010853-CH9-SW1)
-* [LayoutGuides](https://developer.apple.com/documentation/uikit/uilayoutguide)
-* [Views with Intrinsic Content Size](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/ViewswithIntrinsicContentSize.html)
-* [CHCR](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/AnatomyofaConstraint.html#//apple_ref/doc/uid/TP40010853-CH9-SW21)
-* [IntrinsicContentSize](https://developer.apple.com/documentation/uikit/uiview/1622600-intrinsiccontentsize)
 * [InvalidateIntrinsicContentSize](https://developer.apple.com/documentation/uikit/uiview/1622457-invalidateintrinsiccontentsize)
-* [UILayoutPriority](https://developer.apple.com/documentation/uikit/uilayoutpriority)
 * [UIStackView](https://developer.apple.com/documentation/uikit/uistackview)
 * [UIScrollView](https://developer.apple.com/documentation/uikit/uiscrollview)
 * [AutoLayout Cookbook](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/LayoutUsingStackViews.html#//apple_ref/doc/uid/TP40010853-CH11-SW1)
