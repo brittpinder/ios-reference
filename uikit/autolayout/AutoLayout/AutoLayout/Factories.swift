@@ -23,3 +23,13 @@ func makeView(color: UIColor, width: CGFloat, height: CGFloat) -> UIView {
     view.heightAnchor.constraint(equalToConstant: height).isActive = true
     return view
 }
+
+func makeLabel(withText text: String) -> UILabel {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.text = text
+    label.numberOfLines = 0
+    label.font = .systemFont(ofSize: 50)
+    label.textAlignment = .center
+    return label
+}

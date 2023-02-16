@@ -20,6 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let equalToMultiplierConstantVC = EqualToMultiplierConstantVC()
     let equalToSystemSpacingAfterVC = EqualToSystemSpacingAfterVC()
 
+    let intrinsicVC = IntrinsicVC()
+    let intrinsicOverrideVC = IntrinsicOverrideVC()
+    let contentHuggingVC = ContentHuggingVC()
+
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -27,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
-        window?.rootViewController = equalToSystemSpacingAfterVC
+        window?.rootViewController = contentHuggingVC
 
         return true
     }

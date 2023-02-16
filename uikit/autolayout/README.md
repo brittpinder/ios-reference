@@ -218,19 +218,113 @@ view.safeAreaLayoutGuide.bottomAnchor.constraint(equalToSystemSpacingBelow: oran
 
 ## Intrinsic Content Size
 
-Each view in your hierarchy requires a position and a size. Some views will have an intrinsic size (labels, textfields, images) so you don't need to define it explicitly. You will still need to provide a position though.
+Each view in your hierarchy requires a position and a size. Some views will have a natural (intrinsic) size based on their content (labels, textfields, images etc.) so you don't need to define their size explicitly. You will still need to provide a position though.
 
-## Priorities
+In the below example, the label's intrinsic content size is calculated based on its text so we only need to provide it with a position.
 
-Each constraint represents a linear equation, so your view hierarchy is simply a series of linear equations. Your goal is to declare a series of equations that have one and only one possible solution. Ambiguous constraints have more than one possible solution and unsatisfiable constraints don't have a valid solution.
+```swift
+let label = UILabel()
+label.text = "Hello World"
+label.backgroundColor = .systemYellow
+label.translatesAutoresizingMaskIntoConstraints = false
 
+view.addSubview(label)
 
+label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 
-All constraints have a priority between 1 and 1000. Constraints with a priority of 1000 are required. All other constraints are optional.
+print(label.intrinsicContentSize) // (88.0, 20.33)
+```
+![](images/11.png)
 
-When calculating solutions, Auto Layout attempts to satisfy all the constraints in priority order from highest to lowest. If it cannot satisfy an optional constraint, that constraint is skipped and it continues on to the next constraint.
+`UIView` doesn't have a default intrinsic content size so unless you are sizing a view solely through constraints, you will need to provide an intrinsic content size. You can do this by overriding the `intrinsicContentSize` property:
 
-Even if an optional constraint cannot be satisfied, it can still influence the layout. If there is any ambiguity in the layout after skipping the constraint, the system selects the solution that comes closest to the constraint. In this way, unsatisfied optional constraints act as a force pulling views towards them.
+```swift
+class CustomView: UIView {
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: 300, height: 200)
+    }
+}
+
+let customView = CustomView()
+customView.backgroundColor = .systemIndigo
+customView.translatesAutoresizingMaskIntoConstraints = false
+
+view.addSubview(customView)
+
+customView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+customView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+```
+![](images/12.png)
+
+Whenever possible, you should provided an intrinsic content size for your views as it lets your layout dynamically adapt to views' content changes. It also reduces the number of constraints you need to create a nonambiguous, nonconflicting layout.
+
+## Content Hugging and Compression Resistance (CHCR)
+
+Auto Layout represents a view's intrinsic content size using a pair of constraints for each dimension (vertical and horizontal). These constraints are called *Content Hugging* and *Compression Resistance*.
+
+* **Content Hugging** pulls the view inward so that it fits snugly around the content. It controls how much a view should or should not stretch.
+* **Compression Resistance** pushes the view outward so that it does not clip the content. It controls how much a view should or should not shrink.
+
+![](images/13.png)
+
+Under the hood, content hugging and compression resistance are defined using the following inequalities:
+
+```swift
+// Compression Resistance
+View.height >= 0.0 * NotAnAttribute + IntrinsicHeight
+View.width >= 0.0 * NotAnAttribute + IntrinsicWidth
+
+// Content Hugging
+View.height <= 0.0 * NotAnAttribute + IntrinsicHeight
+View.width <= 0.0 * NotAnAttribute + IntrinsicWidth
+```
+
+### Priorities
+
+Since every constraint represents a linear equation, your view hierarchy is simply a series of linear equations. Your goal is to declare a series of equations that have one and only one possible solution. Ambiguous constraints have more than one possible solution and unsatisfiable constraints don't have a valid solution.
+
+To help resolve ambiguity, every constraint has a priority ([`UILayoutPriority`](https://developer.apple.com/documentation/uikit/uilayoutpriority)) between 1 and 1000 where a priority of 1000 is required and all others are optional. When calculating solutions, Auto Layout will attempt to satisfy all the constraints in priority order from highest to lowest. If it cannot satisfy an optional constraint, that constraint is skipped and it continues on to the next constraint.
+
+> Note: Even if an optional constraint cannot be satisfied, it can still influence the layout. If there is any ambiguity in the layout after skipping the constraint, the system selects the solution that comes closest to the constraint. In this way, unsatisfied optional constraints act as a force pulling views towards them.
+
+You can set priorities using raw values or using some predefined priorities:
+
+* `.required` = 1000
+* `.defaultHigh` = 750
+* `.defaultLow` = 250
+
+By default, views have `.defaultLow` priority for their content hugging and `.defaultHigh` priority for their compression resistance making it easier for them to stretch rather than shrink. Anchor constraints have a priority of `.required` by default. Therefore anchors will always override intrinsic content size.
+
+In the below example we have two labels. The first label is pinned to the top, leading and trailing edges of its parent view and the second label is pinned to the bottom, leading and trailing edges of its parent view. The bottom of the first label is pinned to the top of the second label. The height of each label is ambiguous so Auto Layout will attempt to resolve the ambiguity by looking at the priorities. But as you can see in the print statements, each label has the same priorities for content hugging and compression resistance. In this situation, Auto Layout simply chooses one label to stretch (`label2`).
+
+```swift
+NSLayoutConstraint.activate([
+    label1.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+    label1.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+    label1.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+    label1.bottomAnchor.constraint(equalTo: label2.topAnchor),
+
+    label2.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+    label2.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+    label2.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+])
+
+print(label1.contentHuggingPriority(for: .vertical)) // 250
+print(label2.contentHuggingPriority(for: .vertical)) // 250
+
+print(label1.contentCompressionResistancePriority(for: .vertical)) // 750
+print(label2.contentCompressionResistancePriority(for: .vertical)) // 750
+```
+![](images/14.png)
+
+However, if we would prefer for the first label to stretch and the second label to "hug" itself, we could change the content hugging priority on either of the labels so that the second label has a higher content hugging priority than the first label. Either of these lines would do the trick:
+
+```swift
+label2.setContentHuggingPriority(UILayoutPriority(rawValue: 251), for: .vertical)
+label1.setContentHuggingPriority(UILayoutPriority(rawValue: 249), for: .vertical)
+```
+![](images/15.png)
 
 ## Links
 * [Auto Layout Documentation](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/)

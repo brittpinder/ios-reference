@@ -1,9 +1,5 @@
 # AutoLayout
 
-## Anchors
-
-Different options (relationships) for setting constraints (equalToSystemSpacingBelow, equalTo, constant, mutliplier etc.)
-
 
 ## UILayoutGuides
 
@@ -13,41 +9,6 @@ Different options (relationships) for setting constraints (equalToSystemSpacingB
 * You can make your own using UILayoutGuide()
 * Use instead of placeholder views as they are less expensive
 
-## Intrinsic Content Size
-
-* Every component has one
-* The natural size that a control wants to be
-* Allows controls to lay themselves out without requiring full constraints
-* Some controls such as labels and buttons can calculate their intrinsic content size based on their content
-* UIView has no intrinsic content size
-* Can set programmatically:
-
-```swift
-override var intrinsicContentSize: CGSize {
-	return CGSize(width: 50, height: 20)
-}
-```
-
-Content Hugging and Compression Resistance (CHCR)
-
-* Optional constraints that apply to intrinsic content size
-* What gives our components the ability to flex
-* Content Hugging controls how a control should grow. ex: width <= 50
-* Compression Resistance controls how a control should shrink. ex: width >= 50
-* Priorities are set on these constraints to control how much the component should shrink/grow
-* `UILayoutPriority`
-	* `.required = 1000`
-	* `.defaultHigh = 750`
-	* `.defaultLow = 250`
-	* Anchor priorities are set to `.required`
-	* Intrinsic Size is optional (`.defaultHigh` or `.defaultLow`)
-	* Therefore Anchors will always override the intrinsic content size
-	* By changing the priorities we can resolve ambiguity
-* `view.setContentHuggingPriority(.defaultHigh, for: .horizontal)`
-* By default iOS controls are set to stretch:
-	* Content Hugging is set to `.defaultLow` (allowing it to stretch)
-	* Compression Resistance is set to `.defaultHigh` (dislikes being compressed)
-* Working with ImageViews
 
 ## StackView
 
