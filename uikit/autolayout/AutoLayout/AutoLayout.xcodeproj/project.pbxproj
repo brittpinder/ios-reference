@@ -18,6 +18,7 @@
 		E1DE315E299D53C4003B26FB /* Factories.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DE315D299D53C4003B26FB /* Factories.swift */; };
 		E1DE3160299D599D003B26FB /* EqualToConstantVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DE315F299D599D003B26FB /* EqualToConstantVC.swift */; };
 		E1DE3164299D6109003B26FB /* EqualToMultiplierConstantVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DE3163299D6109003B26FB /* EqualToMultiplierConstantVC.swift */; };
+		E1DE3166299E688F003B26FB /* EqualToSystemSpacingAfterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DE3165299E688F003B26FB /* EqualToSystemSpacingAfterVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		E1DE315D299D53C4003B26FB /* Factories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factories.swift; sourceTree = "<group>"; };
 		E1DE315F299D599D003B26FB /* EqualToConstantVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualToConstantVC.swift; sourceTree = "<group>"; };
 		E1DE3163299D6109003B26FB /* EqualToMultiplierConstantVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualToMultiplierConstantVC.swift; sourceTree = "<group>"; };
+		E1DE3165299E688F003B26FB /* EqualToSystemSpacingAfterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualToSystemSpacingAfterVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 				E1DE315F299D599D003B26FB /* EqualToConstantVC.swift */,
 				E1DE3159299D39E3003B26FB /* EqualToMultiplierVC.swift */,
 				E1DE3163299D6109003B26FB /* EqualToMultiplierConstantVC.swift */,
+				E1DE3165299E688F003B26FB /* EqualToSystemSpacingAfterVC.swift */,
 				E1DE314A299D1518003B26FB /* Assets.xcassets */,
 				E1DE314C299D1518003B26FB /* LaunchScreen.storyboard */,
 				E1DE314F299D1518003B26FB /* Info.plist */,
@@ -156,6 +159,7 @@
 				E1DE315E299D53C4003B26FB /* Factories.swift in Sources */,
 				E1DE3146299D1514003B26FB /* FrameVC.swift in Sources */,
 				E1DE315A299D39E3003B26FB /* EqualToMultiplierVC.swift in Sources */,
+				E1DE3166299E688F003B26FB /* EqualToSystemSpacingAfterVC.swift in Sources */,
 				E1DE315C299D508D003B26FB /* EqualToVC.swift in Sources */,
 				E1DE3156299D2642003B26FB /* CenterVC.swift in Sources */,
 				E1DE3142299D1514003B26FB /* AppDelegate.swift in Sources */,

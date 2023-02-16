@@ -14,7 +14,7 @@ func makeView(withColor color: UIColor) -> UIView {
     return view
 }
 
-func makeView(color color: UIColor, width: CGFloat, height: CGFloat) -> UIView {
+func makeView(color: UIColor, width: CGFloat, height: CGFloat) -> UIView {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.backgroundColor = color

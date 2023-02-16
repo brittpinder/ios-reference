@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let equalToConstantVC = EqualToConstantVC()
     let equalToMultiplierVC = EqualToMultiplierVC()
     let equalToMultiplierConstantVC = EqualToMultiplierConstantVC()
+    let equalToSystemSpacingAfterVC = EqualToSystemSpacingAfterVC()
 
     var window: UIWindow?
 
@@ -26,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
-        window?.rootViewController = equalToMultiplierConstantVC
+        window?.rootViewController = equalToSystemSpacingAfterVC
 
         return true
     }

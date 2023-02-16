@@ -201,11 +201,20 @@ blue.heightAnchor.constraint(equalTo: red.heightAnchor, multiplier: 3, constant:
 
 ### constraint(equalToConstant:)
 
-Returns a constraint that defines a constant size for the anchor’s size attribute.
+Returns a constraint that defines a constant size for the anchor’s size attribute. Refer to the example in the [Layout Anchors Section](#layout-anchors)
 
 ### constraint(equalToSystemSpacingBelow/After: multiplier:)
 
-Returns a constraint that defines by how much the current anchor trails the specified anchor.
+Returns a constraint that defines by how much the current anchor trails the specified anchor. In this case, `multiplier` is a multiple of the system spacing which by default is 8 points. In the below example, the orange view is pinned 16 points (2 * 8) from the edges of the safe area. Note that when dealing with the trailing and bottom anchor you need to reverse the order of the attributes.
+
+```swift
+orange.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 2).isActive = true
+orange.leadingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.leadingAnchor, multiplier: 2).isActive = true
+view.safeAreaLayoutGuide.trailingAnchor.constraint(equalToSystemSpacingAfter: orange.trailingAnchor, multiplier: 2).isActive = true
+view.safeAreaLayoutGuide.bottomAnchor.constraint(equalToSystemSpacingBelow: orange.bottomAnchor, multiplier: 2).isActive = true
+```
+![](images/10.png)
+
 
 ## Intrinsic Content Size
 
