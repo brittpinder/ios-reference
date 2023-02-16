@@ -36,7 +36,7 @@
 	* Leading (vertical stackview)
 	* Trailing (vertical stackview)
 	* Center
-	* Fill
+	* Fill (default)
 * A stackview is a container. It has no intrinsic content size of its own. It derives its size from its contents
 * Everything inside needs to be intrinsically content sized
 * How you pin a stackview affects the internal custom views' behaviour
@@ -49,6 +49,19 @@ When making custom views...
 
 * Give them an intrinsic content size
 * Lay them out flush so they go right to the edges of yoru UIView container
+
+## Adaptive Layouts
+
+3 Ways to Tweak Constraints
+
+* Change the constraint values
+* Enable/disable constraints
+* Toggle visibility of views
+
+## Orientation Changes
+
+* `registerForOrientationChanges()` --> Old school way
+* `UITraitCollection` --> New way
 
 ## Links
 

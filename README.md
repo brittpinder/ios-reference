@@ -8,6 +8,7 @@
 ## UIKit
 * [Creating a Project Without Storyboards](https://github.com/brittpinder/ios-reference/tree/main/uikit/no-storyboards)
 * [Auto Layout](https://github.com/brittpinder/ios-reference/tree/main/uikit/autolayout)
+* [UIStackView - wip](https://github.com/brittpinder/ios-reference/tree/main/uikit/uistackview)
 * [UITableView - wip](https://github.com/brittpinder/ios-reference/tree/main/uikit/uitableview)
 
 
@@ -82,11 +83,10 @@
 	* Points vs Pixels
 	* [Interesting way of pinning to view](https://www.youtube.com/watch?v=2yVzeFIMtyc&ab_channel=iOSAcademy)
 	* willLayoutSubviews()
-	* adaptive layouts
+	* adaptive layouts (changing orientation)
+		* `UITraitCollection`
 	* sizeToFit()
 	* sizeThatFits()
-* **StackViews**
-	* Alignment and Distribution options
 * [Container View Controllers](https://developer.apple.com/library/archive/featuredarticles/ViewControllerPGforiPhoneOS/ImplementingaContainerViewController.html#//apple_ref/doc/uid/TP40007457-CH11-SW1)
 	* UINavigationController
 		* Stack: Push/Pop vs Modal: Present/Dismiss 
