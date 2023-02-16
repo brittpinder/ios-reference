@@ -1,6 +1,6 @@
 # UIStackView
 
- | Fill | Leading | Center | Trailing 
+Distribution ↓ / Alignment → | Fill | Leading | Center | Trailing
 ---|---|---|---|---
 **Fill** | ![](images/fill_fill.png) | ![](images/leading_fill.png) | ![](images/center_fill.png) | ![](images/trailing_fill.png)
 **Fill Equally** | ![](images/fill_fillEqually.png) | ![](images/leading_fillEqually.png) | ![](images/center_fillEqually.png) | ![](images/trailing_fillEqually.png)
