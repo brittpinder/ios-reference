@@ -14,22 +14,6 @@
 
 * Allow for fewer constraints
 * `stackView.addArrangedSubView()`
-* Distribution
-	* Fill
-		* Fills all available space
-		* Default setting
-		* Uses intrinsic content size (CHCR)
-		* If CHCR the same it will complain
-	* Fill Equally
-		* Makes all controls the same size
-		* Only distribution that does not use intrinsic content size
-		* It will break the optional intrinsic content size of your components in order to fill equally
-	* Fill Proportionally
-		* Maintains proportions as layout grows and shrinks
-	* Equal Spacing
-		* Maintains equal space between each control
-	* Equal Centering
-		* Spaces equally between center of controls
 * Alignment
 	* Top (horizontal stackview)
 	* Bottom (horizontal stackview)
