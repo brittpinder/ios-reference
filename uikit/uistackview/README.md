@@ -62,13 +62,14 @@ NSLayoutConstraint.activate([
 ])
 ```
 
-Distribution ↓ / Alignment → | Alignment: Fill | Alignment: Leading | Alignment: Center | Alignment: Trailing | Notes
+Distribution ↓ / Alignment → | <div style="width:140">Fill</div> | <div style="width:140">Leading</div> | <div style="width:140">Center</div> | <div style="width:140">Trailing</div> | Notes about Distribution
 ---|---|---|---|---|---
 **Fill** | ![](images/size/fill_fill.png) | ![](images/size/leading_fill.png) | ![](images/size/center_fill.png) | ![](images/size/trailing_fill.png) | The stack view overrides the intrinsic height of the red view and stretches it to fill the space. Changing the content hugging priority of the inner views would allow us to control which inner view gets stretched
 **Fill Equally** | ![](images/size/fill_fillEqually.png) | ![](images/size/leading_fillEqually.png) | ![](images/size/center_fillEqually.png) | ![](images/size/trailing_fillEqually.png) | The stack view overrides the intrinsic height of all the inner views and gives them equal height to fill the space
 **Fill Proportionally** | ![](images/size/fill_fillProportionally.png) | ![](images/size/leading_fillProportionally.png) | ![](images/size/center_fillProportionally.png) | ![](images/size/trailing_fillProportionally.png) | Each inner view is stretched to fill the space, but they maintain their relative proportions
 **Equal Spacing** | ![](images/size/fill_equalSpacing.png) | ![](images/size/leading_equalSpacing.png) | ![](images/size/center_equalSpacing.png) | ![](images/size/trailing_equalSpacing.png) | The intrinsic height of each inner view is respected. They are positioned so that they touch the top and bottom of the stack view, with equal spacing in between.
 **Equal Centering** | ![](images/size/fill_equalCentering.png) | ![](images/size/leading_equalCentering.png) | ![](images/size/center_equalCentering.png) | ![](images/size/trailing_equalCentering.png) | The intrinsic height of each inner view is respected. They are positioned so that they touch the top and bottom of the stack view, but they are spaced so that the center Y of each view is equal distance apart.
+**Notes about Alignment** | The intrinsic width of each inner view is stretched to fill the width of the stack view | The intrinsic width of each inner view is maintained. All inner views are aligned along the leading edge of the stack view. | The intrinsic width of each inner view is maintained. All inner views are aligned along the center X of the stack view. | The intrinsic width of each inner view is maintained. All inner views are aligned along the trailing edge of the stack view. |
 
 <br/>
 
