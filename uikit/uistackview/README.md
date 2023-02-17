@@ -62,7 +62,7 @@ NSLayoutConstraint.activate([
 ])
 ```
 
-Distribution ↓ / Alignment → | <div style="width:140">Fill</div> | <div style="width:140">Leading</div> | <div style="width:140">Center</div> | <div style="width:140">Trailing</div> | Notes about Distribution
+Distribution ↓ / Alignment → | <div style="width:140px">Fill</div> | <div style="width:140px">Leading</div> | <div style="width:140px">Center</div> | <div style="width:140px">Trailing</div> | Notes about Distribution
 ---|---|---|---|---|---
 **Fill** | ![](images/size/fill_fill.png) | ![](images/size/leading_fill.png) | ![](images/size/center_fill.png) | ![](images/size/trailing_fill.png) | The stack view overrides the intrinsic height of the red view and stretches it to fill the space. Changing the content hugging priority of the inner views would allow us to control which inner view gets stretched
 **Fill Equally** | ![](images/size/fill_fillEqually.png) | ![](images/size/leading_fillEqually.png) | ![](images/size/center_fillEqually.png) | ![](images/size/trailing_fillEqually.png) | The stack view overrides the intrinsic height of all the inner views and gives them equal height to fill the space
