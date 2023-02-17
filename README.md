@@ -30,8 +30,6 @@
 * Ranges
 * [Bool.toggle](https://www.hackingwithswift.com/example-code/language/how-to-toggle-a-boolean-value)
 * Argument Labels
-* **inout**
-	* Is it possible to pass parameter as const reference?
 * Closures
 * Containers
 	* Arrays
@@ -42,7 +40,8 @@
 	* Wrappers
 	* Global vs Local
 	* Type Properties
-* [In-out parameters](https://docs.swift.org/swift-book/ReferenceManual/Declarations.html#ID545)
+* [**In-out parameters**](https://docs.swift.org/swift-book/ReferenceManual/Declarations.html)
+	* Is it possible to pass parameter as const reference?
 * **Access Levels**
 * Memory Safety
 * Unknown keywords

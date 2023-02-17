@@ -15,6 +15,8 @@ Delete the SceneDelegate and the Main.Storyboard files:
 
 ![](images/0.png)
 
+> Note: There is an alternative option that keeps the SceneDelegate: [Tutorial](https://www.youtube.com/watch?v=Htn4h51BQsk&ab_channel=SeanAllen)
+
 ### 2. Update info.plist
 
 Click on the Info.plist file and delete the "Application Scene Manifest":
