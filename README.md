@@ -89,7 +89,7 @@
 * [Container View Controllers](https://developer.apple.com/library/archive/featuredarticles/ViewControllerPGforiPhoneOS/ImplementingaContainerViewController.html#//apple_ref/doc/uid/TP40007457-CH11-SW1)
 	* UINavigationController
 		* Stack: Push/Pop vs Modal: Present/Dismiss 
-	* UITabBarController
+	* **UITabBarController**
 	* UIPageViewController
 	* SplitView (iPad only)
 

@@ -11,8 +11,13 @@
 		E17EF4702992836000D59037 /* BasicTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17EF46F2992836000D59037 /* BasicTableVC.swift */; };
 		E17EF4752992836300D59037 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E17EF4742992836300D59037 /* Assets.xcassets */; };
 		E17EF4782992836300D59037 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E17EF4762992836300D59037 /* LaunchScreen.storyboard */; };
+		E1BA867129A0244A00407ED8 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BA867029A0244A00407ED8 /* Category.swift */; };
 		E1C5CCB12992929D00261D8F /* UIView+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C5CCB02992929D00261D8F /* UIView+Util.swift */; };
 		E1C5CCB32992A7CB00261D8F /* CellAccessoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C5CCB22992A7CB00261D8F /* CellAccessoryVC.swift */; };
+		E1DE319A299FF429003B26FB /* CustomCellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DE3199299FF429003B26FB /* CustomCellVC.swift */; };
+		E1DE319D29A00F21003B26FB /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DE319C29A00F21003B26FB /* CustomCell.swift */; };
+		E1DE31A029A01672003B26FB /* CustomNibCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DE319E29A01672003B26FB /* CustomNibCell.swift */; };
+		E1DE31A129A01672003B26FB /* CustomNibCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1DE319F29A01672003B26FB /* CustomNibCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,8 +27,13 @@
 		E17EF4742992836300D59037 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E17EF4772992836300D59037 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E17EF4792992836300D59037 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1BA867029A0244A00407ED8 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		E1C5CCB02992929D00261D8F /* UIView+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Util.swift"; sourceTree = "<group>"; };
 		E1C5CCB22992A7CB00261D8F /* CellAccessoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellAccessoryVC.swift; sourceTree = "<group>"; };
+		E1DE3199299FF429003B26FB /* CustomCellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellVC.swift; sourceTree = "<group>"; };
+		E1DE319C29A00F21003B26FB /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		E1DE319E29A01672003B26FB /* CustomNibCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNibCell.swift; sourceTree = "<group>"; };
+		E1DE319F29A01672003B26FB /* CustomNibCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomNibCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +67,9 @@
 			isa = PBXGroup;
 			children = (
 				E1C5CCAF2992856000261D8F /* ViewControllers */,
+				E1DE319B29A00F07003B26FB /* Cells */,
 				E1C5CCB02992929D00261D8F /* UIView+Util.swift */,
+				E1BA867029A0244A00407ED8 /* Category.swift */,
 				E17EF46B2992836000D59037 /* AppDelegate.swift */,
 				E17EF4742992836300D59037 /* Assets.xcassets */,
 				E17EF4762992836300D59037 /* LaunchScreen.storyboard */,
@@ -71,8 +83,19 @@
 			children = (
 				E17EF46F2992836000D59037 /* BasicTableVC.swift */,
 				E1C5CCB22992A7CB00261D8F /* CellAccessoryVC.swift */,
+				E1DE3199299FF429003B26FB /* CustomCellVC.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		E1DE319B29A00F07003B26FB /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E1DE319C29A00F21003B26FB /* CustomCell.swift */,
+				E1DE319E29A01672003B26FB /* CustomNibCell.swift */,
+				E1DE319F29A01672003B26FB /* CustomNibCell.xib */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,6 +156,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1DE31A129A01672003B26FB /* CustomNibCell.xib in Resources */,
 				E17EF4782992836300D59037 /* LaunchScreen.storyboard in Resources */,
 				E17EF4752992836300D59037 /* Assets.xcassets in Resources */,
 			);
@@ -145,10 +169,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1DE319A299FF429003B26FB /* CustomCellVC.swift in Sources */,
+				E1DE31A029A01672003B26FB /* CustomNibCell.swift in Sources */,
 				E17EF4702992836000D59037 /* BasicTableVC.swift in Sources */,
 				E1C5CCB32992A7CB00261D8F /* CellAccessoryVC.swift in Sources */,
 				E1C5CCB12992929D00261D8F /* UIView+Util.swift in Sources */,
+				E1DE319D29A00F21003B26FB /* CustomCell.swift in Sources */,
 				E17EF46C2992836000D59037 /* AppDelegate.swift in Sources */,
+				E1BA867129A0244A00407ED8 /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
