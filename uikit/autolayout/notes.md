@@ -12,18 +12,6 @@
 
 ## StackView
 
-* Allow for fewer constraints
-* `stackView.addArrangedSubView()`
-* Alignment
-	* Top (horizontal stackview)
-	* Bottom (horizontal stackview)
-	* Leading (vertical stackview)
-	* Trailing (vertical stackview)
-	* Center
-	* Fill (default)
-* A stackview is a container. It has no intrinsic content size of its own. It derives its size from its contents
-* Everything inside needs to be intrinsically content sized
-* How you pin a stackview affects the internal custom views' behaviour
 * Adding padding to a stackview:
 	* `stackView.isLayoutMarginsRelativeArrangement = true`
 	* `stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 40, leading: 16, bottom: 40, trailing: -16)`
@@ -50,10 +38,6 @@ When making custom views...
 ## Links
 
 * [InvalidateIntrinsicContentSize](https://developer.apple.com/documentation/uikit/uiview/1622457-invalidateintrinsiccontentsize)
-* [UIStackView](https://developer.apple.com/documentation/uikit/uistackview)
 * [UIScrollView](https://developer.apple.com/documentation/uikit/uiscrollview)
-* [AutoLayout Cookbook](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/LayoutUsingStackViews.html#//apple_ref/doc/uid/TP40010853-CH11-SW1)
-* [StackView Distribution](https://developer.apple.com/documentation/uikit/uistackview/distribution)
-* [StackView Alignment](https://developer.apple.com/documentation/uikit/uistackview/alignment)
 * [NSHipster](https://nshipster.com/uistackview/)
 
