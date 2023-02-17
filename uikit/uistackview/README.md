@@ -68,6 +68,8 @@ Distribution ↓ / Alignment → | Alignment: Fill | Alignment: Leading | Alignm
 **Equal Spacing** | ![](images/size/fill_equalSpacing.png) | ![](images/size/leading_equalSpacing.png) | ![](images/size/center_equalSpacing.png) | ![](images/size/trailing_equalSpacing.png) | The intrinsic height of each inner view is respected. They are positioned so that they touch the top and bottom of the stack view, with equal spacing in between.
 **Equal Centering** | ![](images/size/fill_equalCentering.png) | ![](images/size/leading_equalCentering.png) | ![](images/size/center_equalCentering.png) | ![](images/size/trailing_equalCentering.png) | The intrinsic height of each inner view is respected. They are positioned so that they touch the top and bottom of the stack view, but they are spaced so that the center Y of each view is equal distance apart.
 
+
+
 ### StackViews with No Size
 
 In the below table, the same example is used from above except that the stack view is not given any size. Instead it is positioned in the center of the screen:
@@ -79,7 +81,7 @@ NSLayoutConstraint.activate([
 ])
 ```
 
-Since the stack view doesn't have a size, the inner views will not need to stretch to fill any available space, so in most cases their intrinsic content size will be respected.
+Since the stack view doesn't have an explicit size, its size will be determined by its inner views. The inner views will not need to stretch to fill any available space, so in most cases their intrinsic content size will be respected.
 
 Distribution ↓ / Alignment → | Alignment: Fill | Alignment: Leading | Alignment: Center | Alignment: Trailing | Notes
 ---|---|---|---|---|---
