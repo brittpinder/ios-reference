@@ -8,7 +8,7 @@
 ## UIKit
 * [Creating a Project Without Storyboards](https://github.com/brittpinder/ios-reference/tree/main/uikit/no-storyboards)
 * [Auto Layout](https://github.com/brittpinder/ios-reference/tree/main/uikit/autolayout)
-* [UIStackView - wip](https://github.com/brittpinder/ios-reference/tree/main/uikit/uistackview)
+* [UIStackView](https://github.com/brittpinder/ios-reference/tree/main/uikit/uistackview)
 * [UITableView - wip](https://github.com/brittpinder/ios-reference/tree/main/uikit/uitableview)
 
 
