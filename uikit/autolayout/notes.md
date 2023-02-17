@@ -12,9 +12,6 @@
 
 ## StackView
 
-* Adding padding to a stackview:
-	* `stackView.isLayoutMarginsRelativeArrangement = true`
-	* `stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 40, leading: 16, bottom: 40, trailing: -16)`
 * Spacer Views trick
 
 When making custom views... 

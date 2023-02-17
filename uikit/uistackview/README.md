@@ -32,6 +32,8 @@ NSLayoutConstraint.activate([
 
 Stack views are very useful because they minimize the number of constraints you need to define yourself. Stack views are essentially containers that have no intrinsic size of their own. Unless a stack view is given an explicit size through constraints, its size will be derived by the size of its contents. Because of this, it is important that every view placed inside a stack view has an intrinsic content size.
 
+<br/>
+
 ## Distribution and Alignment
 
 ### [Distribution](https://developer.apple.com/documentation/uikit/uistackview/distribution)
@@ -147,6 +149,23 @@ Distribution ↓ / Alignment → | Alignment: Fill | Alignment: Leading | Alignm
 **Equal Centering** | ![](images/no_size/fill_equalCentering.png) | ![](images/no_size/leading_equalCentering.png) | ![](images/no_size/center_equalCentering.png) | ![](images/no_size/trailing_equalCentering.png) | Each inner view maintains its intrinsic height, but they must be positioned so that their centerY positions are equal distance apart. This results in the space between the red view and the blue view.
 
 **Notes about Alignment:** When the alignment is set to Fill, the width of each inner view needs to stretch to fill the width of the stack view. Since the stack view's width is determined by its largest inner view (in this case the green view), the red and blue views need to stretch to the same width as the green view. With all other alignment options, the intrinsic widths of the inner views are maintained.
+
+<br/>
+
+## Stackviews with Margins
+
+By default, a stack view will position its arranged views so that they are touching the top, bottom, leading and trailing edges of the stack view. However, there is an option to give your stack view a margin. Using the same example from the beginning, we can add a 20 point margin by adding these lines:
+
+```swift
+stackView.isLayoutMarginsRelativeArrangement = true
+stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20)
+```
+
+![](images/2.png)
+
+> Note: The stack view's background color has been set to gray to show stack view's size and margins
+
+This technique is often used when stack views are embedded within scroll views so that you can have scrolling content with a nice margin.
 
 ## Links
 [Auto Layout Cookbook](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/LayoutUsingStackViews.html)

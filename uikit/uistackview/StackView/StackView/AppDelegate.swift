@@ -12,6 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let axisSpacingVC = AxisSpacingVC()
     let distributionAlignmentVC = DistributionAlignmentVC()
+    let marginVC = MarginVC()
 
     var window: UIWindow?
 
@@ -20,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
-        window?.rootViewController = distributionAlignmentVC
+        window?.rootViewController = marginVC
 
         return true
     }

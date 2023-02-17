@@ -13,6 +13,7 @@
 		E1DE3189299ECDDF003B26FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1DE3187299ECDDF003B26FB /* LaunchScreen.storyboard */; };
 		E1DE3191299FBD85003B26FB /* Factories.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DE3190299FBD85003B26FB /* Factories.swift */; };
 		E1DE3193299FBDCC003B26FB /* AxisSpacingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DE3192299FBDCC003B26FB /* AxisSpacingVC.swift */; };
+		E1DE3196299FC6AA003B26FB /* MarginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DE3195299FC6AA003B26FB /* MarginVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		E1DE318A299ECDDF003B26FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1DE3190299FBD85003B26FB /* Factories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factories.swift; sourceTree = "<group>"; };
 		E1DE3192299FBDCC003B26FB /* AxisSpacingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxisSpacingVC.swift; sourceTree = "<group>"; };
+		E1DE3195299FC6AA003B26FB /* MarginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarginVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 			children = (
 				E1DE3180299ECDDB003B26FB /* DistributionAlignmentVC.swift */,
 				E1DE3192299FBDCC003B26FB /* AxisSpacingVC.swift */,
+				E1DE3195299FC6AA003B26FB /* MarginVC.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -145,6 +148,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1DE3196299FC6AA003B26FB /* MarginVC.swift in Sources */,
 				E1DE3191299FBD85003B26FB /* Factories.swift in Sources */,
 				E1DE3193299FBDCC003B26FB /* AxisSpacingVC.swift in Sources */,
 				E1DE3181299ECDDB003B26FB /* DistributionAlignmentVC.swift in Sources */,
