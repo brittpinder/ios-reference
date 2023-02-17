@@ -62,7 +62,7 @@ NSLayoutConstraint.activate([
 
 Distribution ↓ / Alignment → | Alignment: Fill | Alignment: Leading | Alignment: Center | Alignment: Trailing | Notes
 ---|---|---|---|---|---
-**Fill** | ![](images/size/fill_fill.png) | ![](images/size/leading_fill.png) | ![](images/size/center_fill.png) | ![](images/size/trailing_fill.png) | The stack view overrides the intrinsic heigh of the red view and stretches it to fill the space. Changing the content hugging priority of the inner views would allow us to control which inner view gets stretched
+**Fill** | ![](images/size/fill_fill.png) | ![](images/size/leading_fill.png) | ![](images/size/center_fill.png) | ![](images/size/trailing_fill.png) | The stack view overrides the intrinsic height of the red view and stretches it to fill the space. Changing the content hugging priority of the inner views would allow us to control which inner view gets stretched
 **Fill Equally** | ![](images/size/fill_fillEqually.png) | ![](images/size/leading_fillEqually.png) | ![](images/size/center_fillEqually.png) | ![](images/size/trailing_fillEqually.png) | The stack view overrides the intrinsic height of all the inner views and gives them equal height to fill the space
 **Fill Proportionally** | ![](images/size/fill_fillProportionally.png) | ![](images/size/leading_fillProportionally.png) | ![](images/size/center_fillProportionally.png) | ![](images/size/trailing_fillProportionally.png) | Each inner view is stretched to fill the space, but they maintain their relative proportions
 **Equal Spacing** | ![](images/size/fill_equalSpacing.png) | ![](images/size/leading_equalSpacing.png) | ![](images/size/center_equalSpacing.png) | ![](images/size/trailing_equalSpacing.png) | The intrinsic height of each inner view is respected. They are positioned so that they touch the top and bottom of the stack view, with equal spacing in between.
@@ -70,10 +70,21 @@ Distribution ↓ / Alignment → | Alignment: Fill | Alignment: Leading | Alignm
 
 ### StackViews with No Size
 
-Distribution ↓ / Alignment → | Fill | Leading | Center | Trailing
----|---|---|---|---
-**Fill** | ![](images/no_size/fill_fill.png) | ![](images/no_size/leading_fill.png) | ![](images/no_size/center_fill.png) | ![](images/no_size/trailing_fill.png)
-**Fill Equally** | ![](images/no_size/fill_fillEqually.png) | ![](images/no_size/leading_fillEqually.png) | ![](images/no_size/center_fillEqually.png) | ![](images/no_size/trailing_fillEqually.png)
-**Fill Proportionally** | ![](images/no_size/fill_fillProportionally.png) | ![](images/no_size/leading_fillProportionally.png) | ![](images/no_size/center_fillProportionally.png) | ![](images/no_size/trailing_fillProportionally.png)
-**Equal Spacing** | ![](images/no_size/fill_equalSpacing.png) | ![](images/no_size/leading_equalSpacing.png) | ![](images/no_size/center_equalSpacing.png) | ![](images/no_size/trailing_equalSpacing.png)
-**Equal Centering** | ![](images/no_size/fill_equalCentering.png) | ![](images/no_size/leading_equalCentering.png) | ![](images/no_size/center_equalCentering.png) | ![](images/no_size/trailing_equalCentering.png)
+In the below table, the same example is used from above except that the stack view is not given any size. Instead it is positioned in the center of the screen:
+
+```swift
+NSLayoutConstraint.activate([
+    stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+    stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+])
+```
+
+Since the stack view doesn't have a size, the inner views will not need to stretch to fill any available space, so in most cases their intrinsic content size will be respected.
+
+Distribution ↓ / Alignment → | Alignment: Fill | Alignment: Leading | Alignment: Center | Alignment: Trailing | Notes
+---|---|---|---|---|---
+**Fill** | ![](images/no_size/fill_fill.png) | ![](images/no_size/leading_fill.png) | ![](images/no_size/center_fill.png) | ![](images/no_size/trailing_fill.png) | There is no extra space to fill so the inner views can maintain their intrinsic heights
+**Fill Equally** | ![](images/no_size/fill_fillEqually.png) | ![](images/no_size/leading_fillEqually.png) | ![](images/no_size/center_fillEqually.png) | ![](images/no_size/trailing_fillEqually.png) | All inner views need to have the same height so some views need to shrink or stretch. By default, views will prioritize stretching over shrinking so the red and blue views stretch to match the height of the green view.
+**Fill Proportionally** | ![](images/no_size/fill_fillProportionally.png) | ![](images/no_size/leading_fillProportionally.png) | ![](images/no_size/center_fillProportionally.png) | ![](images/no_size/trailing_fillProportionally.png) | There is no extra space to fill so the inner views can maintain their intrinsic heights which automatically maintains their relative proportions
+**Equal Spacing** | ![](images/no_size/fill_equalSpacing.png) | ![](images/no_size/leading_equalSpacing.png) | ![](images/no_size/center_equalSpacing.png) | ![](images/no_size/trailing_equalSpacing.png) | There is no extra space to fill so each inner view can maintain their position. They have equal spacing of zero.
+**Equal Centering** | ![](images/no_size/fill_equalCentering.png) | ![](images/no_size/leading_equalCentering.png) | ![](images/no_size/center_equalCentering.png) | ![](images/no_size/trailing_equalCentering.png) | Each inner view maintains its intrinsic height, but they must be positioned so that their centerY positions are equal distance apart. This results in the space between the red view and the blue view.

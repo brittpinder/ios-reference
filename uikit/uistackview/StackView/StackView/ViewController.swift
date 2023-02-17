@@ -31,13 +31,13 @@ class ViewController: UIViewController {
         stackView.addArrangedSubview(green)
 
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+//            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+//            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
 
-//            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-//            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
 
 
