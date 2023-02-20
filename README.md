@@ -64,10 +64,13 @@
 
 ## Foundation
 * Dates
+* DateFormatter
+* DateComponents
 * NSAttributedString and NSMutableAttributedString
 
 ## UIKit
-* **Instantiating views and components through code instead of storyboard**
+
+* **View Controller Life Cycle**
 * Nibs and Bundles
 * Segues: Through storyboard (drag and drop) and through code
 * UICalendarView
@@ -87,14 +90,20 @@
 	* sizeToFit()
 	* sizeThatFits()
 * [Container View Controllers](https://developer.apple.com/library/archive/featuredarticles/ViewControllerPGforiPhoneOS/ImplementingaContainerViewController.html#//apple_ref/doc/uid/TP40007457-CH11-SW1)
-	* UINavigationController
+	* **UINavigationController**
 		* Stack: Push/Pop vs Modal: Present/Dismiss 
 	* **UITabBarController**
 	* UIPageViewController
 	* SplitView (iPad only)
+* GestureRecognizer
 
 ## Advanced Topics
-* Persistence
+
+* **App Lifecycle**
+* **Networking**
+	* **Dispatch Methods**
+* **Race Conditions**
+* **Persistence**
 	* UserDefaults
 	* CoreData
 	* Realm
@@ -106,8 +115,7 @@
 * Race Conditions
 * Core Animation
 * Core Graphics
-* **Dispatch Methods**
-* **Race Conditions**
+
 
 ## New Feature Checklist
 * Meets requirements
