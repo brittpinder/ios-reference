@@ -14,13 +14,51 @@
 
 # To Learn
 
+## Priority
+1. **Optionals**
+	1. 	Implicitly unwrapped optionals
+	1. **If let vs guard let**
+1. **Inheritance**
+	1. **`final`**
+1. **Closures**
+1. **Containers**
+	1. 	Arrays
+	1. 	Sets
+	1. 	Tuples
+	1. 	Dictionaries
+1. **Memory Safety and Management**
+	1. References vs Values
+	1. [**In-out parameters**](https://docs.swift.org/swift-book/ReferenceManual/Declarations.html)
+	1. 	Is it possible to pass parameter as const reference?
+1. **Access Levels**
+1. Keywords
+	1. 	**`@escaping`** 
+	1. 	**`weak var` and retain cycles, unowned self**
+	1. 	**`try`, `try!`, `try?`**
+1. **Notification Center** (Observer Pattern)
+1. **SceneDelegate**
+1. **App Lifecycle**
+1. **View Controller Life Cycle**
+1. **Labels and fonts - best practices**
+1. **adaptive layouts (changing orientation)**
+	1. 	`UITraitCollection`
+1. Points vs Pixels
+1. **UINavigationController**
+	1. 	Stack: Push/Pop vs Modal: Present/Dismiss 
+1. **UITabBarController**
+1. **Touch events - how they work**
+1. **Networking**
+	1. 	**Dispatch Methods**
+	1. 	JSON Encoder
+1. **Race Conditions & Multithreading**
+1. **Persistence**
+	1. 	UserDefaults
+	1. 	CoreData
+	1. 	Realm
+1. **Core Animation**
+		
 ## Swift
-* Optionals
-	* Implicitly unwrapped optionals
-* If let vs guard let
-* Inheritance
-	* **`final`**
-* References vs Values
+
 * Generics
 * Error Handling
 * Protocols
@@ -30,90 +68,60 @@
 * Ranges
 * [Bool.toggle](https://www.hackingwithswift.com/example-code/language/how-to-toggle-a-boolean-value)
 * Argument Labels
-* Closures
-* Containers
-	* Arrays
-	* Sets
-	* Tuples
-	* Dictionaries
 * Properties
 	* Wrappers
 	* Global vs Local
 	* Type Properties
-* [**In-out parameters**](https://docs.swift.org/swift-book/ReferenceManual/Declarations.html)
-	* Is it possible to pass parameter as const reference?
-* **Access Levels**
-* Memory Safety
 * Unknown keywords
 	* `#selector`
 	* `required`
 	* `required init?`
-	* **`@escaping`**
 	* `@discardableResult`
-	* **`weak var` and retain cycles, unowned self**
 	* `open`
 	* `dynamic`
-	* `try`, `try!`, `try?`
 	* `@available(iOS 16.0, *)`
 	* `@MainActor`
 * [Patterns](https://docs.swift.org/swift-book/ReferenceManual/Patterns.html#)
 	* Protocol Delegate Pattern
 	* DataSource Pattern
-	* **Notification Center** (Observer Pattern)
+	
 * fatalError, assertionFailure, throw (what are the differences?)
 
 ## Foundation
 * Dates
-* DateFormatter
-* DateComponents
+	* DateFormatter
+	* DateComponents
 * NSAttributedString and NSMutableAttributedString
+
 
 ## UIKit
 
-* **View Controller Life Cycle**
 * Nibs and Bundles
 * Segues: Through storyboard (drag and drop) and through code
 * UICalendarView
 * UIDatePicker
-* **Labels and fonts**
 * Modal presentation that covers part of the screen (adaptiveSheetPresentationController)
-* [UIScrollView](https://github.com/jrasmusson/ios-professional-course/tree/main/Bankey/5-Scrollable-ViewControllers)
+* [**UIScrollView**](https://github.com/jrasmusson/ios-professional-course/tree/main/Bankey/5-Scrollable-ViewControllers)
 	* [Scrollview video explanation](https://www.youtube.com/watch?v=TYM65qxEQNs&ab_channel=SwiftArcade)
 * UICollectionView
-* **Autolayout**
+* Autolayout
 	* More detail about predefined layout guides and creating your own
-	* Points vs Pixels
 	* [Interesting way of pinning to view](https://www.youtube.com/watch?v=2yVzeFIMtyc&ab_channel=iOSAcademy)
 	* willLayoutSubviews()
-	* adaptive layouts (changing orientation)
-		* `UITraitCollection`
 	* sizeToFit()
 	* sizeThatFits()
 * [Container View Controllers](https://developer.apple.com/library/archive/featuredarticles/ViewControllerPGforiPhoneOS/ImplementingaContainerViewController.html#//apple_ref/doc/uid/TP40007457-CH11-SW1)
-	* **UINavigationController**
-		* Stack: Push/Pop vs Modal: Present/Dismiss 
-	* **UITabBarController**
 	* UIPageViewController
 	* SplitView (iPad only)
 * GestureRecognizer
 
 ## Advanced Topics
 
-* **App Lifecycle**
-* **Networking**
-	* **Dispatch Methods**
-* **Race Conditions**
-* **Persistence**
-	* UserDefaults
-	* CoreData
-	* Realm
-* CocoaPods
+* CocoaPods & Swift Package Manager
 * Push Notifications
 * Code Signing
 * Provisioning Profiles
 * pList
-* Race Conditions
-* Core Animation
 * Core Graphics
 
 
@@ -126,7 +134,7 @@
 * TODOs
 * Localization
 * Label text length (no overflow)
-* Simulate slow neetwork connections with Network link conditioner
+* Simulate slow network connections with Network link conditioner
 * Tested on a real device
 * Tested on different device sizes
 
