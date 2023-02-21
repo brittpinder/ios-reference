@@ -1,6 +1,7 @@
 # ios-reference
 
 ## Swift
+* [Optionals](https://github.com/brittpinder/ios-reference/tree/main/swift/optionals)
 * [Enums](https://github.com/brittpinder/ios-reference/tree/main/swift/enums)
 * [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes)
 * [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties)
@@ -17,10 +18,14 @@
 ## Priority
 1. **Optionals**
 	1. 	Implicitly unwrapped optionals
-	1. **If let vs guard let**
+1. Generics
+1. [Error Handling](https://www.youtube.com/watch?v=Lrc-MX8WgNc&ab_channel=SeanAllen)
+	1. fatalError, assertionFailure, throw (what are the differences?)
+	2. [Using `guard` for conditions (not optionals)](https://www.advancedswift.com/when-to-use-guard-in-swift/)
+	1. [**`try`, `try!`, `try?`**](https://stackoverflow.com/questions/32390611/try-try-try-what-s-the-difference-and-when-to-use-each)
 1. **Inheritance**
 	1. **`final`**
-1. **Closures**
+1. [**Closures**](https://github.com/jrasmusson/level-up-swift/tree/master/4-closures)
 1. **Containers**
 	1. 	Arrays
 	1. 	Sets
@@ -30,15 +35,20 @@
 	1. References vs Values
 	1. [**In-out parameters**](https://docs.swift.org/swift-book/ReferenceManual/Declarations.html)
 	1. 	Is it possible to pass parameter as const reference?
+	1. Automatic Reference Counting
+	1. 	**`weak var`, `strong` and retain cycles, unowned self**
+	2. [Retain Cycle, Automatic Reference Counting, Memory Leak Video](https://www.youtube.com/watch?v=VcoZJ88d-vM&list=PL8seg1JPkqgF5wazzCKSq3EEfqt3t8mvA&index=16&ab_channel=SeanAllen)
+	3. Memory leaks in closures (weak self, unknown self)
 1. **Access Levels**
-1. Keywords
-	1. 	**`@escaping`** 
-	1. 	**`weak var` and retain cycles, unowned self**
-	1. 	**`try`, `try!`, `try?`**
+1. Switch case with Value Bindings and `where`
 1. **Notification Center** (Observer Pattern)
 1. **SceneDelegate**
 1. **App Lifecycle**
 1. **View Controller Life Cycle**
+	1. https://www.youtube.com/watch?v=Nfzy1qgxSAg&ab_channel=SeanAllen
+1. UIView
+	1. Lifecycle
+	1. [View frames vs bounds](https://medium.com/@jon.lazar/my-approach-to-learning-ios-fccf943aead)
 1. **Labels and fonts - best practices**
 1. **adaptive layouts (changing orientation)**
 	1. 	`UITraitCollection`
@@ -47,20 +57,25 @@
 	1. 	Stack: Push/Pop vs Modal: Present/Dismiss 
 1. **UITabBarController**
 1. **Touch events - how they work**
+	1. Gesture Recognizers
 1. **Networking**
 	1. 	**Dispatch Methods**
 	1. 	JSON Encoder
-1. **Race Conditions & Multithreading**
+1. [**Race Conditions & Multithreading**](https://www.youtube.com/watch?v=iTcq6L-PaDQ&ab_channel=SeanAllen)
+	1. [Main vs Background Thread](https://medium.com/@jon.lazar/my-approach-to-learning-ios-fccf943aead
+	1. 	**`@escaping`**
+	1. `nonatomic` vs `atomic`
 1. **Persistence**
 	1. 	UserDefaults
 	1. 	CoreData
 	1. 	Realm
 1. **Core Animation**
+1. Communication Patterns between views
+	1. Delegates vs Observers and Notifications
+1. Testing
 		
-## Swift
+## [Foundation](https://developer.apple.com/documentation/foundation)
 
-* Generics
-* Error Handling
 * Protocols
 * Extensions
 * Type Casting
@@ -84,10 +99,6 @@
 * [Patterns](https://docs.swift.org/swift-book/ReferenceManual/Patterns.html#)
 	* Protocol Delegate Pattern
 	* DataSource Pattern
-	
-* fatalError, assertionFailure, throw (what are the differences?)
-
-## Foundation
 * Dates
 	* DateFormatter
 	* DateComponents
@@ -113,16 +124,23 @@
 * [Container View Controllers](https://developer.apple.com/library/archive/featuredarticles/ViewControllerPGforiPhoneOS/ImplementingaContainerViewController.html#//apple_ref/doc/uid/TP40007457-CH11-SW1)
 	* UIPageViewController
 	* SplitView (iPad only)
-* GestureRecognizer
 
-## Advanced Topics
+## Other Topics
 
-* CocoaPods & Swift Package Manager
+* Third Party Libraries: CocoaPods & Swift Package Manager
 * Push Notifications
 * Code Signing
 * Provisioning Profiles
 * pList
 * Core Graphics
+
+## Interview Questions
+* https://www.youtube.com/watch?v=56ZO6Gg68tw&list=PL8seg1JPkqgF5wazzCKSq3EEfqt3t8mvA&index=17&ab_channel=SeanAllen
+* https://github.com/9magnets/iOS-Developer-and-Designer-Interview-Questions
+* https://medium.com/@jon.lazar/my-approach-to-learning-ios-fccf943aead
+* https://www.hackingwithswift.com/store/swift-coding-challenges
+* https://www.youtube.com/watch?v=8XqzE-7e1qk&ab_channel=SeanAllen
+* https://iosinterviewguide.com/ios-interview-questions-for-senior-developers-in-2020
 
 
 ## New Feature Checklist
