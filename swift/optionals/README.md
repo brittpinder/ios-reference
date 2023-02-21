@@ -16,14 +16,19 @@ optionalString = "Hello"
 print(optionalString) // Optional("Hello")
 print(optionalString == nil) // false
 ```
+
+## Unwrapping Optionals
+
 Notice in the above example, when `optionalString` has a value and we print it, it prints `Optional("Hello")` instead of `Hello`. In order to get the value that the optional is storing, we need to "unwrap" it. There are four options for unwrapping optionals:
 
-1. Force Unwrapping
-2. Optional Binding
-3. Optional Chaining
-4. Nil Coalescing Operator
+1. [Force Unwrapping](#force-unwrapping)
+2. [Optional Binding](#optional-binding)
+3. [Optional Chaining](#optional-chaining)
+4. [Nil-Coalescing Operator](#nil-coalescing-operator)
 
-## Force Unwrapping
+<br/>
+
+### Force Unwrapping
 Force unwrapping is performed by adding an exclamation point (!) after an optional.
 
 ```swift
@@ -50,13 +55,15 @@ if age != nil {
     print(age!) // 65
 }
 ```
+<br/>
 
-
-## Optional Binding
+### Optional Binding
 
 Optional binding will unwrap an optional only if it exists and store that unwrapped value in a temporary variable. This can be done using `if let`, `guard let` or `switch`.
 
-### Optional Binding with `if let`
+<br/>
+
+#### Optional Binding with `if let`
 When using `if let` to unwrap an optional, the `if let` block of code is only executed if the unwrapped optional has a value. Additionally, the temporary variable assigned to the unwrapped value only exists within the `if let` block.
 
 ```swift
@@ -107,8 +114,9 @@ if let email, let password {
 }
 // Nothing is printed because password doesn't contain a value
 ```
+<br/>
 
-### Optional Binding with `guard let`
+#### Optional Binding with `guard let`
 
 A `guard let` statement attempts to unwrap an optional and if it doesn't contain a value, a mandatory `else` block of code is executed. This `else` block, must exit the scope (ex: by using `return` or `throw`).
 
@@ -131,7 +139,9 @@ Notice in the above example that the temporary variable `safeName` exists outsid
 
 `if let` should be used when the nil case is valid (ex: a text field being empty) whereas `guard let` should be used when the nil case represents some sort of error.
 
-### Optional Binding with `switch`
+<br/>
+
+#### Optional Binding with `switch`
 
 Behind the scenes, an optional is simply an enum containing two cases: `none` and `some`:
 
@@ -145,7 +155,7 @@ enum Optional<Wrapped> : ExpressibleByNilLiteral {
 This means that you optionally bind by switching on the two enum values:
 
 ```swift
-let name: String? = "Taylor"
+var name: String? = "Taylor"
 
 switch name {
 case .none:
@@ -169,8 +179,8 @@ case let unwrappedName?:
 Optional binding with a `switch` can be very useful when you need to control the flow based on more than one optional value:
 
 ```swift
-let firstName: String? = "Taylor"
-let lastName: String? = nil
+var firstName: String? = "Taylor"
+var lastName: String?
 
 switch (firstName, lastName) {
 case let (firstName?, lastName?):
@@ -184,11 +194,159 @@ case (.none, .none):
 }
 //prints "Hello Taylor"
 ```
+<br/>
 
-## Optional Chaining
+### [Optional Chaining](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/optionalchaining)
 
-## Nil Coalescing Operator
+Optional chaining allows you to call properties, methods and subscripts on optionals that might currently be `nil`. If the optional contains a value, the property, method or subscript call succeeds. If the optional is `nil`, the property, method or subscript call returns `nil`.
+
+In the following example, `dog` doesn't contain a value, so the expression `dog?.name` returns `nil` and `dogName` is assigned a type of `Optional<String>` with a value of `nil`.
+
+```swift
+struct Dog {
+    var name: String
+}
+
+var dog: Dog?
+
+var dogName = dog?.name
+print(dogName) // nil
+print(type(of: dogName)) // Optional<String>
+```
+
+If we assign a value to `dog`, and then use optional chaining to reassign `dogName`, `dogName` is still an optional but holds the value "Jango".
+
+```swift
+dog = Dog(name: "Jango")
+dogName = dog?.name
+print(dogName) // Optional("Jango")
+print(type(of: dogName)) // Optional<String>
+```
+<br/>
+
+#### Optional Chaining with Functions
+
+Optional chaining can also be used to call functions. In the below example, the function `bark()` is only executed if `dog` has a value.
+
+```swift
+struct Dog {
+    var name: String
+
+    func bark() {
+        print("woof")
+    }
+}
+
+var dog: Dog?
+dog?.bark() // bark() is not executed because dog doesn't contain a value
+
+dog = Dog(name: "Jango")
+dog?.bark() // woof
+```
+When using optional chaining to call a method on an optional value, you can check whether that method call is successful by comparing the return type to `nil`. This works even for functions that don't define a return type because they have an implicit return type of `Void`.
+
+```swift
+if dog?.bark() != nil {
+    print("Good dog")
+}
+// Prints "woof"
+// Prints "Good dog"
+```
+<br/>
+
+#### Setting Properties through Optional Chaining
+
+Optional chaining can also be used to set properties on optional variables. In the following example, `toy` is only set when `dog` contains a value.
+
+```swift
+var dog: Dog?
+
+dog?.name = "Aayla"
+print(dog?.name) // nil
+
+dog = Dog(name: "Jango")
+dog?.name = "Aayla"
+print(dog?.name) // Aayla
+```
+
+Any attempt to set a property through optional chaining returns a value of type `Void?` which means that you can compare against nil to check if the property was set successfully:
+
+```swift
+if (dog?.name = "Aayla") != nil {
+    print("Dog's name was set to \(dog?.name)")
+}
+// Prints "Dog's name was set to Optional("Aayla")
+```
+<br/>
+
+#### Linking Multiple Levels of Chaining
+
+Multiple queries can be chained together, and the entire chain fails gracefully if any link in the chain is nil. Consider the example where `Dog` has an optional property of type `Person`.
+
+```swift
+struct Person {
+    let name: String
+    var age: Int
+}
+
+struct Dog {
+    var name: String
+    var owner: Person?
+}
+
+var dog: Dog?
+
+var dogOwnerAge = dog?.owner?.age
+print(dogOwnerAge) // nil because dog doesn't contain a value
+print(type(of: dogOwnerAge)) // Optional<Int>
+```
+Using optional chaining, we can drill down to find the age of the dog's owner and store it in `dogOwnerAge`. However, the unwrapping gracefully fails since `dog` doesn't contain a value. `dogOwnerAge` is assigned a value of `nil` and a type of `Optional<Int>`.
+
+Below, we can try the same thing after giving `dog` a value, but the optional chaining still fails since `owner` doesn't have a value.
+
+```swift
+dog = Dog(name: "Jango")
+
+dogOwnerAge = dog?.owner?.age
+print(dogOwnerAge) // nil
+print(type(of: dogOwnerAge)) // Optional<Int>
+```
+Finally, the optional chaining will succeed if we give a value to `owner`:
+
+```swift
+dog?.owner = Person(name: "Warren", age: 42)
+
+dogOwnerAge = dog?.owner?.age
+print(dogOwnerAge) // Optional(42)
+print(type(of: dogOwnerAge)) // Optional<Int>
+```
+
+<br/>
+
+### Nil-Coalescing Operator
+
+The nil-coalescing operator (??) allows you to supply a default value in case the optional instance is `nil`. In the below example, `menu` will be assigned to `specialMenu` if `specialMenu` holds a value. Otherwise it will be assigned to the default value of `regularMenu`.
+
+```swift
+var regularMenu = "Regular Menu"
+var specialMenu: String?
+
+var menu = specialMenu ?? regularMenu
+print(menu) // Regular Menu
+```
+
+<br/>
+
+## Implicitly Unwrapped Optionals
+
+An implicitly unwrapped optional, written with an exclamation mark (!) after the type (ex: `String!`), is like a regular optional in that it can contain a value or be `nil`, however it doesn't need to be unwrapped before it is used. There is a danger in this because if for whatever reason, your implicitly unwrapped optional contains `nil`, your app will crash and you won't be able to prevent it. Therefore implicitly unwrapped optionals require you to be absolutely sure there's a value before you use them.
+
+The most common reason for using an implicitly unwrapped optional is in the case where something will start off as `nil` but contain a value by the time we need it and won't be `nil` ever again. For example, when you create outlets using Interface Builder, they are created as implicitly unwrapped optionals because when your view controller is being created, those outlets will all be `nil`, but shortly after they get set to real views and won't be destroyed until the whole view controller is destroyed.
+
+`@IBOutlet weak var searchTextField: UITextField!`
 
 ## Links
+* [Apple Documentation on Optional](https://developer.apple.com/documentation/swift/optional)
 * [Swift Optionals Video Tutorial](https://www.youtube.com/watch?v=ZL8BFK8bVjk&ab_channel=SeanAllen)
 * [Optional Binding with Switch](https://sarunw.com/posts/optional-binding-switch-case/)
+* [Apple Documentation on Optional Chaining](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/optionalchaining)
