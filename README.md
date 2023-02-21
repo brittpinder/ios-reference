@@ -16,8 +16,7 @@
 # To Learn
 
 ## Priority
-1. **Optionals**
-	1. 	Implicitly unwrapped optionals
+
 1. Generics
 1. [Error Handling](https://www.youtube.com/watch?v=Lrc-MX8WgNc&ab_channel=SeanAllen)
 	1. fatalError, assertionFailure, throw (what are the differences?)
