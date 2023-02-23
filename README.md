@@ -5,6 +5,7 @@
 * [Enums](https://github.com/brittpinder/ios-reference/tree/main/swift/enums)
 * [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes)
 * [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties)
+* [Error Handling - wip](https://github.com/brittpinder/ios-reference/tree/main/swift/error-handling)
 
 ## UIKit
 * [Creating a Project Without Storyboards](https://github.com/brittpinder/ios-reference/tree/main/uikit/no-storyboards)
@@ -20,8 +21,7 @@
 1. Generics
 1. [Error Handling](https://www.youtube.com/watch?v=Lrc-MX8WgNc&ab_channel=SeanAllen)
 	1. fatalError, assertionFailure, throw (what are the differences?)
-	2. [Using `guard` for conditions (not optionals)](https://www.advancedswift.com/when-to-use-guard-in-swift/)
-	1. [**`try`, `try!`, `try?`**](https://stackoverflow.com/questions/32390611/try-try-try-what-s-the-difference-and-when-to-use-each)
+	2. [Cleanup actions](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/errorhandling/)
 1. **Inheritance**
 	1. **`final`**
 1. [**Closures**](https://github.com/jrasmusson/level-up-swift/tree/master/4-closures)
@@ -132,6 +132,9 @@
 * Provisioning Profiles
 * pList
 * Core Graphics
+
+## Links
+* [When to use guard in Swift](https://www.advancedswift.com/when-to-use-guard-in-swift/)
 
 ## Interview Questions
 * https://www.youtube.com/watch?v=56ZO6Gg68tw&list=PL8seg1JPkqgF5wazzCKSq3EEfqt3t8mvA&index=17&ab_channel=SeanAllen
