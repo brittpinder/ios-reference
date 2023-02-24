@@ -118,6 +118,7 @@ createUser(name: "jimhalpert") // Created user with name: jimhalpert
 ```
 > Notice in the above example that the expression that can throw is preceded by the keyword `try`. This is a requirement; you must put `try` before any function call that can throw. There are two alternatives: `try?` and `try!` which are explained in detail later on.
 
+<br/>
 You can use [patterns](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/patterns/) with `do-catch` blocks to handle errors in many different ways including handling more than one error in one catch block, appending a condition using the `where` keyword, or simply check if the error is of a certain type:
 
 ```swift
@@ -169,6 +170,7 @@ print(result2) // nil
 ```
 In the above example, the first call to `divide` is successful, but because the `try?` keyword was used, the result is converted to an `Optional<Int>`. The second call to `divide` throws an error but it is handled by returning `nil`.
 
+<br/>
 It is very common to use `if let` syntax when using `try?` to handle an error:
 
 ```swift
@@ -242,11 +244,11 @@ Because a failed assertion or precondition indicates an invalid program state, t
 
 The five types of assertions and preconditions, in order from lowest to highest severity, are as follows:
 
-* [`assert()`](#assert())
-* [`assertionFailure()`](#assertionFailure())
-* [`precondition()`](#precondition())
-* [`preconditionFailure()`](#preconditionFailure())
-* [`fatalError()`](#fatalError())
+* [`assert()`](#assert)
+* [`assertionFailure()`](#assertionFailure)
+* [`precondition()`](#precondition)
+* [`preconditionFailure()`](#preconditionFailure)
+* [`fatalError()`](#fatalError)
 
 <br/>
 
