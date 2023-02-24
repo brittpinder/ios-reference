@@ -5,7 +5,7 @@
 * [Enums](https://github.com/brittpinder/ios-reference/tree/main/swift/enums)
 * [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes)
 * [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties)
-* [Error Handling - wip](https://github.com/brittpinder/ios-reference/tree/main/swift/error-handling)
+* [Error Handling and Assertions](https://github.com/brittpinder/ios-reference/tree/main/swift/error-handling)
 
 ## UIKit
 * [Creating a Project Without Storyboards](https://github.com/brittpinder/ios-reference/tree/main/uikit/no-storyboards)
@@ -19,9 +19,6 @@
 ## Priority
 
 1. Generics
-1. [Error Handling](https://www.youtube.com/watch?v=Lrc-MX8WgNc&ab_channel=SeanAllen)
-	1. fatalError, assertionFailure, throw (what are the differences?)
-	2. [Cleanup actions](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/errorhandling/)
 1. **Inheritance**
 	1. **`final`**
 1. [**Closures**](https://github.com/jrasmusson/level-up-swift/tree/master/4-closures)
@@ -72,6 +69,8 @@
 1. Communication Patterns between views
 	1. Delegates vs Observers and Notifications
 1. Testing
+1. Bundles
+2. `@autoclosure`
 		
 ## [Foundation](https://developer.apple.com/documentation/foundation)
 
@@ -102,6 +101,7 @@
 	* DateFormatter
 	* DateComponents
 * NSAttributedString and NSMutableAttributedString
+* [Cleanup Actions](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/errorhandling/#Specifying-Cleanup-Actions)
 
 
 ## UIKit
