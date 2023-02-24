@@ -6,6 +6,8 @@
 * [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes)
 * [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties)
 * [Error Handling and Assertions](https://github.com/brittpinder/ios-reference/tree/main/swift/error-handling)
+* [Access Control](https://github.com/brittpinder/ios-reference/tree/main/swift/access-control)
+
 
 ## UIKit
 * [Creating a Project Without Storyboards](https://github.com/brittpinder/ios-reference/tree/main/uikit/no-storyboards)
@@ -35,7 +37,6 @@
 	1. 	**`weak var`, `strong` and retain cycles, unowned self**
 	2. [Retain Cycle, Automatic Reference Counting, Memory Leak Video](https://www.youtube.com/watch?v=VcoZJ88d-vM&list=PL8seg1JPkqgF5wazzCKSq3EEfqt3t8mvA&index=16&ab_channel=SeanAllen)
 	3. Memory leaks in closures (weak self, unknown self)
-1. **Access Levels**
 1. Switch case with Value Bindings and `where`
 1. **Notification Center** (Observer Pattern)
 1. **SceneDelegate**
