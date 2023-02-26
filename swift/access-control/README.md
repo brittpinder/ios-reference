@@ -43,8 +43,33 @@ There are five different access levels in Swift:
 * The least restrictive access level
 * Source files from within and outside the defining module can access and subclass the entity
 * Typically used when specifying the public interface to a framework
+* Example: In UIKit, `UITableViewCell` is marked as `open` meaning that it can be subclassed in other modules (ie. your own app).
 
-If you are creating a single target application, you will only need to concern yourself with  `private`, `fileprivate` or `internal`. If you are creating a framework, you will additionally need to use `public` and/or `open` to define your framework's public facing interface (API).
+If you are creating a single target application, you will only need to concern yourself with  `private`, `fileprivate` and/or `internal`. If you are creating a framework, you will additionally need to use `public` and/or `open` to define your framework's public facing interface (API).
+
+<br/>
+
+## Read-Only with Private Setter
+
+You can make constants, variables, properties and subscripts read-only by making their setters private using `private(set)`. In the following example, `numberOfEdits` has a private setter, making it a read-only property.
+
+```swift
+struct TrackedString {
+    private(set) var numberOfEdits = 0
+    var value: String = "" {
+        didSet {
+            numberOfEdits += 1
+        }
+    }
+}
+
+var myString = TrackedString()
+myString.value = "Hello"
+myString.value = "World"
+
+print(myString.numberOfEdits) // 2
+myString.numberOfEdits = 5 // Compiler Error: Cannot assign to property: 'numberOfEdits' setter is inaccessible
+```
 
 <br/>
 
