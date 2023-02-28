@@ -1,5 +1,13 @@
 # Keywords
 
+### [`class`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures)
+
+* A general-purpose, flexible construct, containing properties and methods
+* Classes are *reference* types and allow inheritance
+* Referenced in [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes)
+
+<br/>
+
 ### [`didSet`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/properties/#Property-Observers)
 
 * A *property observer* that gets called right after a property is set
@@ -44,6 +52,20 @@
 
 <br/>
 
+### [`indirect`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/enumerations/#Recursive-Enumerations)
+
+* Indicates that an enumeration or an enumeration case is recursive
+* Referenced in [Enums](https://github.com/brittpinder/ios-reference/tree/main/swift/enums#recursive-enumerations)
+
+<br/>
+
+### [`init`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization#Initializers)
+
+* Defines the initializer of a struct or class
+* Referenced in [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes#initialization)
+
+<br/>
+
 ### [`internal`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/accesscontrol/)
 
 * The default access level placed on a type (class, method, enum, property etc.)
@@ -56,6 +78,27 @@
 
 * Indicates that a stored property's initial value isn't calculated until the first time it's used
 * Referenced in [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties#lazy-stored-properties)
+
+<br/>
+
+### [`let`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Declaring-Constants-and-Variables)
+
+* Used to declare a constant
+* Referenced in [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties)
+
+<br/>
+
+### [`mutating`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/methods#Modifying-Value-Types-from-Within-Instance-Methods)
+
+* Allows modification of value types (such as structures and enumerations) from within its instance methods
+* Referenced in [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes#mutability) and [Enums](https://github.com/brittpinder/ios-reference/tree/main/swift/enums#enums-with-mutating-functions)
+
+<br/>
+
+### [`nil`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#nil)
+
+* Represents the absence of a valid object
+* Referenced in [Optionals](https://github.com/brittpinder/ios-reference/tree/main/swift/optionals)
 
 <br/>
 
@@ -90,10 +133,25 @@
 
 <br/>
 
+### [`self`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/guidedtour#Objects-and-Classes)
+
+* An implicit property that each instance of a type has, that refers to the instance itself
+* Referenced in [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes)
+
+<br/>
+
 ### [`set`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/properties/#Computed-Properties)
 
 * Defines the "setter" of a computed property
 * Referenced in [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties#setting-computed-properties)
+
+<br/>
+
+### [`struct`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures)
+
+* A general-purpose, flexible construct, containing properties and methods
+* Structs are *value* types and don't allow inheritance
+* Referenced in [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes)
 
 <br/>
 
@@ -120,12 +178,82 @@
 
 <br/>
 
+### [`var`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Declaring-Constants-and-Variables)
+
+* Used to declare a variable
+* Referenced in [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties)
+
+<br/>
+
 ### [`willSet`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/properties/#Property-Observers)
 
 * A *property observer* that gets called right before a property is set
 * Referenced in [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties#property-observers)
 
 <br/>
+
+## To Add
+* `_`
+* `as`
+* `associatedType`
+* `associativity`
+* `convenience`
+* `defer`
+* `deinit`
+* `dynamic`
+* `enum`
+* `extension`
+* `fallthrough`
+* `func`
+* `import`
+* `in`
+* `infix`
+* `inout`
+* `is`
+* `left`
+* `none`
+* `nonmutating`
+* `operator`
+* `optional`
+* `postfix`
+* `prefix`
+* `protocol`
+* `precedencegroup`
+* `repeat`
+* `required`
+* `rethrows`
+* `right`
+* `static`
+* `subscript`
+* `super`
+* `typealias`
+* `unowned`
+* `weak`
+* `where`
+* `#available`
+* `#column`
+* `#else`
+* `#elseif`
+* `#endif`
+* `#error`
+* `#file`
+* `#filePath`
+* `#function`
+* `#if`
+* `#line`
+* `#selector`
+* `#sourceLocation`
+* `#warning`
+* `@autoclosure`
+* `@available`
+* `@discardableResult`
+* `@dynamicCallable`
+* `@dynamicMemberLookup`
+* `@escaping`
+* `@objc`
+* `@objcMembers`
+* `@unknown`
+
 
 ## Links
 
