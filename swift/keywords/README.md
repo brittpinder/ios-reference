@@ -1,5 +1,15 @@
 # Keywords
 
+### [`as`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/typecasting/#Downcasting)
+
+* The *type cast operator*, used to cast a class instance to another class type within its inheritance hierarchy
+* `as` upcasts a subclass to a superclass
+* `as?` optionally downcasts a superclass to a subclass
+* `as!` force downcasts a superclass to a subclass
+* Referenced in [Inheritance](https://github.com/brittpinder/ios-reference/tree/main/swift/inheritance#downcasting)
+
+<br/>
+
 ### [`class`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures)
 
 * A general-purpose, flexible construct, containing properties and methods
@@ -71,6 +81,13 @@
 * The default access level placed on a type (class, method, enum, property etc.)
 * Restricts access to any source file within the app module
 * Referenced in [Access Control](https://github.com/brittpinder/ios-reference/tree/main/swift/access-control#internal)
+
+<br/>
+
+### [`is`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/typecasting/#Checking-Type)
+
+* The *type check operator* checks wither an instance is of a certain subclass type
+* Referenced in [Inheritance](https://github.com/brittpinder/ios-reference/tree/main/swift/inheritance#type-checking)
 
 <br/>
 
@@ -194,7 +211,6 @@
 
 ## To Add
 * `_`
-* `as`
 * `associatedType`
 * `associativity`
 * `convenience`
@@ -209,7 +225,6 @@
 * `in`
 * `infix`
 * `inout`
-* `is`
 * `left`
 * `none`
 * `nonmutating`
