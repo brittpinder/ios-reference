@@ -30,8 +30,8 @@ circle.draw() // Drawing a green circle with radius 50
 ```
 > When overriding a function from a superclass, you need to mark it with the `override` keyword
 
-
 <br/>
+
 ## Overriding Properties
 
 Inheritance allows you to override properties as well as methods. In the below example, `Car` overrides the computed property `description` to provide a custom description that includes the gear. It also overrides the stored property `currentSpeed` in order to add a property observer that updates the gear when the speed changes.
@@ -63,6 +63,7 @@ myCar.currentSpeed = 65
 print(myCar.description) // traveling at 65.0 km/h in gear 2
 ```
 <br/>
+
 ## Final
 
 You can prevent a class, method, property, or subscript from being overridden by marking it as `final`. Any attempt to override something marked as `final` will produce a compile-time error.
@@ -92,6 +93,7 @@ class Goldfish: Fish {
 ```
 
 <br/>
+
 ## Polymorphism
 
 Polymorphism allows objects of different classes to be treated as objects of a common superclass. In the below example, the function `makeNoise` takes a value of type `Pet`, but we can pass it values like `Dog` and `Husky` because they inherit from `Pet`.
@@ -124,6 +126,7 @@ makeNoise(with: Dog()) // Woof
 makeNoise(with: Husky()) // Awwwooooo
 ```
 <br/>
+
 ## Type Checking
 
 You can use the *type check operator* (`is`) to check whether an instance is of a certain subclass type. In the below example, we can count the number of dogs in the pet array using `is` to check the type.
@@ -144,6 +147,7 @@ print("There are \(numDogs) dogs") // There are 3 dogs
 > Notice how the husky is counted as a dog since it inherits from `Dog`
 
 <br/>
+
 ## Downcasting
 
 When you believe that a constant or variable of a certain class type may actually refer to an instance of a subclass, you can try to downcast it to the subclass with a *type cast operator* (`as?` or `as!`).
@@ -199,6 +203,7 @@ for bird in birds as! [Bird] {
 ```
 
 <br/>
+
 ## Upcasting
 
 While seldom used, it is possible to "upcast" from a subclass to a super class using `as`. Here we are taking an instance of `Bird` and upcasting it to an instance of type `Animal`.
@@ -214,6 +219,7 @@ animal.identify() // I am a bird
 > Notice how after we perform the upcast and call `animal.identify()`, it calls the `identify()` function of `Bird`. This is because `animal` is still of type `Bird` behind the scenes.
 
 <br/>
+
 ## Links
 * [Apple Documentation on Inheritance](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/inheritance)
 * [Apple Documentation on Type Casting](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/typecasting)
