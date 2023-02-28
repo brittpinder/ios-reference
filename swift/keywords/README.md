@@ -15,5 +15,5 @@
 ### [`override`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/inheritance#Overriding)
 
 * Overrides a method, property or subscript from the superclass
-* Referenced in [Inheritance](https://github.com/brittpinder/ios-reference/tree/main/swift/inheritance#final)
+* Referenced in [Inheritance](https://github.com/brittpinder/ios-reference/tree/main/swift/inheritance)
 
