@@ -91,6 +91,7 @@ class Goldfish: Fish {
     }
 }
 ```
+> Note: Marking classes, methods and subscripts as `final` has a slight improvement on performance since it disables dynamic dispatch for that particular class, method or subscript.
 
 <br/>
 
