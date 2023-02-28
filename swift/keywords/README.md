@@ -14,6 +14,14 @@
 
 <br/>
 
+### [`fileprivate`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/accesscontrol/)
+
+* An access level that can be placed on a type (class, method, enum, property etc.)
+* Restricts access to the file in which an entity is declared
+* Referenced in [Access Control](https://github.com/brittpinder/ios-reference/tree/main/swift/access-control#fileprivate)
+
+<br/>
+
 ### [`final`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/inheritance#Preventing-Overrides)
 
 * Prevents a class, method, property or subscript from being overriden
@@ -36,6 +44,14 @@
 
 <br/>
 
+### [`internal`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/accesscontrol/)
+
+* The default access level placed on a type (class, method, enum, property etc.)
+* Restricts access to any source file within the app module
+* Referenced in [Access Control](https://github.com/brittpinder/ios-reference/tree/main/swift/access-control#internal)
+
+<br/>
+
 ### [`lazy`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/properties/#Lazy-Stored-Properties)
 
 * Indicates that a stored property's initial value isn't calculated until the first time it's used
@@ -43,10 +59,34 @@
 
 <br/>
 
+### [`open`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/accesscontrol/)
+
+* The least restrictive access level that can be placed on a type (class, method, enum, property etc.)
+* Allows access and subclassing to files both within and outside the defining module of the entity
+* Referenced in [Access Control](https://github.com/brittpinder/ios-reference/tree/main/swift/access-control#open)
+
+<br/>
+
 ### [`override`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/inheritance#Overriding)
 
 * Overrides a method, property or subscript from the superclass
 * Referenced in [Inheritance](https://github.com/brittpinder/ios-reference/tree/main/swift/inheritance)
+
+<br/>
+
+### [`private`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/accesscontrol/)
+
+* The most restrictive access level that can be placed on a type (class, method, enum, property etc.)
+* Restricts access to the enclosing declaration and to extensions of that declaration within the same file
+* Referenced in [Access Control](https://github.com/brittpinder/ios-reference/tree/main/swift/access-control#private)
+
+<br/>
+
+### [`public`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/accesscontrol/)
+
+* An access level that can be placed on a type (class, method, enum, property etc.)
+* Allows access to files both within and outside the defining module of the entity, however, files outside the defining module cannot subclass the entity
+* Referenced in [Access Control](https://github.com/brittpinder/ios-reference/tree/main/swift/access-control#public)
 
 <br/>
 
