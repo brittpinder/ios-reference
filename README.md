@@ -5,6 +5,7 @@
 * [Enums](https://github.com/brittpinder/ios-reference/tree/main/swift/enums)
 * [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes)
 * [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties)
+* [Inheritance](https://github.com/brittpinder/ios-reference/tree/main/swift/inheritance)
 * [Error Handling and Assertions](https://github.com/brittpinder/ios-reference/tree/main/swift/error-handling)
 * [Access Control](https://github.com/brittpinder/ios-reference/tree/main/swift/access-control)
 
@@ -21,8 +22,7 @@
 ## Priority
 
 1. Generics
-1. **Inheritance**
-	1. **`final`**
+1. Initialization & Deinitialization
 1. [**Closures**](https://github.com/jrasmusson/level-up-swift/tree/master/4-closures)
 1. **Containers**
 	1. 	Arrays
