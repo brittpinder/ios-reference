@@ -20,6 +20,8 @@ func greet(person: String) -> String {
 print(greet(person: "Anna")) // Hello, Anna!
 ```
 
+<br/>
+
 ## Returning Values
 
 ### Functions with Multiple Return Values
@@ -39,6 +41,8 @@ print(center.y) // 2.5
 ```
 > Note that the tuple's members don't need to be named at the point that the tuple is returned from the function, because their names are already specified as part of the function's return type.
 
+<br/>
+
 Here is an example of returning an optional tuple:
 
 ```swift
@@ -54,6 +58,8 @@ if let bounds = getBounds(array: [2, 7, 4, 9, -3, 6]) {
 }
 ```
 
+<br/>
+
 ### Functions with an Implicit Return
 
 If the entire body of a function is a single expression, the function will implicitly return that expression, which means that you can omit the `return` keyword. Both functions below have the same behaviour:
@@ -67,6 +73,8 @@ func addNumbers(num1: Int, num2: Int) -> Int {
     num1 + num2
 }
 ```
+
+<br/>
 
 ## Argument Labels and Parameter Names
 
@@ -90,6 +98,8 @@ print(greet(person: "Brittany", from: "Halifax")) // Hello Brittany! Glad you co
 
 > All parameters must have unique names. It’s possible for multiple parameters to have the same argument label, however unique argument labels help make your code more readable.
 
+<br/>
+
 ### Omitting Argument Labels
 
 If you don't specify an argument label, by default the parameter name will be the argument label. In the below example, no argument label is specified so it is defaulted to the parameter name of `numbers`:
@@ -111,6 +121,7 @@ func calculateAverage(_ numbers: [Float]) -> Float {
 
 let average = calculateAverage([2, 6, 10])
 ```
+<br/>
 
 ### Default Parameter Values
 
@@ -127,6 +138,8 @@ let button = createButton(width: 30, height: 20)
 let redButton = createButton(width: 40, height: 40, color: .red)
 
 ```
+
+<br/>
 
 ## Later
 
