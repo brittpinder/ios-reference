@@ -2,6 +2,8 @@
 
 ## Swift
 * [Optionals](https://github.com/brittpinder/ios-reference/tree/main/swift/optionals)
+* [Functions - wip](https://github.com/brittpinder/ios-reference/tree/main/swift/functions)
+* [Closures - wip](https://github.com/brittpinder/ios-reference/tree/main/swift/closures)
 * [Enums](https://github.com/brittpinder/ios-reference/tree/main/swift/enums)
 * [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes)
 * [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties)
@@ -24,7 +26,6 @@
 
 1. Generics
 1. Initialization & Deinitialization
-1. [**Closures**](https://github.com/jrasmusson/level-up-swift/tree/master/4-closures)
 1. **Containers**
 	1. 	Arrays
 	1. 	Sets
