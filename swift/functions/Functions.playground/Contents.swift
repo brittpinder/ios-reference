@@ -99,3 +99,62 @@ swapValues(&a, &b)
 print(a) // 4
 print(b) // 2
 
+
+
+
+func add(_ a: Int, _ b: Int) -> Int {
+    return a + b
+}
+
+func subtract(_ a: Int, _ b: Int) -> Int {
+    return a - b
+}
+
+func multiply(_ a: Int, _ b: Int) -> Int {
+    return a * b
+}
+
+func divide(_ a: Int, _ b: Int) -> Int {
+    return a / b
+}
+
+var mathFunction: (Int, Int) -> Int = add
+print(mathFunction(2, 3)) // 5
+
+mathFunction = multiply
+print(mathFunction(2, 3)) // 6
+
+var anotherMathFunction = add
+print(type(of: anotherMathFunction)) // (Int, Int) -> Int
+
+
+func calculate(_ a: Int, _ b: Int, _ operation: (Int, Int) -> Int) -> Int {
+    return operation(a, b)
+}
+
+let result = calculate(4, 7, multiply)
+print(result) // 28
+
+
+
+func chooseCalculation(operation: String) -> (Int, Int) -> Int {
+    switch operation {
+    case "+":
+        return add
+    case "-":
+        return subtract
+    case "*":
+        return multiply
+    case "/":
+        return divide
+    default:
+        // Obviously this case would need to be handled in a better way
+        return add
+    }
+}
+
+var calculation = chooseCalculation(operation: "-")
+print(calculation(7, 2)) // 5
+
+let calculationResult = chooseCalculation(operation: "/")(12, 3)
+print(calculationResult) // 4

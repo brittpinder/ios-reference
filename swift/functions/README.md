@@ -185,10 +185,96 @@ When the argument is a value stored at a physical address in memory, an optimiza
 
 <br/>
 
+## Function Types
+
+Every function in Swift has a type, consisting of the function's parameter types and return type. This allows functions to be passed as parameters to other functions or to be returned from other functions.
+
+The two functions below, both have the same type of `(Int, Int) -> Int`. They both take two parameters of type `Int` and return a value of type `Int`.
+
+```swift
+func add(_ a: Int, _ b: Int) -> Int {
+    return a + b
+}
+func multiply(_ a: Int, _ b: Int) -> Int {
+    return a * b
+}
+```
+Here is an example of a function that has no parameters or return value. It has a type of `() -> Void`.
+
+```swift
+func printHelloWorld() {
+    print("hello, world")
+}
+```
+<br/>
+
+### Using Function Types
+
+You can use function types just like any other types in Swift. For example, you can define a variable with a certain function type and assign an appropriate function to that variable:
+
+```swift
+var mathFunction: (Int, Int) -> Int = add
+print(mathFunction(2, 3)) // 5
+
+mathFunction = multiply
+print(mathFunction(2, 3)) // 6
+```
+Type inference also works when assigning function types to variables:
+
+```swift
+var anotherMathFunction = add
+print(type(of: anotherMathFunction)) // (Int, Int) -> Int
+```
+<br/>
+
+### Function Types as Parameter Types
+
+Using a function type as a parameter type allows you to pass functions as arguments to other functions:
+
+```swift
+func calculate(_ a: Int, _ b: Int, _ operation: (Int, Int) -> Int) -> Int {
+    return operation(a, b)
+}
+
+let result = calculate(4, 7, multiply)
+print(result) // 28
+```
+<br/>
+
+### Function Types as Return Types
+
+You can use a function type as the return type of another function by writing a complete function type immediately after the return arrow of the returning function.
+
+For example, suppose we had two more similar functions, `subtract` and `divide`. We could then write a function that returns a mathematical function depending on the operation symbol we provide:
+
+```swift
+func chooseCalculation(operation: String) -> (Int, Int) -> Int {
+    switch operation {
+    case "+":
+        return add
+    case "-":
+        return subtract
+    case "*":
+        return multiply
+    case "/":
+        return divide
+    default:
+        // Obviously this case would need to be handled in a better way
+        return add
+    }
+}
+
+var calculation = chooseCalculation(operation: "-")
+print(calculation(7, 2)) // 5
+
+let calculationResult = chooseCalculation(operation: "/")(12, 3)
+print(calculationResult) // 4
+```
+
 ## Later
 
-* Every function in Swift has a type, consisting of the function's parameter types and return type.
-* Using a function's type, you can pass functions as parameters to other functions and to return functions from functions. Functions can also be written within other functions to encapsulate useful functionality within a nested function scope
+
+* Functions can also be written within other functions to encapsulate useful functionality within a nested function scope
 
 ## Links
 
