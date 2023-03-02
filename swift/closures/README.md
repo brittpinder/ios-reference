@@ -180,6 +180,75 @@ names.sorted(by: <)
 
 ## Trailing Closures
 
+### Multiple Trailing Closures
+
+As shown in the previous section, when the last argument of a function is a closure, you can use trailing closure syntax to place the closure *outside* the function call. However, if you are calling a function that takes multiple closure arguments and they all appear at the end, it is possible to have multiple trailing closures.
+
+Consider the following function that rolls a die and executes one of two closures provided depending on whether the number rolled is even or odd.
+
+```swift
+func rollDie(numSides: Int, isOdd: () -> Void, isEven: () -> Void) {
+    let number = Int.random(in: 1...numSides)
+
+    if number % 2 == 0 {
+        isEven()
+    } else {
+        isOdd()
+    }
+}
+```
+
+Using trailing closure syntax, we can call this function like so:
+
+```swift
+func oddFunc() {
+    print("You rolled an odd number")
+}
+
+rollDie(numSides: 6, isOdd: oddFunc) {
+    print("You rolled an even number")
+}
+```
+
+However, this feels quite awkward because we've defined the `isEven` parameter as a trailing closure, but the `isOdd` function has to be defined elsewhere in order to be passed as an argument. Using multiple trailing closures, we can define both closures inline like so:
+
+```swift
+rollDie(numSides: 6) {
+    print("You rolled an odd number")
+} isEven: {
+    print("You rolled an even number")
+}
+```
+> Note: If a function takes multiple closures, you omit the argument label for the first trailing closure and you label the remaining trailing closures.
+
+<br/>
+
+### Trailing Closure as the Only Argument
+
+If a closure expression is provided as the only argument and you provide that expression as a trailing closure, you don’t need to write a pair of parentheses `()` after the function or method’s name when you call the function.
+
+For example, the `sorted` example from above:
+
+```swift
+names.sorted() { $0 < $1 }
+```
+
+could be written like so:
+
+```swift
+names.sorted { $0 < $1 }
+```
+
+This type of syntax is often used with the [`Array.map()`](https://developer.apple.com/documentation/swift/array/map(_:)-87c4d) function.
+
+```swift
+let numbers = [1, 2, 3, 4, 5]
+
+let numbersSquared = numbers.map { $0 * $0 }
+
+print(numbersSquared) // [1, 4, 9, 16, 25]
+```
+
 <br/>
 
 ## Capturing Values

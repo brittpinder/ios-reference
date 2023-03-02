@@ -87,6 +87,42 @@ names.sorted(by: { $0 < $1 })
 
 // Trailing closure
 names.sorted() { $0 < $1 }
+names.sorted { $0 < $1 }
 
 // Operator Method
 names.sorted(by: <)
+
+
+
+// Multiple closures
+func rollDie(numSides: Int, isOdd: () -> Void, isEven: () -> Void) {
+    let number = Int.random(in: 1...numSides)
+
+    if number % 2 == 0 {
+        isEven()
+    } else {
+        isOdd()
+    }
+}
+
+func oddFunc() {
+    print("You rolled an odd number")
+}
+
+rollDie(numSides: 6, isOdd: oddFunc) {
+    print("You rolled an even number")
+}
+
+
+rollDie(numSides: 6) {
+    print("You rolled an odd number")
+} isEven: {
+    print("You rolled an even number")
+}
+
+
+let numbers = [1, 2, 3, 4, 5]
+
+let numbersSquared = numbers.map { $0 * $0 }
+
+print(numbersSquared) // [1, 4, 9, 16, 25]
