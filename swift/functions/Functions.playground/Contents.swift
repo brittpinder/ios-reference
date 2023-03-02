@@ -66,6 +66,11 @@ let average = calculateAverage([2, 6, 10])
 
 
 
+func calculateAverage(_ numbers: Float...) -> Float {
+    return numbers.reduce(0, +) / Float(numbers.count)
+}
+
+calculateAverage(2, 6, 10)
 
 
 func createButton(width: CGFloat, height: CGFloat, color: UIColor = .blue) -> UIButton {
@@ -78,4 +83,19 @@ let button = createButton(width: 30, height: 20)
 let redButton = createButton(width: 40, height: 40, color: .red)
 
 
+
+
+
+func swapValues(_ a: inout Int, _ b: inout Int) {
+    let temp = a
+    a = b
+    b = temp
+}
+
+var a = 2
+var b = 4
+
+swapValues(&a, &b)
+print(a) // 4
+print(b) // 2
 
