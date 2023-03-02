@@ -271,10 +271,53 @@ let calculationResult = chooseCalculation(operation: "/")(12, 3)
 print(calculationResult) // 4
 ```
 
-## Later
+<br/>
 
+## Nested Functions
 
-* Functions can also be written within other functions to encapsulate useful functionality within a nested function scope
+All of the functions encountered so far have been defined at a global scope. Functions can also be written within other functions to encapsulate useful functionality within a nested function scope.
+
+Nested functions are hidden from the outside by default and can only be called and used by their enclosing function. However, an enclosing function can return one of its nested functions to allow the nested function to be used in another scope.
+
+For example, the `chooseCalculation` function from above could be rewritten like this:
+
+```swift
+func chooseCalculation(operation: String) -> (Int, Int) -> Int {
+    func addition(_ a: Int, _ b: Int) -> Int {
+        return a + b
+    }
+
+    func subtraction(_ a: Int, _ b: Int) -> Int {
+        return a - b
+    }
+
+    func multiplication(_ a: Int, _ b: Int) -> Int {
+        return a * b
+    }
+
+    func division(_ a: Int, _ b: Int) -> Int {
+        return a / b
+    }
+
+    switch operation {
+    case "+":
+        return addition
+    case "-":
+        return subtraction
+    case "*":
+        return multiplication
+    case "/":
+        return division
+    default:
+        // Obviously this case would need to be handled in a better way
+        return addition
+    }
+}
+
+var mathOperation = chooseCalculation(operation: "+")
+print(mathOperation(2, 7)) // 9
+
+```
 
 ## Links
 
