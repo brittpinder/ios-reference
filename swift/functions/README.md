@@ -275,9 +275,9 @@ print(calculationResult) // 4
 
 ## Nested Functions
 
-All of the functions encountered so far have been defined at a global scope. Functions can also be written within other functions to encapsulate useful functionality within a nested function scope.
+All of the functions encountered so far have been defined at a global scope - they are *global functions*. Functions can also be written within other functions to encapsulate useful functionality within a nested function scope.
 
-Nested functions are hidden from the outside by default and can only be called and used by their enclosing function. However, an enclosing function can return one of its nested functions to allow the nested function to be used in another scope.
+*Nested functions* are hidden from the outside by default and can only be called and used by their enclosing function. However, an enclosing function can return one of its nested functions to allow the nested function to be used in another scope.
 
 For example, the `chooseCalculation` function from above could be rewritten like this:
 
