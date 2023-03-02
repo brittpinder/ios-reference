@@ -3,7 +3,7 @@
 ## Swift
 * [Optionals](https://github.com/brittpinder/ios-reference/tree/main/swift/optionals)
 * [Functions](https://github.com/brittpinder/ios-reference/tree/main/swift/functions)
-* [Closures - wip](https://github.com/brittpinder/ios-reference/tree/main/swift/closures)
+* [Closures](https://github.com/brittpinder/ios-reference/tree/main/swift/closures)
 * [Enums](https://github.com/brittpinder/ios-reference/tree/main/swift/enums)
 * [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes)
 * [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties)
@@ -77,6 +77,7 @@
 		
 ## [Foundation](https://developer.apple.com/documentation/foundation)
 
+* [Advanced Closure Topics](https://github.com/brittpinder/ios-reference/tree/main/swift/closures#advanced-closure-topics)
 * Protocols
 * Extensions
 * Type Casting
