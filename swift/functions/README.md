@@ -156,7 +156,7 @@ let redButton = createButton(width: 40, height: 40, color: .red)
 
 ### In-Out Parameters
 
-Function parameters are constants by default meaning that you cannot change their values within the body of the function. If you want a function to modify a parameter's value and you want htose changes to persist after the function call has ended, define that parameter as an *in-out parameter* by placing the `inout` keyword right before the parameter's type. When passing an argument for an in-out parameter, you need to put an ampersand (`&`) directly before the variable's name.
+Function parameters are constants by default meaning that you cannot change their values within the body of the function. If you want a function to modify a parameter's value and you want those changes to persist after the function call has ended, define that parameter as an *in-out parameter* by placing the `inout` keyword right before the parameter's type. When passing an argument for an in-out parameter, you need to put an ampersand (`&`) directly before the variable's name.
 
 The below example takes two in-out parameters and swaps their values:
 

@@ -76,6 +76,13 @@
 
 <br/>
 
+### [`inout`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/functions/#In-Out-Parameters)
+
+* Used to declare an in-out parameter which can be modified within a function body and have those changes persist after the function call has ended.
+* Referenced in [Functions](https://github.com/brittpinder/ios-reference/tree/main/swift/functions#in-out-parameters)
+
+<br/>
+
 ### [`internal`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/accesscontrol/)
 
 * The default access level placed on a type (class, method, enum, property etc.)
@@ -224,7 +231,6 @@
 * `import`
 * `in`
 * `infix`
-* `inout`
 * `left`
 * `none`
 * `nonmutating`
