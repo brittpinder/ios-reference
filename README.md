@@ -43,14 +43,14 @@
 1. **Notification Center** (Observer Pattern)
 1. **SceneDelegate**
 1. **App Lifecycle**
-1. **View Controller Life Cycle**
-	1. https://www.youtube.com/watch?v=Nfzy1qgxSAg&ab_channel=SeanAllen
 1. UIView
 	1. Lifecycle
 	1. [View frames vs bounds](https://medium.com/@jon.lazar/my-approach-to-learning-ios-fccf943aead)
+	2. 1. https://www.youtube.com/watch?v=Nfzy1qgxSAg&ab_channel=SeanAllen
 1. **Labels and fonts - best practices**
 1. **adaptive layouts (changing orientation)**
 	1. 	`UITraitCollection`
+	2. [Handle View Rotations](https://developer.apple.com/documentation/uikit/uiviewcontroller#1652814)
 1. Points vs Pixels
 1. **UINavigationController**
 	1. 	Stack: Push/Pop vs Modal: Present/Dismiss 
@@ -74,6 +74,7 @@
 1. Testing
 1. Bundles
 2. `@autoclosure`
+3. Provisioning Profiles
 		
 ## [Foundation](https://developer.apple.com/documentation/foundation)
 
@@ -110,6 +111,8 @@
 
 ## UIKit
 
+* View Controllers
+	* [Methods for showing and hiding](https://developer.apple.com/documentation/uikit/view_controllers/showing_and_hiding_view_controllers)
 * Nibs and Bundles
 * Segues: Through storyboard (drag and drop) and through code
 * UICalendarView
