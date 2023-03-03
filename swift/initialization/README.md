@@ -136,7 +136,7 @@ var unknown = ShoppingListItem(quantity: 4)
 
 ## Initializer Delegation for Value Types
 
-Initializers can call other initializers to perform part of an instance’s initialization. This process, known as *initializer delegation*, avoids duplicating code across multiple initializers.
+Initializers can call other initializers to perform part of an instance’s initialization. This process, known as *initializer delegation*, avoids duplicating code across multiple initializers. Value types (structures and enumerations) don’t support inheritance, and so their initializer delegation process is relatively simple, because they can only delegate to another initializer that they provide themselves.
 
 In the following example, the third initializer `init(center:size:)`, calculates an appropriate origin and then calls (or delegates) to the `init(origin:size:)` initializer.
 
@@ -170,7 +170,113 @@ struct Rect {
 
 <br/>
 
-## Class Inheritance and Initialization
+## Initializer Delegation for Classes
+
+The initializer delegation process for classes is much more complex because classes support inheritance. During initialization, not only do all of a class's properties need to be assigned an initial value, but all of the properties that it inherits need to be assigned an initial value as well.
+
+There are two types of initializers that help to ensure that all stored properties of a class receive an initial value: *designated initializers* and *convenience initializers*
+
+<br/>
+
+### Designated Initializers
+
+Designated initializers are the **primary** initializers for a class. They fully initialize all properties introduced by a class and call an appropriate superclass initializer to continue the initialization process up the superclass chain.
+
+Every class must have at least one designated initializer. In some cases, this requirement is satisfied by inheriting one or more designated initializers from a superclass. It is helpful to think of designated initializers as “funnel” points through which initialization takes place, and through which the initialization process continues up the superclass chain.
+
+All initializers that we have seen thus far have been designated initializers. Here is another example:
+
+```swift
+class Polygon {
+    var points: [Point]
+
+    init(points: [Point]) {
+        self.points = points
+    }
+}
+
+var square = Polygon(points: [Point(x: 0, y: 0),
+                              Point(x: 4, y: 0),
+                              Point(x: 4, y: 4),
+                              Point(x: 0, y: 4)])
+```
+
+The initializer above is "designated" because it initializes all of the class's stored properties.
+
+<br/>
+
+### Convenience Initializers
+
+Convenience initializers are **secondary**, supporting initializers for a class. They are indicated with the `convenience` keyword and provide shortcuts to common initialization patterns that will save time or provide clearer intent. For example, we could add a convenience initializer to the class `Polygon` to make initializing squares much more straightforward by just specifying a length:
+
+```swift
+class Polygon {
+    var points: [Point]
+
+    init(points: [Point]) {
+        self.points = points
+    }
+
+    convenience init(squareWithLength length: CGFloat) {
+        let points = [
+            Point(x: 0, y: 0),
+            Point(x: length, y: 0),
+            Point(x: length, y: length),
+            Point(x: 0, y: length),
+        ]
+
+        self.init(points: points)
+    }
+}
+
+var convenientSquare = Polygon(squareWithLength: 4)
+```
+Convenience initializers are not required, but if you define one it *must* ultimately call a designated initializer within the same class.
+
+<br/>
+
+### Initializer Delegation for Class Types
+
+To simplify the relationships between designated and convenience initializers, Swift applies the following three rules for delegation calls between initializers:
+
+1. A designated initializer must call a designated initializer from its immediate superclass.
+2. A convenience initializer must call another initializer from the *same* class.
+3. A convenience initializer must ultimately call a designated initializer.
+
+A simple way to remember this is:
+
+* Designated initializers must always delegate *up*
+* Convenience initializers must always delegate *across*
+
+### Two-Phase Initialization
+
+* Class initialization in Swift is a two-phase process.
+* In the first phase, each stored property is assigned an initial value by the class that introduced it.
+* Once the initial state for every stored property has been determined, the second phase begins, and each class is given the opportunity to customize its stored properties further before the new instance is considered ready for use.
+* The use of a two-phase initialization process makes initialization safe, while still giving complete flexibility to each class in a class hierarchy.
+* Two-phase initialization prevents property values from being accessed before they’re initialized, and prevents property values from being set to a different value by another initializer unexpectedly.
+
+Swift’s compiler performs four helpful safety-checks to make sure that two-phase initialization is completed without error:
+
+1. A designated initializer must ensure that all of the properties introduced by its class are initialized before it delegates up to a superclass initializer.
+2. A designated initializer must delegate up to a superclass initializer before assigning a value to an inherited property. If it doesn’t, the new value the designated initializer assigns will be overwritten by the superclass as part of its own initialization.
+3. A convenience initializer must delegate to another initializer before assigning a value to any property (including properties defined by the same class). If it doesn’t, the new value the convenience initializer assigns will be overwritten by its own class’s designated initializer.
+4. An initializer can’t call any instance methods, read the values of any instance properties, or refer to self as a value until after the first phase of initialization is complete.
+
+### Initializer Inheritance and Overriding
+
+* Swift subclasses don’t inherit their superclass initializers by default
+* When you write a subclass initializer that matches a superclass designated initializer, you are effectively providing an override of that designated initializer. Therefore, you must write the override modifier before the subclass’s initializer definition
+* Conversely, if you write a subclass initializer that matches a superclass convenience initializer, that superclass convenience initializer can never be called directly by your subclass. Therefore, your subclass is not (strictly speaking) providing an override of the superclass initializer. As a result, you don’t write the override modifier when providing a matching implementation of a superclass convenience initializer.
+
+### Automatic Initializer Inheritance
+
+* As mentioned above, subclasses don’t inherit their superclass initializers by default. However, superclass initializers are automatically inherited if certain conditions are met.
+
+Assuming that you provide default values for any new properties you introduce in a subclass, the following two rules apply:
+
+1. If your subclass doesn’t define any designated initializers, it automatically inherits all of its superclass designated initializers.
+2. If your subclass provides an implementation of all of its superclass designated initializers — either by inheriting them as per rule 1, or by providing a custom implementation as part of its definition — then it automatically inherits all of the superclass convenience initializers.
 
 <br/>
 
@@ -189,3 +295,10 @@ struct Rect {
 # [Deinitialization](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/deinitialization)
 
 Deinitializers perform any custom cleanup just before an instance of that class is deallocated.
+
+
+## Links
+
+* [Apple Documentation on Initialization](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization)
+* [Apple Documentation on Deinitialization](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/deinitialization)
+* [Convenience Initializer Video Tutorial](https://www.youtube.com/watch?v=IPrYRyd2qQU&ab_channel=SeanAllen)

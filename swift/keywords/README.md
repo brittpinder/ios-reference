@@ -18,6 +18,13 @@
 
 <br/>
 
+### [`convenience`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization#Designated-Initializers-and-Convenience-Initializers)
+
+* Defines a *convenience initializer* which provides a shortcut to a common initialization pattern and eventually delegates to a *designated initializer*
+* Referenced in [Initialization](https://github.com/brittpinder/ios-reference/tree/main/swift/initialization#convenience-initializers)
+
+<br/>
+
 ### [`didSet`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/properties/#Property-Observers)
 
 * A *property observer* that gets called right after a property is set
@@ -220,6 +227,8 @@
 * `_`
 * `associatedType`
 * `associativity`
+* `async`
+* `await`
 * `convenience`
 * `defer`
 * `deinit`

@@ -109,3 +109,31 @@ struct Rect {
         self.init(origin: Point(x: originX, y: originY), size: size)
     }
 }
+
+
+class Polygon {
+    var points: [Point]
+
+    init(points: [Point]) {
+        self.points = points
+    }
+
+    convenience init(squareWithLength length: CGFloat) {
+        let points = [
+            Point(x: 0, y: 0),
+            Point(x: length, y: 0),
+            Point(x: length, y: length),
+            Point(x: 0, y: length),
+        ]
+
+        self.init(points: points)
+    }
+}
+
+
+var square = Polygon(points: [Point(x: 0, y: 0),
+                               Point(x: 4, y: 0),
+                               Point(x: 4, y: 4),
+                               Point(x: 0, y: 4)])
+
+var convenientSquare = Polygon(squareWithLength: 4)
