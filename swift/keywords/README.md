@@ -229,7 +229,6 @@
 * `associativity`
 * `async`
 * `await`
-* `convenience`
 * `defer`
 * `deinit`
 * `dynamic`
