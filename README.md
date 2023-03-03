@@ -77,12 +77,12 @@
 2. `@autoclosure`
 3. Provisioning Profiles
 4. `Any` and `AnyObject`
+5. Protocols
+6. Extensions
 		
 ## [Foundation](https://developer.apple.com/documentation/foundation)
 
 * [Advanced Closure Topics](https://github.com/brittpinder/ios-reference/tree/main/swift/closures#advanced-closure-topics)
-* Protocols
-* Extensions
 * Type Casting
 * Subscripts
 * Ranges
@@ -97,7 +97,6 @@
 	* `required`
 	* `required init?`
 	* `@discardableResult`
-	* `open`
 	* `dynamic`
 	* `@available(iOS 16.0, *)`
 	* `@MainActor`
