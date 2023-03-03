@@ -9,46 +9,66 @@ import UIKit
 
 class MainViewController: UIViewController {
 
+    init() {
+        print("Main: init")
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func loadView() {
+        print("Main: loadView")
+        super.loadView()
+    }
+
     override func viewDidLoad() {
-        super.viewDidLoad()
         print("Main: viewDidLoad")
+        super.viewDidLoad()
         setupUI()
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         print("Main: viewWillAppear")
+        super.viewWillAppear(animated)
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         print("Main: viewDidAppear")
+        super.viewDidAppear(animated)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
         print("Main: viewWillDisappear")
+        super.viewWillDisappear(animated)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
         print("Main: viewDidDisappear")
+        super.viewDidDisappear(animated)
+    }
+
+    deinit {
+        print("Main: deinit")
     }
 }
 
 extension MainViewController {
     override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
         print("Main: viewWillLayoutSubviews")
+        super.viewWillLayoutSubviews()
+
     }
 
     override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
         print("Main: viewDidLayoutSubviews")
+        super.viewDidLayoutSubviews()
     }
 }
 
 extension MainViewController {
+
     func setupUI() {
         let button = UIButton(type: .system)
         button.configuration = .filled()
@@ -63,6 +83,8 @@ extension MainViewController {
     }
 
     @objc func nextButtonPressed() {
+        print("\nNext Button Pressed\n")
+
         self.navigationController?.pushViewController(PurpleViewController(), animated: true)
     }
 }
