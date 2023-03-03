@@ -61,4 +61,25 @@ class Person {
 }
 
 var person = Person(name: "Bob")
-person.name = "Robert" // Error: Cannot assign to property: 'name' is a let constant
+//person.name = "Robert" // Error: Cannot assign to property: 'name' is a let constant
+
+
+//class ShoppingListItem {
+//    var name: String?
+//    var quantity = 1
+//    var purchased = false
+//}
+//var item = ShoppingListItem()
+
+struct ShoppingListItem {
+    var name: String?
+    var quantity = 1
+    var purchased = false
+}
+var item = ShoppingListItem()
+var anotherItem = ShoppingListItem(name: "Carrot", quantity: 3, purchased: true)
+
+
+var bread = ShoppingListItem(name: "Bread", purchased: true)
+var juice = ShoppingListItem(name: "Juice", quantity: 2)
+var unknown = ShoppingListItem(quantity: 4)

@@ -100,6 +100,38 @@ person.name = "Robert" // Error: Cannot assign to property: 'name' is a let cons
 
 ## Default Initializers
 
+If a structure or class provides default values for all of its stored properties and doesn't provide at least one initializer itself, Swift will create a *default initializer* which simply creates a new instance with all of its properties set to their default values.
+
+```swift
+class ShoppingListItem {
+    var name: String?
+    var quantity = 1
+    var purchased = false
+}
+var item = ShoppingListItem()
+```
+
+Structures additionally receive a *memberwise initializer* (if they don't define any of their own custom initializers). If the above class were converted to a struct, we could initialize it with a memberwise initializer:
+
+```swift
+struct ShoppingListItem {
+    var name: String?
+    var quantity = 1
+    var purchased = false
+}
+var item = ShoppingListItem()
+var anotherItem = ShoppingListItem(name: "Carrot", quantity: 3, purchased: true)
+```
+
+When you call a memberwise initializer, you can omit values for any properties that have default values:
+
+```swift
+var bread = ShoppingListItem(name: "Bread", purchased: true)
+var juice = ShoppingListItem(name: "Juice", quantity: 2)
+var unknown = ShoppingListItem(quantity: 4)
+```
+> Note: When you omit properties in a memberwise initializer, the remaining properties still need to be provided in order
+
 <br/>
 
 ## Initializer Delegation for Value Types

@@ -13,6 +13,8 @@ class SomeClass {
 ```
 >Note: To adhere to Swift naming conventions, always define your struct and class names with `UpperCamelCase`. Give the properties and methods of structs and classes `lowerCamelCase` names.
 
+<br/>
+
 ## Initialization
 
 Structures have default initializers so you don't need to explicitly declare an `init()` method:
@@ -68,6 +70,9 @@ class Dog {
 
 var dog = Dog(name: "Aayla", age: 5)
 ```
+> There is an exception to this rule: If all of a class's stored properties have default values, Swift will create a default initializer. Refer to [Initialization](https://github.com/brittpinder/ios-reference/tree/main/swift/initialization#default-initializers) for more details.
+
+<br/>
 
 ## Value vs. Reference Types
 It is very important to remember that structs are *value* types whereas classes are *references* types.
@@ -118,6 +123,8 @@ You can compare two variables using the identity operators `===` and `!==` to se
 print(dog === otherDog) // true
 print(dog !== otherDog) // false
 ```
+
+<br/>
 
 ## Mutability
 
@@ -188,6 +195,7 @@ otherDog.addToy(toy: "Rooster") // This is ok
 ```
 Read more about using `var` and `let` with classes and structs in the [Properties Section](https://github.com/brittpinder/ios-reference/tree/main/swift/properties)
 
+<br/>
 
 ## Comparing Structures and Classes
 
