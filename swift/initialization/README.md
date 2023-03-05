@@ -172,7 +172,7 @@ struct Rect {
 
 ## Initializer Delegation for Classes
 
-The initializer delegation process for classes is much more complex because classes support inheritance. During initialization, not only do all of a class's properties need to be assigned an initial value, but all of the properties that it inherits need to be assigned an initial value as well.
+The initializer delegation process for classes is much more complex because classes support inheritance. During initialization, not only do all of a class's properties need to be assigned an initial value, but also all of the properties that it inherits.
 
 There are two types of initializers that help to ensure that all stored properties of a class receive an initial value: *designated initializers* and *convenience initializers*
 
@@ -231,11 +231,11 @@ class Polygon {
 
 var convenientSquare = Polygon(squareWithLength: 4)
 ```
-Convenience initializers are not required, but if you define one it *must* ultimately call a designated initializer within the same class.
+Convenience initializers are not required, but if you define one it *must* ultimately call a designated initializer within the same class. Any class initializer that calls another initializer within the same class is a convenience initializer and *must* be marked with `convenience`.
 
 <br/>
 
-### Initializer Delegation for Class Types
+### Designated vs. Convenience Initializers
 
 To simplify the relationships between designated and convenience initializers, Swift applies the following three rules for delegation calls between initializers:
 
@@ -247,6 +247,65 @@ A simple way to remember this is:
 
 * Designated initializers must always delegate *up*
 * Convenience initializers must always delegate *across*
+
+An example of this is shown below. The top row represents the super class and the rows below are subclasses. As you can see, the designated intializers always call a designated initializer from their superclass and the convenience initializers always call another initializer (designated or convenience) from within the same class. The designated initializers in this hierarchy act as “funnel” points for class initialization.
+
+![](images/0.png)
+
+Below is a practical example of a subclass of `UIButton`. It has a designated initializer and two convenience initializers.
+
+```swift
+class CustomButton: UIButton {
+    // Designated Initializer: calls superclass designated initializer
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        layer.cornerRadius = 10
+        translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    // Convenience Initializer: Calls designated initializer
+    convenience init(color: UIColor, title: String) {
+        self.init(frame: .zero)
+        self.backgroundColor = color
+        self.setTitle(title, for: .normal)
+    }
+
+    // Convenience Initializer: Calls convenience initializer
+    convenience init(color: UIColor, title: String, width: CGFloat, height: CGFloat) {
+        self.init(color: color, title: title)
+        widthAnchor.constraint(equalToConstant: width).isActive = true
+        heightAnchor.constraint(equalToConstant: height).isActive = true
+    }
+}
+```
+
+Buttons can be created using any of the three initializers defined in this class. Notice how using the convenience initializers greatly reduces the amount of manual setup required.
+
+![](images/1.png)
+
+```swift
+let button1 = CustomButton()
+let button2 = CustomButton(color: .systemGreen, title: "Button 2")
+let button3 = CustomButton(color: .systemBlue, title: "Button 3", width: 280, height: 50)
+
+let stackView = UIStackView()
+
+override func viewDidLoad() {
+    super.viewDidLoad()
+
+    button1.backgroundColor = .systemRed
+    button1.setTitle("Button 1", for: .normal)
+    button1.widthAnchor.constraint(equalToConstant: 280).isActive = true
+    button1.heightAnchor.constraint(equalToConstant: 50).isActive = true
+
+    button2.widthAnchor.constraint(equalToConstant: 280).isActive = true
+    button2.heightAnchor.constraint(equalToConstant: 50).isActive = true
+
+    // No need to manually configure button3 because the convenience initializer takes care of it
+}
+```
+> Some implementation details such as arranging the buttons in a stackview have been excluded in order to better highlight the important parts of the example.
 
 ### Two-Phase Initialization
 

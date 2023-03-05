@@ -20,7 +20,7 @@
 
 ### [`convenience`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization#Designated-Initializers-and-Convenience-Initializers)
 
-* Defines a *convenience initializer* which provides a shortcut to a common initialization pattern and eventually delegates to a *designated initializer*
+* Defines a *convenience initializer* which provides a shortcut to a common initialization pattern and delegates to another convenience initializer or a *designated initializer*
 * Referenced in [Initialization](https://github.com/brittpinder/ios-reference/tree/main/swift/initialization#convenience-initializers)
 
 <br/>

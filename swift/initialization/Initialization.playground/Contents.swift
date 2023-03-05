@@ -137,3 +137,5 @@ var square = Polygon(points: [Point(x: 0, y: 0),
                                Point(x: 0, y: 4)])
 
 var convenientSquare = Polygon(squareWithLength: 4)
+
+
