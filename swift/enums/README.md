@@ -1,6 +1,5 @@
 # Enums
 
-## Syntax
 
 Each enum value is defined using the keyword `case`
 
@@ -26,6 +25,7 @@ The type of a variable is inferred when it’s initialized to a possible enum va
 var favouritePlanet = Planet.mars
 favouritePlanet = .jupiter
 ```
+<br/>
 
 ## Iteration
 You can easily iterate over the values of an enum by having it inherit from `CaseIterable` and then accessing the `.allCases` property.
@@ -49,6 +49,7 @@ for direction in Direction.allCases {
 // left
 // right
 ```
+<br/>
 
 ## Raw Values
 Enumeration cases can come prepopulated with default values (called raw values), which are all of the same type. Raw values can be strings, characters, or any of the integer or floating-point number types. Each raw value must be unique within its enumeration declaration.
@@ -119,6 +120,9 @@ print(possibleColor) // Optional(Color.red)
 let anotherPossibleColor = Color(rawValue: 7)
 print(anotherPossibleColor) // nil
 ```
+This implicitly defined initializer is referred to as a [Failable Initializer](https://github.com/brittpinder/ios-reference/tree/main/swift/initialization#failable-initializers).
+
+<br/>
 
 ## Associated Values of Different Types
 In Swift it is possible to store associated values that are different for each case of the enumeration. In the below example, a Mark can be stored as a gpa (ex: 3.5, 4.0, 2.6) or a grade (ex: A+, B-, F)
@@ -175,6 +179,7 @@ switch yearMark {
         print("Grade: \(firstSemester), \(secondSemester)")
 }
 ```
+<br/>
 
 ## Recursive Enumerations
 
@@ -220,6 +225,8 @@ let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.numb
 
 print(evaluate(product)) // (5 + 4) * 2 = 18
 ```
+<br/>
+
 ## Enums with Computed Properties
 Enums cannot have stored properties, but they can have computed properties:
 
@@ -239,6 +246,7 @@ enum Device {
 let device = Device.iPhone
 print(device.year) // 2007
 ```
+<br/>
 
 ## Enums with Functions
 Functions can be added to enums like so
@@ -253,6 +261,8 @@ enum Season: String {
 }
 print(Season.summer.displayString()) // Summer
 ```
+<br/>
+
 ## Enums with Static Functions
 
 ```swift
@@ -272,6 +282,7 @@ enum Currency {
 
 print(Currency.getDisplayString(currency: Currency.sek)) // Swedish Krona
 ```
+<br/>
 
 ## Enums with Mutating Functions
 You can simulate an enum having a state by having it mutate itself:
@@ -295,6 +306,7 @@ var light = TrafficLight.red
 light.next() // light is now equal to .green
 light.next() // light is now equal to .yellow
 ```
+<br/>
 
 ## Enums with Initializers
 ```swift
@@ -315,6 +327,10 @@ enum LifeStage {
 let lifeStage = LifeStage(age: 4)
 print(lifeStage) // child
 ```
+See also [Failable Initializers for Enumerations](https://github.com/brittpinder/ios-reference/tree/main/swift/initialization#failable-initializers-for-enumerations)
+
+<br/>
+
 ## Helpful Links
 * [Swift Documentation](https://docs.swift.org/swift-book/LanguageGuide/Enumerations.html)
 * [ios-starter-kit](https://github.com/jrasmusson/ios-starter-kit/blob/master/basics/Enums/README.md)
