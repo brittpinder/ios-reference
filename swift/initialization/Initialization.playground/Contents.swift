@@ -316,3 +316,28 @@ class UntitledDocument: Document {
         super.init(name: "[Untitled]")!
     }
 }
+
+
+class Position {
+    let x: Int
+    let y: Int
+
+    required init(x: Int, y: Int) {
+        self.x = x
+        self.y = y
+    }
+}
+
+class VisitedPosition: Position {
+    var isVisited: Bool
+
+    init(x: Int, y: Int, isVisited: Bool) {
+        self.isVisited = isVisited
+        super.init(x: x, y: y)
+    }
+
+    required init(x: Int, y: Int) {
+        self.isVisited = false
+        super.init(x: x, y: y)
+    }
+}

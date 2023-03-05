@@ -542,6 +542,50 @@ class UntitledDocument: Document {
 
 ## Required Initializers
 
+Required initializers, indicated by the keyword `required`, must be implemented in every subclass. Required initializers guarantee that you can initialize a class or any of its subclasses with that initializer signature.
+
+For example, suppose we had a class `Position` that contained an x and y value. We could mark its initializer as `required` to ensure that we can always create an instance of `Position` (either directly or through a subclass) by providing an x and y value:
+
+```swift
+class Position {
+    let x: Int
+    let y: Int
+
+    required init(x: Int, y: Int) {
+        self.x = x
+        self.y = y
+    }
+}
+```
+If we subclass `Position` to create a `VisitedPosition` that holds a flag to indicate whether or not that position has been visited, we *must* override the required initializer from the base class. We must also mark this initializer as `required` to indicate that the initializer requirement applies to further subclasses in the chain.
+
+```swift
+class VisitedPosition: Position {
+    var isVisited: Bool
+
+    init(x: Int, y: Int, isVisited: Bool) {
+        self.isVisited = isVisited
+        super.init(x: x, y: y)
+    }
+
+    required init(x: Int, y: Int) {
+        self.isVisited = false
+        super.init(x: x, y: y)
+    }
+}
+```
+> Note: When overriding a required designated initializer, you don't write the `override` keyword
+
+<br/>
+
+You will often run into a required initializer when creating subclassing compoments from UIKit:
+
+![](images/2.png)
+
+This stems from UI components being initialized from a storyboard file. When you subclass a UI component and don't implement the required initializer, Xcode complains because it doesn't know how to initialize an instance of that component from `NSCoder`. If you are creating your components programmatically, you can use the default "fix" for the error which will supply a required initializer that calls `fatalError`. You don't have to worry - this initializer will never be called because it can't be created from a storyboard.
+
+![](images/3.png)
+
 <br/>
 
 ## Setting a Default Property Value with a Closure or Function
@@ -557,4 +601,5 @@ Deinitializers perform any custom cleanup just before an instance of that class 
 
 * [Apple Documentation on Initialization](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization)
 * [Apple Documentation on Deinitialization](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/deinitialization)
-* [Convenience Initializer Video Tutorial](https://www.youtube.com/watch?v=IPrYRyd2qQU&ab_channel=SeanAllen)
+* [Convenience Initializer Video](https://www.youtube.com/watch?v=IPrYRyd2qQU&ab_channel=SeanAllen)
+* [Required Initializer Video](https://www.youtube.com/watch?v=DGSoxiLNP_0&ab_channel=iOSAcademy)
