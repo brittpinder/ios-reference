@@ -440,6 +440,106 @@ print(anotherSuit) // nil
 
 <br/>
 
+### Propogation of Initialization Failure
+
+Failable initializers can delegate across to other initializers (failable or non-failable) within the same class, struct or enum. Similarly, a subclass failable initializer can delegate up to a superclass initializer. In either case, if you delegate to another initializer that causes initialization to fail, the entire initialization process fails immediately, and no further initialization code is executed.
+
+In the following example, `CartItem` models a shopping cart item where the quantity must be at least 1.
+
+```swift
+class Product {
+    let name: String
+
+    init?(name: String) {
+        if name.isEmpty {
+            return nil
+        }
+        self.name = name
+    }
+}
+
+class CartItem: Product {
+    let quantity: Int
+
+    init?(name: String, quantity: Int) {
+        if quantity < 1 {
+            return nil
+        }
+        self.quantity = quantity
+        super.init(name: name)
+    }
+}
+```
+The failable initializer of `CartItem` first validates that the `quantity` is at least 1 and then delegates to its superclass initializer which validates that the `name` is not `nil`.
+
+```swift
+func createCartItem(name: String, quantity: Int) {
+    if let _ = CartItem(name: name, quantity: quantity) {
+        print("Initialization was successful")
+    } else {
+        print("Initialization failed")
+    }
+}
+
+createCartItem(name: "Book", quantity: 1) // Initialization was successful
+createCartItem(name: "Shirt", quantity: 0) // Initialization failed
+createCartItem(name: "", quantity: 1) // Initialization failed
+```
+
+<br/>
+
+### Overriding Failable Initializers
+
+It is possible to override a failable superclass initializer with either a failable or non-failable initializer. This enables you to define a subclass for which initialization can't fail, even though initialization of the superclass is allowed to fail.
+
+> Note: the inverse does not apply; you cannot override a non-failable initializer with a failable one.
+
+In the following example, `AutomaticallyNamedDocument` overrides the failable intializer of `Document` and ensures that `name` always has a valid value.
+
+```swift
+class Document {
+    var name: String?
+
+    init() {} // Creates a document with a nil name
+
+    init?(name: String) { // Creates a document with a non-nil name
+        if name.isEmpty {
+            return nil
+        }
+        self.name = name
+    }
+}
+
+class AutomaticallyNamedDocument: Document {
+    override init() {
+        super.init()
+        self.name = "[Untitled]"
+    }
+
+    override init(name: String) { // Overrides failable initializer
+        super.init()
+        if name.isEmpty {
+            self.name = "[Untitled]"
+        } else {
+            self.name = name
+        }
+    }
+}
+```
+
+If you override a failable superclass initializer, the only way to call the superclass initializer is to force-unwrap the result of the failable superclass initializer:
+
+```swift
+class UntitledDocument: Document {
+    override init() {
+        super.init(name: "[Untitled]")!
+    }
+}
+```
+> If an empty string were passed in the example above (eg: `super.init(name: "")!`), it would result in a runtime error.
+
+<br/>
+
 ## Required Initializers
 
 <br/>

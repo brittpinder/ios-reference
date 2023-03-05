@@ -239,3 +239,80 @@ print(suit) // Optional(Suit.spade)
 
 let anotherSuit = Suit(rawValue: "clover")
 print(anotherSuit) // nil
+
+
+
+class Product {
+    let name: String
+
+    init?(name: String) {
+        if name.isEmpty {
+            return nil
+        }
+        self.name = name
+    }
+}
+
+class CartItem: Product {
+    let quantity: Int
+
+    init?(name: String, quantity: Int) {
+        if quantity < 1 {
+            return nil
+        }
+        self.quantity = quantity
+        super.init(name: name)
+    }
+}
+
+func createCartItem(name: String, quantity: Int) {
+    if let _ = CartItem(name: name, quantity: quantity) {
+        print("Initialization was successful")
+    } else {
+        print("Initialization failed")
+    }
+}
+
+createCartItem(name: "Book", quantity: 1) // Initialization was successful
+createCartItem(name: "Shirt", quantity: 0) // Initialization failed
+createCartItem(name: "", quantity: 1) // Initialization failed
+
+
+
+
+
+class Document {
+    var name: String?
+
+    init() {} // Creates a document with a nil name
+
+    init?(name: String) { // Creates a document with a non-nil name
+        if name.isEmpty {
+            return nil
+        }
+        self.name = name
+    }
+}
+
+class AutomaticallyNamedDocument: Document {
+    override init() {
+        super.init()
+        self.name = "[Untitled]"
+    }
+
+    override init(name: String) { // Overrides failable initializer
+        super.init()
+        if name.isEmpty {
+            self.name = "[Untitled]"
+        } else {
+            self.name = name
+        }
+    }
+}
+
+
+class UntitledDocument: Document {
+    override init() {
+        super.init(name: "[Untitled]")!
+    }
+}
