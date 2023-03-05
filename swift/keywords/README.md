@@ -78,8 +78,16 @@
 
 ### [`init`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization#Initializers)
 
-* Defines the initializer of a struct or class
+* Defines the initializer of a struct, class or enum
 * Referenced in [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes#initialization)
+
+<br/>
+
+### [`init?`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Failable-Initializers)
+
+* Defines a failable initializer for a struct, class or enum
+* Failable initializers create optional instances and return `nil` when initialization fails
+* Referenced in [Initialization](https://github.com/brittpinder/ios-reference/tree/main/swift/initialization#failable-initializers)
 
 <br/>
 
