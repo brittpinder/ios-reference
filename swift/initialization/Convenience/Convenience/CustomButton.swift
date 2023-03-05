@@ -20,6 +20,7 @@ class CustomButton: UIButton {
     // Convenience Initializer: Calls designated initializer
     convenience init(color: UIColor, title: String) {
         self.init(frame: .zero)
+
         self.backgroundColor = color
         self.setTitle(title, for: .normal)
     }
@@ -27,6 +28,7 @@ class CustomButton: UIButton {
     // Convenience Initializer: Calls convenience initializer
     convenience init(color: UIColor, title: String, width: CGFloat, height: CGFloat) {
         self.init(color: color, title: title)
+
         widthAnchor.constraint(equalToConstant: width).isActive = true
         heightAnchor.constraint(equalToConstant: height).isActive = true
     }

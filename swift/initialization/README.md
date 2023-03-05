@@ -267,6 +267,7 @@ class CustomButton: UIButton {
     // Convenience Initializer: Calls designated initializer
     convenience init(color: UIColor, title: String) {
         self.init(frame: .zero)
+
         self.backgroundColor = color
         self.setTitle(title, for: .normal)
     }
@@ -274,6 +275,7 @@ class CustomButton: UIButton {
     // Convenience Initializer: Calls convenience initializer
     convenience init(color: UIColor, title: String, width: CGFloat, height: CGFloat) {
         self.init(color: color, title: title)
+
         widthAnchor.constraint(equalToConstant: width).isActive = true
         heightAnchor.constraint(equalToConstant: height).isActive = true
     }
@@ -288,8 +290,6 @@ Buttons can be created using any of the three initializers defined in this class
 let button1 = CustomButton()
 let button2 = CustomButton(color: .systemGreen, title: "Button 2")
 let button3 = CustomButton(color: .systemBlue, title: "Button 3", width: 280, height: 50)
-
-let stackView = UIStackView()
 
 override func viewDidLoad() {
     super.viewDidLoad()
@@ -306,6 +306,8 @@ override func viewDidLoad() {
 }
 ```
 > Some implementation details such as arranging the buttons in a stackview have been excluded in order to better highlight the important parts of the example.
+
+<br/>
 
 ### Two-Phase Initialization
 
