@@ -172,6 +172,13 @@
 
 <br/>
 
+### [`required`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Required-Initializers)
+
+* Defines a *required initializer* which must be implemented in any subclass
+* Referenced in [Initialization](https://github.com/brittpinder/ios-reference/tree/main/swift/initialization#required-initializers)
+
+<br/>
+
 ### [`self`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/guidedtour#Objects-and-Classes)
 
 * An implicit property that each instance of a type has, that refers to the instance itself
@@ -257,7 +264,6 @@
 * `protocol`
 * `precedencegroup`
 * `repeat`
-* `required`
 * `rethrows`
 * `right`
 * `static`
