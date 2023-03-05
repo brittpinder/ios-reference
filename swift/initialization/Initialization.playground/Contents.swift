@@ -170,3 +170,72 @@ let bicycle = LandVehicle(bicycleWithMaxSpeed: 20)
 print(bicycle.maxSpeed)
 print(bicycle.numberOfWheels)
 
+
+
+class Student {
+    let name: String
+
+    init?(name: String) {
+        if name.isEmpty {
+            return nil
+        }
+        self.name = name
+    }
+}
+
+let student1 = Student(name: "Bridget")
+print(student1 == nil) // false
+
+let student2 = Student(name: "")
+print(student2 == nil) // true
+
+
+let number = Int("34")
+print(number) // Optional(34)
+
+
+let anotherNumber = Int("three")
+print(anotherNumber) // nil
+
+
+
+enum MeasurementUnit {
+    case millimeter, centimeter, meter, kilometer
+
+    init?(symbol: String) {
+        switch(symbol) {
+        case "mm":
+            self = .millimeter
+        case "cm":
+            self = .centimeter
+        case "m":
+            self = .meter
+        case "km":
+            self = .kilometer
+        default:
+            return nil
+        }
+    }
+}
+
+if MeasurementUnit(symbol: "cm") != nil {
+    print("Initialization succeeded")
+}
+
+if MeasurementUnit(symbol: "centimeter") == nil {
+    print("Initialization failed")
+}
+
+
+enum Suit: String {
+    case heart
+    case diamond
+    case spade
+    case club
+}
+
+let suit = Suit(rawValue: "spade")
+print(suit) // Optional(Suit.spade)
+
+let anotherSuit = Suit(rawValue: "clover")
+print(anotherSuit) // nil

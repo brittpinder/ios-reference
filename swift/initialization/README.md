@@ -350,24 +350,93 @@ class LandVehicle: Vehicle {
 
 <br/>
 
-### Initializer Inheritance and Overriding
+## Failable Initializers
 
-* Swift subclasses don’t inherit their superclass initializers by default
-* When you write a subclass initializer that matches a superclass designated initializer, you are effectively providing an override of that designated initializer. Therefore, you must write the override modifier before the subclass’s initializer definition
-* Conversely, if you write a subclass initializer that matches a superclass convenience initializer, that superclass convenience initializer can never be called directly by your subclass. Therefore, your subclass is not (strictly speaking) providing an override of the superclass initializer. As a result, you don’t write the override modifier when providing a matching implementation of a superclass convenience initializer.
+If an initializer can run into problems that prevent it from propertly initializing a struct, class or enum (ex: due to invalid parameter values or the absence of a required external resource), you can make it a *failable* initializer. Failable initializers create optional values and are indicated by `init?`. At the point where initialization fails, you simply return `nil`.
 
-### Automatic Initializer Inheritance
+Below is an example of a failable initializer that fails when an empty string is passed as the `name`.
 
-* As mentioned above, subclasses don’t inherit their superclass initializers by default. However, superclass initializers are automatically inherited if certain conditions are met.
+```swift
+class Student {
+    let name: String
 
-Assuming that you provide default values for any new properties you introduce in a subclass, the following two rules apply:
+    init?(name: String) {
+        if name.isEmpty {
+            return nil
+        }
+        self.name = name
+    }
+}
 
-1. If your subclass doesn’t define any designated initializers, it automatically inherits all of its superclass designated initializers.
-2. If your subclass provides an implementation of all of its superclass designated initializers — either by inheriting them as per rule 1, or by providing a custom implementation as part of its definition — then it automatically inherits all of the superclass convenience initializers.
+let student1 = Student(name: "Bridget")
+print(student1 == nil) // false
+
+let student2 = Student(name: "")
+print(student2 == nil) // true
+```
+
+Failable initializers are used for numeric type conversions in Swift:
+
+```swift
+let number = Int("34")
+print(number) // Optional(34)
+
+
+let anotherNumber = Int("three")
+print(anotherNumber) // nil
+```
 
 <br/>
 
-## Failable Initializers
+### Failable Initializers for Enumerations
+
+Failable initializers can be used to select an appropriate enumeration case based on one or more parameters. The initializer can then fail if the provided parameters don't match an appropriate enumeration case.
+
+```swift
+enum MeasurementUnit {
+    case millimeter, centimeter, meter, kilometer
+
+    init?(symbol: String) {
+        switch(symbol) {
+        case "mm":
+            self = .millimeter
+        case "cm":
+            self = .centimeter
+        case "m":
+            self = .meter
+        case "km":
+            self = .kilometer
+        default:
+            return nil
+        }
+    }
+}
+
+if MeasurementUnit(symbol: "cm") != nil {
+    print("Initialization succeeded")
+}
+
+if MeasurementUnit(symbol: "centimeter") == nil {
+    print("Initialization failed")
+}
+```
+
+When an enum has a raw value, it automatically receives a failable initializer that takes a parameter called `rawValue` which selects a matching enumeration case if one is found or returns nil if no matching value exists.
+
+```swift
+enum Suit: String {
+    case heart
+    case diamond
+    case spade
+    case club
+}
+
+let suit = Suit(rawValue: "spade")
+print(suit) // Optional(Suit.spade)
+
+let anotherSuit = Suit(rawValue: "clover")
+print(anotherSuit) // nil
+```
 
 <br/>
 
