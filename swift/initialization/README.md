@@ -311,18 +311,44 @@ override func viewDidLoad() {
 
 ### Two-Phase Initialization
 
-* Class initialization in Swift is a two-phase process.
-* In the first phase, each stored property is assigned an initial value by the class that introduced it.
-* Once the initial state for every stored property has been determined, the second phase begins, and each class is given the opportunity to customize its stored properties further before the new instance is considered ready for use.
-* The use of a two-phase initialization process makes initialization safe, while still giving complete flexibility to each class in a class hierarchy.
-* Two-phase initialization prevents property values from being accessed before they’re initialized, and prevents property values from being set to a different value by another initializer unexpectedly.
+Class initialization in Swift can be broken down into a two-phase process: Initialization and Customization. During the first phase, each stored property is assigned an initial value by the class that introduced it. After that, the second phase begins and each class is given the opportunity to customize its stored properties further before the new instance is considered ready for use.
 
-Swift’s compiler performs four helpful safety-checks to make sure that two-phase initialization is completed without error:
+Two-phase initialization prevents property values from being accessed before they’re initialized, and prevents property values from being set to a different value by another initializer unexpectedly. Swift’s compiler performs four helpful safety-checks to make sure that two-phase initialization is completed without error:
 
 1. A designated initializer must ensure that all of the properties introduced by its class are initialized before it delegates up to a superclass initializer.
-2. A designated initializer must delegate up to a superclass initializer before assigning a value to an inherited property. If it doesn’t, the new value the designated initializer assigns will be overwritten by the superclass as part of its own initialization.
-3. A convenience initializer must delegate to another initializer before assigning a value to any property (including properties defined by the same class). If it doesn’t, the new value the convenience initializer assigns will be overwritten by its own class’s designated initializer.
+2. A designated initializer must delegate up to a superclass initializer before assigning a value to an inherited property.
+3. A convenience initializer must delegate to another initializer before assigning a value to any property (including properties defined by the same class).
 4. An initializer can’t call any instance methods, read the values of any instance properties, or refer to self as a value until after the first phase of initialization is complete.
+
+The following example illustrates these rules:
+
+```swift
+class Vehicle {
+    var maxSpeed: Float
+
+    init() {
+        maxSpeed = 0
+    }
+}
+
+class LandVehicle: Vehicle {
+    var numberOfWheels: Int
+
+    override init() {
+        numberOfWheels = 0  // Initialize values introduced by this class
+        super.init()        // Initialize inherited values
+        maxSpeed = 100      // Customize inherited values
+    }
+
+    convenience init(bicycleWithMaxSpeed: Float) {
+        self.init()         // Call designated initializer
+        numberOfWheels = 2  // Customize inherited values and values introduced by this class
+        maxSpeed = bicycleWithMaxSpeed
+    }
+}
+```
+
+<br/>
 
 ### Initializer Inheritance and Overriding
 

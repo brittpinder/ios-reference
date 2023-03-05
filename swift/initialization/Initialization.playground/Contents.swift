@@ -139,3 +139,34 @@ var square = Polygon(points: [Point(x: 0, y: 0),
 var convenientSquare = Polygon(squareWithLength: 4)
 
 
+
+
+class Vehicle {
+    var maxSpeed: Float
+
+    init() {
+        maxSpeed = 0
+    }
+}
+
+class LandVehicle: Vehicle {
+    var numberOfWheels: Int
+
+    override init() {
+        numberOfWheels = 0  // Initialize values introduced by this class
+        super.init()        // Initialize inherited values
+        maxSpeed = 100      // Customize inherited values
+    }
+
+    convenience init(bicycleWithMaxSpeed: Float) {
+        self.init()         // Call designated initializer
+        numberOfWheels = 2  // Customize inherited values and values introduced by this class
+        maxSpeed = bicycleWithMaxSpeed
+    }
+}
+
+
+let bicycle = LandVehicle(bicycleWithMaxSpeed: 20)
+print(bicycle.maxSpeed)
+print(bicycle.numberOfWheels)
+
