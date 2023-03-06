@@ -588,10 +588,6 @@ This stems from UI components being initialized from a storyboard file. When you
 
 <br/>
 
-## Setting a Default Property Value with a Closure or Function
-
-<br/>
-
 # [Deinitialization](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/deinitialization)
 
 Deinitializers, declared with the `deinit` keyword, are called immediately before a class instance is deallocated and should therefore be used to perform any custom cleanup. Swift handles memory management through automatic reference counting, so you will rarely need to implement a deinitializer. An example of when to implement a deinitializer would be if your class has opened a file and you need to close it before the class instance is deallocated.

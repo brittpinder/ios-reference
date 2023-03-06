@@ -8,7 +8,7 @@
 * [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes)
 * [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties)
 * [Inheritance](https://github.com/brittpinder/ios-reference/tree/main/swift/inheritance)
-* [Initialization - wip](https://github.com/brittpinder/ios-reference/tree/main/swift/initialization)
+* [Initialization](https://github.com/brittpinder/ios-reference/tree/main/swift/initialization)
 * [Error Handling and Assertions](https://github.com/brittpinder/ios-reference/tree/main/swift/error-handling)
 * [Access Control](https://github.com/brittpinder/ios-reference/tree/main/swift/access-control)
 * [Keywords](https://github.com/brittpinder/ios-reference/tree/main/swift/keywords)
@@ -83,6 +83,7 @@
 ## [Foundation](https://developer.apple.com/documentation/foundation)
 
 * [Advanced Closure Topics](https://github.com/brittpinder/ios-reference/tree/main/swift/closures#advanced-closure-topics)
+	* [Setting a Default Property Value with a Closure or Function](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Setting-a-Default-Property-Value-with-a-Closure-or-Function)
 * Type Casting
 * Subscripts
 * Ranges
