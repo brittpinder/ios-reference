@@ -594,8 +594,47 @@ This stems from UI components being initialized from a storyboard file. When you
 
 # [Deinitialization](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/deinitialization)
 
-Deinitializers perform any custom cleanup just before an instance of that class is deallocated.
+Deinitializers, declared with the `deinit` keyword, are called immediately before a class instance is deallocated and should therefore be used to perform any custom cleanup. Swift handles memory management through automatic reference counting, so you will rarely need to implement a deinitializer. An example of when to implement a deinitializer would be if your class has opened a file and you need to close it before the class instance is deallocated.
 
+Class definitions can have at most one deinitializer per class. The deinitializer doesn’t take any parameters and is written without parentheses:
+
+```swift
+deinit {
+    // perform the deinitialization
+}
+```
+
+The following example demonstrates how the deinitializer gets triggered. The function `makeCharacter` creates a character and then it immediately goes out of scope, causing it to be deallocated. 
+
+```swift
+class Friend {
+    var name: String
+
+    init(name: String) {
+        print("Friend initialized with name: \(name)")
+        self.name = name
+    }
+
+    deinit {
+        print("Friend named \(name) has been deinitialized")
+    }
+}
+
+func createFriend() {
+    var _ = Friend(name: "Chandler")
+}
+
+createFriend()
+// Friend initialized with name: Chandler
+// Friend named Chandler has been deinitialized
+```
+Deinitializers also get called when you set an optional class type to `nil`:
+
+```swift
+var friend: Friend? = Friend(name: "Monica") // Friend initialized with name: Monica
+friend = nil // Friend named Monica has been deinitialized
+```
+<br/>
 
 ## Links
 

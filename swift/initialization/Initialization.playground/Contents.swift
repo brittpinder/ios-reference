@@ -341,3 +341,28 @@ class VisitedPosition: Position {
         super.init(x: x, y: y)
     }
 }
+
+
+class Friend {
+    var name: String
+
+    init(name: String) {
+        print("Friend initialized with name: \(name)")
+        self.name = name
+    }
+
+    deinit {
+        print("Friend named \(name) has been deinitialized")
+    }
+}
+
+func createFriend() {
+    var _ = Friend(name: "Chandler")
+}
+
+createFriend()
+// Friend initialized with name: Chandler
+// Friend named Chandler has been deinitialized
+
+var friend: Friend? = Friend(name: "Monica") // Friend initialized with name: Monica
+friend = nil // Friend named Monica has been deinitialized
