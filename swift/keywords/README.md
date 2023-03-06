@@ -238,6 +238,14 @@
 
 <br/>
 
+### [`weak`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/#Weak-References)
+
+* Declares a reference that doesn't keep a strong hold of the instance it refers to and therefore doesn't stop ARC from disposing of that instance.
+* Weak references should be applied to instances that have a shorter lifetime than the class containing the weak reference
+* Referenced in [Memory Management](https://github.com/brittpinder/ios-reference/tree/main/swift/memory-management#weak-references)
+
+<br/>
+
 ### [`willSet`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/properties/#Property-Observers)
 
 * A *property observer* that gets called right before a property is set
@@ -277,7 +285,6 @@
 * `super`
 * `typealias`
 * `unowned`
-* `weak`
 * `where`
 * `#available`
 * `#column`

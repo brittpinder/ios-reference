@@ -37,7 +37,7 @@
 	1. References vs Values
 	1. [**In-out parameters**](https://docs.swift.org/swift-book/ReferenceManual/Declarations.html)
 	1. 	Is it possible to pass parameter as const reference?
-	1. 	**`weak var` and `unowned var`**
+	1. 	`unowned var`
 	2. [Retain Cycle, Automatic Reference Counting, Memory Leak Video](https://www.youtube.com/watch?v=VcoZJ88d-vM&list=PL8seg1JPkqgF5wazzCKSq3EEfqt3t8mvA&index=16&ab_channel=SeanAllen)
 	3. Memory leaks in closures (weak self, unknown self)
 1. Switch case with Value Bindings and `where`
