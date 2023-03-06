@@ -25,6 +25,13 @@
 
 <br/>
 
+### [`deinit`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/deinitialization/)
+
+* Defines the *deinitializer* for a class, which gets automatically called right before a class instance is deallocated
+* Referenced in [Initialization](https://github.com/brittpinder/ios-reference/tree/main/swift/initialization#deinitialization)
+
+<br/>
+
 ### [`didSet`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/properties/#Property-Observers)
 
 * A *property observer* that gets called right after a property is set
@@ -245,7 +252,6 @@
 * `async`
 * `await`
 * `defer`
-* `deinit`
 * `dynamic`
 * `enum`
 * `extension`

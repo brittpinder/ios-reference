@@ -604,7 +604,7 @@ deinit {
 }
 ```
 
-The following example demonstrates how the deinitializer gets triggered. The function `makeCharacter` creates a character and then it immediately goes out of scope, causing it to be deallocated. 
+The following example demonstrates how the deinitializer gets triggered. The function `makeFriend` creates an instance of the class `Friend` and then it immediately goes out of scope, causing it to be deallocated.
 
 ```swift
 class Friend {
