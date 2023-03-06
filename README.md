@@ -10,6 +10,7 @@
 * [Inheritance](https://github.com/brittpinder/ios-reference/tree/main/swift/inheritance)
 * [Initialization](https://github.com/brittpinder/ios-reference/tree/main/swift/initialization)
 * [Error Handling and Assertions](https://github.com/brittpinder/ios-reference/tree/main/swift/error-handling)
+* [Memory Management - wip](https://github.com/brittpinder/ios-reference/tree/main/swift/memory-management)
 * [Access Control](https://github.com/brittpinder/ios-reference/tree/main/swift/access-control)
 * [Keywords](https://github.com/brittpinder/ios-reference/tree/main/swift/keywords)
 
@@ -43,7 +44,7 @@
 1. Switch case with Value Bindings and `where`
 1. **Notification Center** (Observer Pattern)
 1. **SceneDelegate**
-1. **App Lifecycle**
+1. [**App Lifecycle**](https://developer.apple.com/documentation/uikit/app_and_environment/managing_your_app_s_life_cycle)
 1. UIView
 	1. Lifecycle
 	1. [View frames vs bounds](https://medium.com/@jon.lazar/my-approach-to-learning-ios-fccf943aead)

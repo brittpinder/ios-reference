@@ -347,8 +347,8 @@ class Friend {
     var name: String
 
     init(name: String) {
-        print("Friend initialized with name: \(name)")
         self.name = name
+        print("Friend initialized with name: \(name)")
     }
 
     deinit {
