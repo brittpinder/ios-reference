@@ -180,4 +180,63 @@ memoryUnsafeFunction()
 
 ## Resolving Strong Reference Cycles
 
+Swift provides two ways of resolving strong reference cycles: *weak references* (declared with the `weak` keyword) and *unowned references* (declared with the `unowned` keyword). These types of references enable an instance to refer to another instance without keeping a strong hold on it (ie: without increasing its reference count). This allows instances to reference each other without creating strong reference cycles. Put another way, if the only remaining references to an instance are weak or unowned, that instance will be deallocated by ARC.
+
+Use weak references when the other instance has a shorter lifetime (ie. the other instance can be deallocated first), and use an unowned reference when the other instance has the same lifetime or a longer lifetime.
+
+<br/>
+
+### Weak References
+
+As mentioned above, a weak reference doesn't keep a strong hold of the instance it refers to and doesn't stop ARC from disposing of the referenced instance. This means that it's possible for an instance to be deallocated while a weak reference is still referring to it. When this happens, ARC will automatically set a weak reference to `nil`. Because their value can change at runtime, weak references must always be declared as optional variables.
+
+> Note: Property observers are not called when ARC sets a weak reference to nil
+
+Consider the same example from above with one change: `Apartment` now holds a weak reference to `Person`:
+
+```swift
+class Apartment {
+    let unit: String
+    weak var tenant: Person?
+
+    init(unit: String) {
+        self.unit = unit
+        print("Apartment \(unit) is being initialized")
+    }
+
+    deinit {
+        print("Apartment \(unit) is being deinitialized")
+    }
+}
+```
+
+We can then create and link our instances as we did before and a strong reference cycle will not be created:
+
+```swift
+var john: Person? = Person(name: "John") // John is being initialized
+var unit4A: Apartment? = Apartment(unit: "4A") // Apartment 4A is being initialized
+
+john!.apartment = unit4A
+unit4A!.tenant = john
+```
+![](images/1.png)
+
+The instance of `Person` only has one strong reference - the variable `john`. If we set that variable to `nil`, the instance will be deallocated and the weak reference to it inside the apartment instance will be set to `nil`:
+
+```swift
+john = nil // John is being deinitialized
+
+print(unit4A!.tenant) // nil
+```
+Once the instace of `Person` is deallocated, there is only one remaining strong reference to the `Apartment` instance, through the variable `unit4A`. So setting that variable to `nil` will deallocate the `Apartment` instance:
+
+```swift
+unit4A = nil // Apartment 4A is being deinitialized
+```
+
+<br/>
+
+### Unowned References
+
+
 - protocols and delegates - delegates should be weak
