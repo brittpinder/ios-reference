@@ -188,7 +188,7 @@ Use weak references when the other instance has a shorter lifetime (ie. the othe
 
 ### Weak References
 
-As mentioned above, a weak reference doesn't keep a strong hold of the instance it refers to and doesn't stop ARC from disposing of the referenced instance. This means that it's possible for an instance to be deallocated while a weak reference is still referring to it. When this happens, ARC will automatically set a weak reference to `nil`. Because their value can change at runtime, weak references must always be declared as optional variables.
+As mentioned above, a weak reference doesn't keep a strong hold of the instance it refers to and doesn't stop ARC from disposing of the referenced instance. This means that it's possible for an instance to be deallocated while a weak reference is still referring to it. When this happens, ARC will automatically set a weak reference to `nil`. Because their value can change at runtime, **weak references must always be declared as optional variables**.
 
 > Note: Property observers are not called when ARC sets a weak reference to nil
 
@@ -238,5 +238,71 @@ unit4A = nil // Apartment 4A is being deinitialized
 
 ### Unowned References
 
+Like a weak reference, an *unowned reference*, (indicated with the `unowned` keyword) doesn’t keep a strong hold on the instance it refers to. Unlike a weak reference, however, an unowned reference is used when the other instance has the same lifetime or a longer lifetime. Since unowned references point to objects that are expected to outlive the instances referring to them, **unowned references are expected to always have a value**. This means that unowned references don't have to be optional and ARC will never set an unowned reference to nil. However, if an instance does happen to be deallocated and you try to access it using an unowned reference, you'll get a runtime error.
+
+In the following example, a customer may or may not have a credit card, but a credit card will always be associated with a customer. The `person` reference should always outlive any instance of `CreditCard`, so we can mark the reference as `unowned`:
+
+```swift
+class Customer {
+    let name: String
+    var card: CreditCard?
+
+    init(name: String) {
+        self.name = name
+    }
+
+    deinit {
+        print("\(name) is being deinitialized")
+    }
+}
+
+class CreditCard {
+    let number: UInt64
+    unowned let customer: Customer
+
+    init(number: UInt64, customer: Customer) {
+        self.number = number
+        self.customer = customer
+    }
+
+    deinit {
+        print("Card #\(number) is being deinitialized")
+    }
+}
+```
+
+We can now create a `Customer` instance and use it to initialize and assign a `CreditCard` instance:
+
+```swift
+var john: Customer? = Customer(name: "John Appleseed")
+john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
+```
+The `Customer` instance has a strong reference to the `CreditCard` instance and the `CreditCard` instance has an unowned reference to the `Customer` instance. They reference each other, but there is no retain cycle.
+
+![](images/2.png)
+
+If we then break the strong reference to the `Customer` instance by setting `john` to nil, there are no more strong references to the `Customer` instance and it will be deallocated. When this happens, the one and only strong reference to the `CreditCard` instance will disappear and then the `CreditCard` instance will be deallocated:
+
+```swift
+john = nil
+// Prints "John Appleseed is being deinitialized"
+// Prints "Card #1234567890123456 is being deinitialized"
+```
+The unowned reference works in the above example because the `Customer` and the `CreditCard` instances have the same lifetime: when the `Customer` instance is deallocated, the `CreditCard` instance goes with it. However, if the `CreditCard` instance had the possibility of *outliving* the `Customer` instance - say if we stored it in its own variable, creating an additional strong reference to it - we would run into a problem:
+
+```swift
+var bob: Customer? = Customer(name: "Bob")
+var creditCard = CreditCard(number: 1234_5678_9012_3456, customer: bob!)
+
+bob = nil
+print(creditCard.customer.name) // CRASH
+```
+In this scenario, when we set the `Customer` instance to nil, it gets deallocated but the `CreditCard` instance does not because there is still a remaining strong reference to it through the `creditCard` variable. If we then attempt to access the `Customer` instance through the `creditCard` variable, we will get a runtime error because the `Customer` instance no longer exists. This is an example of where a weak pointer should be used instead.
+
+<br/>
+
+### Unowned Optional References
+
 
 - protocols and delegates - delegates should be weak
+- Safe unowned references vs unsafe unowned references
