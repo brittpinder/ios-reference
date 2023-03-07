@@ -301,8 +301,11 @@ In this scenario, when we set the `Customer` instance to nil, it gets deallocate
 
 <br/>
 
-### Unowned Optional References
 
+## To Explore
 
+* [Unowned optional references](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/#Unowned-Optional-References)
 - protocols and delegates - delegates should be weak
 - Safe unowned references vs unsafe unowned references
+- Table comparison of weak and unowned references
+- The main difference between weak and unowned is what happens when the referred-to object is released; a weak reference becomes nil while an unowned reference still holds a (now invalid) reference to the object, so your program will crash if you try and access it.

@@ -231,6 +231,16 @@
 
 <br/>
 
+### [`unowned`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/#Unowned-References)
+
+* Declares a reference that doesn't keep a strong hold of the instance it refers to and therefore doesn't stop ARC from disposing of that instance
+* Unowned references should be applied to instances that have the same or longer lifetime than the class containing the unknown reference
+* Unowned references are expected to always hold a value and therefore are non-optional
+* See also: [`weak`](#weak)
+* Referenced in [Memory Management](https://github.com/brittpinder/ios-reference/tree/main/swift/memory-management#unowned-references)
+
+<br/>
+
 ### [`var`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Declaring-Constants-and-Variables)
 
 * Used to declare a variable
@@ -242,6 +252,8 @@
 
 * Declares a reference that doesn't keep a strong hold of the instance it refers to and therefore doesn't stop ARC from disposing of that instance.
 * Weak references should be applied to instances that have a shorter lifetime than the class containing the weak reference
+* Weak references will be set to `nil` when the instance they point to is deallocated which means weak references must be optional variables
+* See also: [`unowned`](#unowned)
 * Referenced in [Memory Management](https://github.com/brittpinder/ios-reference/tree/main/swift/memory-management#weak-references)
 
 <br/>
@@ -284,7 +296,6 @@
 * `subscript`
 * `super`
 * `typealias`
-* `unowned`
 * `where`
 * `#available`
 * `#column`
