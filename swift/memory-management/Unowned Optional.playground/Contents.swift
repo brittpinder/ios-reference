@@ -9,13 +9,14 @@ class Customer {
     }
 
     deinit {
+        self.card?.customer = nil
         print("\(name) is being deinitialized")
     }
 }
 
 class CreditCard {
     let number: UInt64
-    unowned let customer: Customer
+    unowned var customer: Customer?
 
     init(number: UInt64, customer: Customer) {
         self.number = number
@@ -30,7 +31,6 @@ class CreditCard {
 var john: Customer? = Customer(name: "John Appleseed")
 john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
 
-
 john = nil
 // Prints "John Appleseed is being deinitialized"
 // Prints "Card #1234567890123456 is being deinitialized"
@@ -38,7 +38,9 @@ john = nil
 
 var bob: Customer? = Customer(name: "Bob")
 var creditCard = CreditCard(number: 1234_5678_9012_3456, customer: bob!)
+
 bob!.card = creditCard
 
 bob = nil
-print(creditCard.customer.name) // CRASH
+print(creditCard.customer?.name)
+

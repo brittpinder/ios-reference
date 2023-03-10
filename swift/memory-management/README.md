@@ -293,6 +293,7 @@ The unowned reference works in the above example because the `Customer` and the 
 ```swift
 var bob: Customer? = Customer(name: "Bob")
 var creditCard = CreditCard(number: 1234_5678_9012_3456, customer: bob!)
+bob!.card = creditCard
 
 bob = nil
 print(creditCard.customer.name) // CRASH
@@ -301,11 +302,114 @@ In this scenario, when we set the `Customer` instance to nil, it gets deallocate
 
 <br/>
 
+#### Unowned Optional References
+
+The previous section covered the use of unowned non-optional references. However, it is possible to create an unowned *optional* reference as well. In terms of the ARC ownership model, an unowned optional reference and a weak reference can both be used in the same contexts. The difference is that when you use an unowned optional reference, you’re responsible for making sure it always refers to a valid object or is set to `nil`.
+
+<br/>
+
+## Strong Reference Cycles for Closures
+
+So far we have discussed strong reference cycles between two class instances. Strong reference cycles can also occur between a closure and a class instance - particularly if you assign a closure to a property of a class instance and the body of that closure captures the instance (by referencing `self`). This strong reference cycle occurs because closures, like classes, are *reference* types.
+
+For example, suppose we had a class called `Counter` which keeps track of the number of days left until a certain event.
+
+```swift
+class Counter {
+    var daysLeft: Int
+
+    lazy var displayString: () -> String = {
+        if self.daysLeft == 1 {
+            return "There is 1 day left"
+        } else {
+            return "There are \(self.daysLeft) days left"
+        }
+    }
+
+    init(daysLeft: Int) {
+        self.daysLeft = daysLeft
+    }
+
+    deinit {
+        print("Deallocating Counter")
+    }
+}
+```
+Inside this class we have a closure that returns a display string depending on the number of days left (singular or plural). This closure is stored in the variable `displayString` which creates a strong reference from the class instance to the closure. However, within the body of the closure, it references `self.daysLeft`, meaning that there is also a strong reference from the closure to the class instance. We have a strong reference cycle.
+
+This can be demonstrated by creating an instance of the class and then setting it to nil. When the instance is set to nil, nothing is printed to the console, indicating that the `deinit` function was never called.
+
+```swift
+var counter: Counter? = Counter(daysLeft: 4)
+counter = nil
+```
+
+<br/>
+
+### Resolving Strong Reference Cycles for Closures
+
+To resolve a strong reference cyle between a closure and a class instance, you define a `capture list` as part of the closures definition. Within this capture list, you declare each captured reference to be either weak or unowned.
+
+Using the above example, if we declare a weak reference to self within the closure capture list, we can see that the strong reference cycle is resolved because the `deinit` function is called when the class instance is set to nil.
+
+```swift
+lazy var displayString: () -> String = { [weak self] in
+    if self?.daysLeft == 1 {
+        return "There is 1 day left"
+    } else {
+        return "There are \(self?.daysLeft) days left"
+    }
+}
+
+...
+
+var counter: Counter? = Counter(daysLeft: 4)
+counter = nil // Deallocating Counter
+```
+> Notice how when we define `self` as a weak reference, `self` becomes an optional. This is because weak references have the possibility of being set to `nil` so they have to be optional.
+
+We could also resolve the strong reference cycle using an unowned reference to `self`:
+
+```swift
+lazy var displayString: () -> String = { [unowned self] in
+    if self.daysLeft == 1 {
+        return "There is 1 day left"
+    } else {
+        return "There are \(self.daysLeft) days left"
+    }
+}
+
+...
+
+var counter: Counter? = Counter(daysLeft: 4)
+counter = nil // Deallocating Counter
+```
+> Unowned references are expected to always hold a value, so they are non-optional
+
+**When the captured reference may become `nil` at some point in the future, you should use a weak reference. When the captured reference will never become `nil`, use an unowned reference.**
+
+In the above example, whenever an instance of `Counter` is deallocated, the closure `displayString` should go with it (they have the same lifetime), so in this scenario it makes sense to use an unowned reference.
+
+<br/>
 
 ## To Explore
 
 * [Unowned optional references](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/#Unowned-Optional-References)
-- protocols and delegates - delegates should be weak
+* [Unowned References and Implicitly Unwrapped Optional Properties](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/#Unowned-References-and-Implicitly-Unwrapped-Optional-Properties)
+- [protocols and delegates - delegates should be weak](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols#Delegation)
 - Safe unowned references vs unsafe unowned references
 - Table comparison of weak and unowned references
 - The main difference between weak and unowned is what happens when the referred-to object is released; a weak reference becomes nil while an unowned reference still holds a (now invalid) reference to the object, so your program will crash if you try and access it.
+- Value Types: Structs, Enums, Arrays?
+- Reference Types: Classes, Closures
+
+<br/>
+
+## Links
+
+* [Apple Documentation on Automatic Reference Counting](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting)
+* [Apple Documentation on Memory Safety](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/memorysafety)
+* [Video Explanation](https://www.youtube.com/watch?v=VcoZJ88d-vM&list=PL8seg1JPkqgF5wazzCKSq3EEfqt3t8mvA&index=19&ab_channel=SeanAllen)
+* [Video Example of Retain Cycles in Closures](https://www.youtube.com/watch?v=q0-DIJszYRo&ab_channel=LetsBuildThatApp)
+* [Video Explanation of Weak Self](https://www.youtube.com/watch?v=chI-B8u4MBs&ab_channel=iOSAcademy)
+* [Using Instruments to Detect Memory Leaks](https://www.youtube.com/watch?v=sp8qEMY9X6Q&ab_channel=LetsBuildThatApp)
