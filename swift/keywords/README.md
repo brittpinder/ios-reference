@@ -12,7 +12,7 @@
 
 ### [`class`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures)
 
-* A general-purpose, flexible construct, containing properties and methods
+* A custom data type that allows you to define a collection of related properties and methods
 * Classes are *reference* types and allow inheritance
 * Referenced in [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes)
 
@@ -202,7 +202,7 @@
 
 ### [`struct`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures)
 
-* A general-purpose, flexible construct, containing properties and methods
+* A custom data type that allows you to define a collection of related properties and methods
 * Structs are *value* types and don't allow inheritance
 * Referenced in [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes)
 
