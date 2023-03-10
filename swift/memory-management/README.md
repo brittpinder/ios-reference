@@ -392,14 +392,29 @@ In the above example, whenever an instance of `Counter` is deallocated, the clos
 
 <br/>
 
+## Weak vs Unowned
+
+One of the key differences between weak and unowned references is what happens when the referred-to object is released: a weak reference becomes nil while an unowned reference still holds a (now invalid) reference to the object, so your program will crash if you try to access it.
+
+Since weak references can become nil, they *must* be optional variables. Unowned references however can be both optional or non-optional, constant or variable.
+
+| | Weak | Unowned
+|---|---|---|
+| var | :heavy_check_mark: | :heavy_check_mark:
+| let |  | :heavy_check_mark:
+| Can be optional | :heavy_check_mark: | :heavy_check_mark:
+| Can be non-optional |  | :heavy_check_mark:
+| What happens when referenced instance is deallocated | Reference is set to nil | Reference points to invalid object and will crash if accessed
+| When to use | When the referenced instance could become nil (ie. it has a shorter lifetime) | When the referenced instance is always expected to have a value (ie. it has the same or a longer lifetime)
+
+<br/>
+
 ## To Explore
 
 * [Unowned optional references](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/#Unowned-Optional-References)
 * [Unowned References and Implicitly Unwrapped Optional Properties](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/#Unowned-References-and-Implicitly-Unwrapped-Optional-Properties)
 - [protocols and delegates - delegates should be weak](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols#Delegation)
 - Safe unowned references vs unsafe unowned references
-- Table comparison of weak and unowned references
-- The main difference between weak and unowned is what happens when the referred-to object is released; a weak reference becomes nil while an unowned reference still holds a (now invalid) reference to the object, so your program will crash if you try and access it.
 - Value Types: Structs, Enums, Arrays?
 - Reference Types: Classes, Closures
 
