@@ -413,10 +413,10 @@ Since weak references can become nil, they *must* be optional variables. Unowned
 
 * [Unowned optional references](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/#Unowned-Optional-References)
 * [Unowned References and Implicitly Unwrapped Optional Properties](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/#Unowned-References-and-Implicitly-Unwrapped-Optional-Properties)
-- [protocols and delegates - delegates should be weak](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols#Delegation)
-- Safe unowned references vs unsafe unowned references
-- Value Types: Structs, Enums, Arrays?
-- Reference Types: Classes, Closures
+* [protocols and delegates - delegates should be weak](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols#Delegation)
+* Safe unowned references vs unsafe unowned references
+* Value Types: Structs, Enums, Arrays?
+* Reference Types: Classes, Closures
 
 <br/>
 
