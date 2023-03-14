@@ -10,7 +10,7 @@
 * [Inheritance](https://github.com/brittpinder/ios-reference/tree/main/swift/inheritance)
 * [Initialization](https://github.com/brittpinder/ios-reference/tree/main/swift/initialization)
 * [Error Handling and Assertions](https://github.com/brittpinder/ios-reference/tree/main/swift/error-handling)
-* [Memory Management - wip](https://github.com/brittpinder/ios-reference/tree/main/swift/memory-management)
+* [Memory Management](https://github.com/brittpinder/ios-reference/tree/main/swift/memory-management)
 * [Access Control](https://github.com/brittpinder/ios-reference/tree/main/swift/access-control)
 * [Keywords](https://github.com/brittpinder/ios-reference/tree/main/swift/keywords)
 
@@ -39,9 +39,6 @@
 	1. 	Sets
 	1. 	Dictionaries
 2. [Tuples](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Tuples)
-1. **Memory Safety and Management**
-	1. [Copying classes](https://stackoverflow.com/questions/24242629/implementing-copy-in-swift)
-	1. 	Is it possible to pass parameter as const reference?
 1. Switch case with Value Bindings and `where`
 1. **Notification Center** (Observer Pattern)
 1. **SceneDelegate**
@@ -79,9 +76,11 @@
 1. Bundles
 2. `@autoclosure`
 3. Provisioning Profiles
-4. `Any` and `AnyObject`
+4. [`Any`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/types/#Any-Type), `AnyObject` and `NSObject`
+5. [`Self`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/types/#Self-Type)
 5. Protocols
 6. Extensions
+7. [Copying Objects](https://www.hackingwithswift.com/example-code/system/how-to-copy-objects-in-swift-using-copy)
 		
 ## [Foundation](https://developer.apple.com/documentation/foundation)
 
