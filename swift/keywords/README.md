@@ -101,7 +101,7 @@
 ### [`inout`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/functions/#In-Out-Parameters)
 
 * Used to declare an in-out parameter which can be modified within a function body and have those changes persist after the function call has ended.
-* Referenced in [Functions](https://github.com/brittpinder/ios-reference/tree/main/swift/functions#in-out-parameters)
+* Referenced in [Functions](https://github.com/brittpinder/ios-reference/tree/main/swift/functions#in-out-parameters), [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties#property-observers) and [Memory Management](https://github.com/brittpinder/ios-reference/tree/main/swift/memory-management#conflicting-access-to-in-out-parameters)
 
 <br/>
 
