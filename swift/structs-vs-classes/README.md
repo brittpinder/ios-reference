@@ -124,6 +124,8 @@ print(dog === otherDog) // true
 print(dog !== otherDog) // false
 ```
 
+For a more in depth comparision of value and reference types, see [Memory Management](https://github.com/brittpinder/ios-reference/tree/main/swift/memory-management#values-and-references)
+
 <br/>
 
 ## Mutability
@@ -221,7 +223,22 @@ Compatible with Objective-C code |  | :heavy_check_mark:
 Pass by value/reference | value | reference
 Live on the stack/heap | stack | heap
 
+<br/>
+
+### Performance
+
+In general, structures are more performant than classes for a few reasons:
+
+* Structures are allocated on the stack whereas classes are allocated on the heap
+* Classes have the additional overhead of automatic reference counting
+* In multi-threaded applications, classes need to protect their integrity by using locking or other synchronization methods
+
+> Note: there are some cases where structures can become less performant than classes - particularly when a struct contains properties that are classes. Suppose you had a struct that contained three properties that were class types. For every instance of that struct, ARC would have to keep track of three different references. If the struct were changed to a class, ARC would only have to keep track of one reference per instance. For a detailed example watch [this video](https://developer.apple.com/videos/play/wwdc2016/416/) from 13:50 until 18:00.
+
+<br/>
+
 ## Choosing Between Structures and Classes
+
 It can be difficult to know whether or not to use a Struct or a Class. Below are some recommendations:
 
 * Use structures by default
@@ -229,8 +246,11 @@ It can be difficult to know whether or not to use a Struct or a Class. Below are
 * Use classes when you need to control the identity of the data you're modeling
 * Use structures along with protocols to adopt behavior by sharing implementations. Prefer protocol inheritance first whether you are using structs or classes. If you need non-protocol inheritance, then use a class.
 
+<br/>
+
 ## Helpful Links
 * [Choosing Between Structures and Classes](https://developer.apple.com/documentation/swift/choosing-between-structures-and-classes)
 * [Structs vs Classes Video](https://www.youtube.com/watch?v=LtlbB4-6k_U&ab_channel=SeanAllen)
+* [WWDC Video on Performance](https://developer.apple.com/videos/play/wwdc2016/416/)
 
 
