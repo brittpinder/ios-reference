@@ -167,12 +167,12 @@ func swapValues(_ a: inout Int, _ b: inout Int) {
     b = temp
 }
 
-var a = 2
-var b = 4
+var foo = 2
+var bar = 4
 
-swapValues(&a, &b)
-print(a) // 4
-print(b) // 2
+swapValues(&foo, &bar)
+print(foo) // 4
+print(bar) // 2
 ```
 
 In-out parameters are passed using a model known as *copy-in copy-out* or *call by value result*:
