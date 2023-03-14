@@ -37,10 +37,10 @@
 1. **Containers**
 	1. 	Arrays
 	1. 	Sets
-	1. 	Tuples
 	1. 	Dictionaries
+2. [Tuples](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Tuples)
 1. **Memory Safety and Management**
-	1. References vs Values
+	1. [Copying classes](https://stackoverflow.com/questions/24242629/implementing-copy-in-swift)
 	1. 	Is it possible to pass parameter as const reference?
 1. Switch case with Value Bindings and `where`
 1. **Notification Center** (Observer Pattern)

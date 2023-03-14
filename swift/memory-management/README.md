@@ -1,10 +1,66 @@
 # Memory Management
 
+## Values and References
+
+All types in Swift fall into one of two categories: *values* or *references*.
+
+**Value Types** | **Reference Types**
+---|---
+Struct | Class
+Enum | Closure
+Tuple | Function
+Collections (Array, Set, Dictionary) |
+Primitives (Int, Double, String) |
+
+**Value Types**
+
+* When assigned or passed to a function, another variable/constant is created with its own unique copy of the data
+* Allocated on the stack
+* [ARC](#automatic-reference-counting) is not used so there is no reference counting overhead (*unless your value type contains references*. Ex: a struct that has properties that are classes)
+
+**Reference Types**
+
+* When assigned or passed to a function, another variable/constant is created that points to the same shared instance
+* Allocated on the heap
+* ARC is used to keep track of all references
+
+
+> An good analogy to better understand the difference between values and references is when you share a Google spreadsheet with someone. If you download the spreadsheet and send it to someone in an email, you are creating a unique *copy* of it. They can modify it however they want and it won't affect your original spreadsheet. This is how value types work. If you instead share the link to your google spreadsheet with someone, they have access to the original spreadsheet. Any changes they make will effect your original version. This is how reference types work.
+
+For a code example of the differences between values and references, see [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes#value-vs-reference-types)
+
+<br/>
+
+### Stack vs Heap
+
+As mentioned above, value types are allocated on the *stack* whereas reference types are allocated on the *heap*.
+
+**Stack**
+
+* The stack is a simple data structure that allows you to allocate and deallocate data by pushing and popping to/from the end of it
+* This is accomplished by simply keeping a pointer to the end of the stack (called the "stack pointer")
+* Stack allocation and deallocation is very fast - as fast as assigning an integer
+
+**Heap**
+
+* The heap is a more advanced data structure that allows you to allocate memory with a dynamic lifetime at any location rather than at a specific position (ex: the stack pointer)
+* It is more dynamic than the stack but less efficient
+* The heap is less performant than a stack for the following reasons
+	* When allocating memory, the heap data structure needs to be searched to find unused blocks of memory of the appropriate size
+	* When deallocating memory, empty blocks of memory need to be reinserted at the same location
+	* Multiple threads can allocate memory on the heap at the same time so it needs to protect its integrity by using locking or other synchronization methods
+	* Objects allocated on the heap incur a reference counting overhead (because they are tracked by ARC)
+
+
+<br/>
+
+## Automatic Reference Counting
+
 Swift uses *Automatic Reference Counting (ARC)* to track and manage your app's memory usage. ARC automatically frees up the memory used by class instances when those instances are no longer needed, meaning that you don't need to worry about memory management yourself. However, there are a few cases where ARC requires more information about the relationships between parts of your code in order to manage memory for you.
 
 <br/>
 
-## How Automatic Reference Counting Works
+### How Automatic Reference Counting Works
 
 Every time you create a new instance of a class, ARC allocates a chunk of memory to store information about that instance. When an instance is no longer needed, ARC frees up the memory used by that instance so that the memory can be used for other purposes instead.
 
@@ -92,7 +148,7 @@ office = nil // Dwight Schrute is being deinitialized
 
 <br/>
 
-## Strong Reference Cycles (Retain Cycles)
+### Strong Reference Cycles (Retain Cycles)
 
 If you are not careful, it is possible to create situations where the reference count for an object can never reach 0, meaning that that object's memory can never be freed. An example of this is a retain cycle, where two class instances hold strong references to each other, keeping each other alive.
 
@@ -178,7 +234,7 @@ memoryUnsafeFunction()
 
 <br/>
 
-## Resolving Strong Reference Cycles
+### Resolving Strong Reference Cycles
 
 Swift provides two ways of resolving strong reference cycles: *weak references* (declared with the `weak` keyword) and *unowned references* (declared with the `unowned` keyword). These types of references enable an instance to refer to another instance without keeping a strong hold on it (ie: without increasing its reference count). This allows instances to reference each other without creating strong reference cycles. Put another way, if the only remaining references to an instance are weak or unowned, that instance will be deallocated by ARC.
 
@@ -186,7 +242,7 @@ Use weak references when the other instance has a shorter lifetime (ie. the othe
 
 <br/>
 
-### Weak References
+#### Weak References
 
 As mentioned above, a weak reference doesn't keep a strong hold of the instance it refers to and doesn't stop ARC from disposing of the referenced instance. This means that it's possible for an instance to be deallocated while a weak reference is still referring to it. When this happens, ARC will automatically set a weak reference to `nil`. Because their value can change at runtime, **weak references must always be declared as optional variables**.
 
@@ -236,7 +292,7 @@ unit4A = nil // Apartment 4A is being deinitialized
 
 <br/>
 
-### Unowned References
+#### Unowned References
 
 Like a weak reference, an *unowned reference*, (indicated with the `unowned` keyword) doesn’t keep a strong hold on the instance it refers to. Unlike a weak reference, however, an unowned reference is used when the other instance has the same lifetime or a longer lifetime. Since unowned references point to objects that are expected to outlive the instances referring to them, **unowned references are expected to always have a value**. This means that unowned references don't have to be optional and ARC will never set an unowned reference to nil. However, if an instance does happen to be deallocated and you try to access it using an unowned reference, you'll get a runtime error.
 
@@ -302,13 +358,13 @@ In this scenario, when we set the `Customer` instance to nil, it gets deallocate
 
 <br/>
 
-#### Unowned Optional References
+##### Unowned Optional References
 
 The previous section covered the use of unowned non-optional references. However, it is possible to create an unowned *optional* reference as well. In terms of the ARC ownership model, an unowned optional reference and a weak reference can both be used in the same contexts. The difference is that when you use an unowned optional reference, you’re responsible for making sure it always refers to a valid object or is set to `nil`.
 
 <br/>
 
-## Strong Reference Cycles for Closures
+### Strong Reference Cycles for Closures
 
 So far we have discussed strong reference cycles between two class instances. Strong reference cycles can also occur between a closure and a class instance - particularly if you assign a closure to a property of a class instance and the body of that closure captures the instance (by referencing `self`). This strong reference cycle occurs because closures, like classes, are *reference* types.
 
@@ -346,7 +402,7 @@ counter = nil
 
 <br/>
 
-### Resolving Strong Reference Cycles for Closures
+#### Resolving Strong Reference Cycles for Closures
 
 To resolve a strong reference cyle between a closure and a class instance, you define a `capture list` as part of the closures definition. Within this capture list, you declare each captured reference to be either weak or unowned.
 
@@ -392,7 +448,7 @@ In the above example, whenever an instance of `Counter` is deallocated, the clos
 
 <br/>
 
-## Weak vs Unowned
+### Weak vs Unowned
 
 One of the key differences between weak and unowned references is what happens when the referred-to object is released: a weak reference becomes nil while an unowned reference still holds a (now invalid) reference to the object, so your program will crash if you try to access it.
 
@@ -556,8 +612,6 @@ If the compiler can’t prove the access is safe, it doesn’t allow the access.
 * [Unowned References and Implicitly Unwrapped Optional Properties](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/#Unowned-References-and-Implicitly-Unwrapped-Optional-Properties)
 * [protocols and delegates - delegates should be weak](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols#Delegation)
 * Safe unowned references vs unsafe unowned references
-* Value Types: Structs, Enums, Arrays?
-* Reference Types: Classes, Closures
 
 <br/>
 
@@ -566,7 +620,9 @@ If the compiler can’t prove the access is safe, it doesn’t allow the access.
 * [Apple Documentation on Automatic Reference Counting](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting)
 * [Apple Documentation on Memory Safety](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/memorysafety)
 * [Apple Documentation on Diagnosing Memory Issues](https://developer.apple.com/documentation/xcode/diagnosing-memory-thread-and-crash-issues-early)
+* [WWDC Video on Performance](https://developer.apple.com/videos/play/wwdc2016/416/)
 * [Video Explanation](https://www.youtube.com/watch?v=VcoZJ88d-vM&list=PL8seg1JPkqgF5wazzCKSq3EEfqt3t8mvA&index=19&ab_channel=SeanAllen)
 * [Video Example of Retain Cycles in Closures](https://www.youtube.com/watch?v=q0-DIJszYRo&ab_channel=LetsBuildThatApp)
 * [Video Explanation of Weak Self](https://www.youtube.com/watch?v=chI-B8u4MBs&ab_channel=iOSAcademy)
 * [Using Instruments to Detect Memory Leaks](https://www.youtube.com/watch?v=sp8qEMY9X6Q&ab_channel=LetsBuildThatApp)
+* [Values and Reference Types](https://developer.apple.com/swift/blog/?id=10)
