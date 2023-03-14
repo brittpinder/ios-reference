@@ -409,6 +409,38 @@ Since weak references can become nil, they *must* be optional variables. Unowned
 
 <br/>
 
+## [Memory Safety](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/memorysafety)
+
+Because Swift manages memory automatically, most of the time you don’t have to think about accessing memory at all. However, there are cases where conflicting access to memory can occur which will result in either a compile-time or runtime error.
+
+A conflicting access to memory can occur when different parts of your code try to access the same location in memory at the same time, which can produce unpredictable or inconsistent behavior. A common scenario is trying to access a memory location at the same time that it's being modified.
+
+For example, when we add items to a budget, the total value of all the items needs to be re-calculated. During this stage of adding items to the budget, the total value is in a temporary, invalid state. Reading this value at this time could produce very different results ($5 or $320 or something in between).
+
+![](images/3.png)
+
+In code, a conflict occurs when you have two accesses that meet all of the following conditions:
+
+1. At least one is a write access or a nonatomic access
+2. They access the same location in memory
+3. Their durations overlap
+
+The duration of memory access is either instantaneous or long-term. Most memory access you will encounter is instantaneous. Long-term memory access occurs when it's possible for other code to run after memory access starts but before it ends, resulting in an *overlap*. Overlapping access appears primarily in functions/methods that take in-out parameters or in structures that have mutating methods.
+
+<br/>
+
+### Conflicting Access to In-Out Parameters
+
+<br/>
+
+### Conflicting Access to self in Methods
+
+<br/>
+
+### Conflicting Access to Properties
+
+<br/>
+
 ## To Explore
 
 * [Unowned optional references](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/#Unowned-Optional-References)
