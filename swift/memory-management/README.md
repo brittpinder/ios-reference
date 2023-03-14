@@ -413,7 +413,7 @@ Since weak references can become nil, they *must* be optional variables. Unowned
 
 Because Swift manages memory automatically, most of the time you don’t have to think about accessing memory at all. However, there are cases where conflicting access to memory can occur which will result in either a compile-time or runtime error.
 
-A conflicting access to memory can occur when different parts of your code try to access the same location in memory at the same time, which can produce unpredictable or inconsistent behavior. A common scenario is trying to access a memory location at the same time that it's being modified.
+Conflicting access to memory occurs when different parts of your code try to access the same location in memory at the same time, which can result in unpredictable or inconsistent behavior. A common scenario is trying to access a memory location at the same time that it's being modified.
 
 For example, when we add items to a budget, the total value of all the items needs to be re-calculated. During this stage of adding items to the budget, the total value is in a temporary, invalid state. Reading this value at this time could produce very different results ($5 or $320 or something in between).
 
@@ -431,13 +431,122 @@ The duration of memory access is either instantaneous or long-term. Most memory 
 
 ### Conflicting Access to In-Out Parameters
 
+A function has long-term write access to all of its in-out parameters that lasts for the entire duration of that function call. One consequence of this is that you can't access the original variable that was passed as in-out, even if scoping rules and access control would otherwise permit it. Consider the following function that increments an in-out variable by the global variable `stepSize`.
+
+```swift
+var stepSize = 1
+
+func increment(_ number: inout Int) {
+    number += stepSize
+}
+
+var counter = 0
+increment(&counter) // This is ok
+print(counter) // 1
+```
+
+All is well and good until we pass `stepSize` as the in-out parameter:
+
+```swift
+increment(&stepSize) // Error: Fatal access conflict detected
+```
+This results in the `increment` function attempting to read and write to `stepSize` at the same time which produces a run-time error.
+
+![](images/4.png)
+
+Another consequence of long-term write access to in-out parameters is that passing a single variable as the argument for multiple in-out parameters of the same function produces a conflict. Below is a contrived example but it demonstrates the problem of attempting to read and write to the same memory location at the same time.
+
+```swift
+func swapValues(_ a: inout Int, _ b: inout Int) {
+    let temp = a
+    a = b
+    b = temp
+}
+
+var foo = 2
+swapValues(&foo, &foo)
+// Error: Inout arguments are not allowed to alias each other
+// Error: Overlapping accesses to 'foo', but modification requires exclusive access; consider copying to a local variable
+```
+
 <br/>
 
-### Conflicting Access to self in Methods
+### Conflicting Access to `self` in Methods
+
+A mutating method on a structure has write access to `self` for the duration of the method call. In the below example, the function `transferEnergy` has long-term access to both `self` and the in-out parameter `otherPlayer`. 
+
+```swift
+struct Player {
+    var energy: Int
+    var health: Int
+
+    mutating func transferEnergy(to otherPlayer: inout Player) {
+        otherPlayer.energy += energy
+        energy = 0
+    }
+}
+```
+As long as we pass a different object to `transferEnergy` than the object we are calling from, there is no memory access conflict.
+
+```swift
+var oscar = Player(energy: 10, health: 100)
+var kevin = Player(energy: 5, health: 100)
+
+oscar.transferEnergy(to: &kevin)
+
+print(oscar.energy) // 0
+print(kevin.energy) // 15
+```
+
+However, if we pass the *same* object, a conflict will occur because the function attempts to read and write to the same memory location at the same time:
+
+```swift
+kevin.transferEnergy(to: &kevin)
+// Error: Inout arguments are not allowed to alias each other
+// Error: Overlapping accesses to 'maria', but modification requires exclusive access; consider copying to a local variable
+```
 
 <br/>
 
 ### Conflicting Access to Properties
+
+Value types like structures, tuples and enumerations are made up of other individual values (ex: the properties of a structure or the elements of a tuple). Mutating any piece of a value mutates the entire value, meaning that read or write access to one of the pieces requires read or write access to the whole value.
+
+For example, if you overlap write access to the elements of a tuple, a conflict will occur. In the code below, the `swap` function requires two write accesses to `position` at the same time, creating an overlap. This will result in a run-time error.
+
+```swift
+var position = (x: 4, y: 7)
+swap(&position.x, &position.y) // Error: Fatal access conflict detected
+```
+
+The same problem occurs when overlapping write access to the properties of a structure that's stored in a global variable:
+
+```swift
+var angela = Player(energy: 20, health: 100)
+swap(&angela.energy, &angela.health) // Error: Fatal access conflict detected
+```
+
+However, if a structure is stored in a *local* variable, the compiler is able to prove that overlapping access to the stored properties of the structure is memory safe and will allow nonexclusive access. The following code is completely safe and won't result in any compile-time or runtime errors:
+
+```swift
+func someFunction() {
+    var angela = Player(energy: 20, health: 100)
+    swap(&angela.energy, &angela.health)
+
+    print(angela.energy) // 100
+    print(angela.health) // 20
+}
+
+someFunction()
+```
+
+As you can see in the above example, the Swift compiler will make exceptions to nonexclusive access to memory if it can prove that the nonexclusive access is memory safe. Swift's compiler can prove that overlapping access to properties of a structure is safe if the following conditions apply:
+
+1. You’re accessing only stored properties of an instance, not computed properties or class properties.
+2. The structure is the value of a local variable, not a global variable.
+3. The structure is either not captured by any closures, or it’s captured only by nonescaping closures.
+
+If the compiler can’t prove the access is safe, it doesn’t allow the access.
 
 <br/>
 
@@ -456,6 +565,7 @@ The duration of memory access is either instantaneous or long-term. Most memory 
 
 * [Apple Documentation on Automatic Reference Counting](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting)
 * [Apple Documentation on Memory Safety](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/memorysafety)
+* [Apple Documentation on Diagnosing Memory Issues](https://developer.apple.com/documentation/xcode/diagnosing-memory-thread-and-crash-issues-early)
 * [Video Explanation](https://www.youtube.com/watch?v=VcoZJ88d-vM&list=PL8seg1JPkqgF5wazzCKSq3EEfqt3t8mvA&index=19&ab_channel=SeanAllen)
 * [Video Example of Retain Cycles in Closures](https://www.youtube.com/watch?v=q0-DIJszYRo&ab_channel=LetsBuildThatApp)
 * [Video Explanation of Weak Self](https://www.youtube.com/watch?v=chI-B8u4MBs&ab_channel=iOSAcademy)

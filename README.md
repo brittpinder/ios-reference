@@ -41,7 +41,6 @@
 	1. 	Dictionaries
 1. **Memory Safety and Management**
 	1. References vs Values
-	1. [**In-out parameters**](https://docs.swift.org/swift-book/ReferenceManual/Declarations.html)
 	1. 	Is it possible to pass parameter as const reference?
 1. Switch case with Value Bindings and `where`
 1. **Notification Center** (Observer Pattern)
@@ -68,6 +67,7 @@
 	1. [Main vs Background Thread](https://medium.com/@jon.lazar/my-approach-to-learning-ios-fccf943aead
 	1. 	**`@escaping`**
 	1. `nonatomic` vs `atomic`
+	2. [Diagnosing Threading Issues](https://developer.apple.com/documentation/xcode/diagnosing-memory-thread-and-crash-issues-early)
 1. **Persistence**
 	1. 	UserDefaults
 	1. 	CoreData
