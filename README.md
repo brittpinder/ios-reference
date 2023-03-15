@@ -1,6 +1,8 @@
 # ios-reference
 
 ## Swift
+
+* [Collection Types - wip](https://github.com/brittpinder/ios-reference/tree/main/swift/collection-types)
 * [Optionals](https://github.com/brittpinder/ios-reference/tree/main/swift/optionals)
 * [Functions](https://github.com/brittpinder/ios-reference/tree/main/swift/functions)
 * [Closures - wip](https://github.com/brittpinder/ios-reference/tree/main/swift/closures)
@@ -34,10 +36,6 @@
 ## Priority
 
 1. Generics
-1. **Containers**
-	1. 	Arrays
-	1. 	Sets
-	1. 	Dictionaries
 2. [Tuples](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Tuples)
 1. Switch case with Value Bindings and `where`
 1. **Notification Center** (Observer Pattern)
