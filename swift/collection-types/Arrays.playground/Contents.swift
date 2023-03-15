@@ -22,10 +22,10 @@ print(values) // [2.0, 2.0, 2.0, 2.0]
 
 
 var grades = [85, 76]
-var scores = [99, 52, 78]
+var scores = [99, 85, 78]
 
 var allGrades = grades + scores
-print(allGrades) // [85, 76, 99, 52, 78]
+print(allGrades) // [85, 76, 99, 85, 78]
 
 
 
@@ -118,6 +118,41 @@ for i in 0..<groceryList.count {
 // Item 1: Broccoli
 // Item 2: Carrots
 // Item 3: Potatoes
+
+
+
+let nums = [3, 6, 9, 2, 10, 9, 12]
+
+let containsFour = nums.contains(4)
+print(containsFour) // false
+
+let containsValuesGreaterThanTen = nums.contains(where: {$0 > 10})
+print(containsValuesGreaterThanTen) // true
+
+let allValuesAreEven = nums.allSatisfy({$0 % 2 == 0})
+print(allValuesAreEven) // false
+
+
+let firstEvenNumber = nums.first(where: {$0 % 2 == 0})
+print(firstEvenNumber) // Optional(6)
+
+let lastNumberLessThanSeven = nums.last(where: {$0 < 7})
+print(lastNumberLessThanSeven) // Optional(2)
+
+let firstNumberGreaterThanTwenty = nums.first(where: {$0 > 20})
+print(firstNumberGreaterThanTwenty) // nil
+
+
+
+let firstIndexOfNine = nums.firstIndex(of: 9)
+print(firstIndexOfNine) // Optional(2)
+
+let lastIndexOfNine = nums.lastIndex(of: 9)
+print(lastIndexOfNine) // Optional(5)
+
+let firstIndexOfZero = nums.firstIndex(of: 0)
+print(firstIndexOfZero) // nil
+
 
 
 

@@ -47,10 +47,10 @@ Arrays can also be created by adding two or more existing arrays with compatible
 
 ```swift
 var grades = [85, 76]
-var scores = [99, 52, 78]
+var scores = [99, 85, 78]
 
 var allGrades = grades + scores
-print(allGrades) // [85, 76, 99, 52, 78]
+print(allGrades) // [85, 76, 99, 85, 78]
 ```
 <br/>
 
@@ -220,7 +220,54 @@ for i in 0..<groceryList.count {
 
 <br/>
 
-### Searching Arrays
+### Finding Elements in an Array
+
+The functions `contains` and `allSatisfy` allow you to check if an array contains certain values or if its values all satisfy a certain condition:
+
+```swift
+let nums = [3, 6, 9, 2, 10, 9, 12]
+
+let containsFour = nums.contains(4)
+print(containsFour) // false
+
+let containsValuesGreaterThanTen = nums.contains(where: {$0 > 10})
+print(containsValuesGreaterThanTen) // true
+
+let allValuesAreEven = nums.allSatisfy({$0 % 2 == 0})
+print(allValuesAreEven) // false
+```
+
+To find the first or last element that satisfies a condition, use the `first(where:)` and `last(where:)` functions
+
+```swift
+let firstEvenNumber = nums.first(where: {$0 % 2 == 0})
+print(firstEvenNumber) // Optional(6)
+
+let lastNumberLessThanSeven = nums.last(where: {$0 < 7})
+print(lastNumberLessThanSeven) // Optional(2)
+```
+Notice that these functions return an optional value. If no element can be found that satisfies the condition, `nil` will be returned:
+
+```swift
+let firstNumberGreaterThanTwenty = nums.first(where: {$0 > 20})
+print(firstNumberGreaterThanTwenty) // nil
+```
+
+To find the first and last index of a specific value, use the `firstIndex(of:)` and `lastIndex(of:)` functions (or the alternatives, `firstIndex(where:)` and `lastIndex(where:)`:
+
+```swift
+let firstIndexOfNine = nums.firstIndex(of: 9)
+print(firstIndexOfNine) // Optional(2)
+
+let lastIndexOfNine = nums.lastIndex(of: 9)
+print(lastIndexOfNine) // Optional(5)
+```
+If the specified value is not found, these functions will return `nil`:
+
+```swift
+let firstIndexOfZero = nums.firstIndex(of: 0)
+print(firstIndexOfZero) // nil
+```
 
 <br/>
 
