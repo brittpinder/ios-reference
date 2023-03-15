@@ -2,6 +2,8 @@
 
 An array stores values of the same type in an ordered list. The same value can appear in an array multiple times at different positions.
 
+<br/>
+
 ## Creating Arrays
 
 An empty array can be initialized using either full syntax or shorthand syntax, although shorthand is more common.
