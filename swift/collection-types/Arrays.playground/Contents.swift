@@ -119,3 +119,33 @@ for i in 0..<groceryList.count {
 // Item 2: Carrots
 // Item 3: Potatoes
 
+
+
+var letters = ["A", "B", "C"]
+var lettersCopy = letters
+
+letters[0] = "K"
+lettersCopy[1] = "Z"
+
+print(letters) // ["K", "B", "C"]
+print(lettersCopy) // ["A", "Z", "C"]
+
+
+class Person {
+    var name: String
+
+    init(_ name: String) {
+        self.name = name
+    }
+}
+
+var people = [Person("Michael"), Person("Jim"), Person("Pam")]
+var peopleCopy = people
+
+people[0].name = "Dwight"
+print(peopleCopy[0].name) // Dwight
+
+
+people[0] = Person("Angela")
+print(people[0].name) // Angela
+print(peopleCopy[0].name) // Dwight

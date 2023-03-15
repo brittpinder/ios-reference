@@ -226,6 +226,51 @@ for i in 0..<groceryList.count {
 
 ### [Copying Arrays](https://developer.apple.com/documentation/swift/array#Modifying-Copies-of-Arrays)
 
+Arrays are *value* types which means that if you copy an array, a brand new array is created with a unique copy of the values inside. Any changes to the new array will not affect the original array and vice versa.
+
+```swift
+var letters = ["A", "B", "C"]
+var lettersCopy = letters
+
+letters[0] = "K"
+lettersCopy[1] = "Z"
+
+print(letters) // ["K", "B", "C"]
+print(lettersCopy) // ["A", "Z", "C"]
+```
+> Behind the scenes, Swift uses *copy-on-write optimization* which means that multiple copies of an array will share the same storage until one of the copies is modified.
+
+However, if you copy an array that stores reference types (such as class instances), this behaviour appears to be different (even though it is not). This is because the values stored in the array are *references to objects that live outside the array*. The copied array copies the *references*, not the values those references point to.
+
+Take a look at the following example where we have an array of `Person` objects and a copy of that array.
+
+```swift
+class Person {
+    var name: String
+
+    init(_ name: String) {
+        self.name = name
+    }
+}
+
+var people = [Person("Michael"), Person("Jim"), Person("Pam")]
+var peopleCopy = people
+```
+
+If we modify an instance of `Person` that is referenced by both arrays, that change can be observed in both arrays:
+
+```swift
+people[0].name = "Dwight"
+print(peopleCopy[0].name) // Dwight
+```
+
+However, if we replace the reference in an array with a reference to a different object instance, this change is not reflected in the other array:
+
+```swift
+people[0] = Person("Angela")
+print(people[0].name) // Angela
+print(peopleCopy[0].name) // Dwight
+```
 
 <br/>
 
