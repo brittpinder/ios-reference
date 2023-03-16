@@ -84,6 +84,9 @@ print(containsThree) // true
 let containsOddNumbers = nums.contains(where: {$0 % 2 == 1})
 print(containsOddNumbers) // true
 
+let allValuesAreLessThanTwenty = nums.allSatisfy({$0 < 20})
+print(allValuesAreLessThanTwenty) // true
+
 
 
 let marineAnimals: Set = ["Shark", "Whale", "Dolphin", "Crab"]
@@ -138,3 +141,11 @@ print(bigCats.isDisjoint(with: mammals)) // false
 
 print(bigCats == africanPredators) // true
 print(mammals == marineAnimals) // false
+
+
+
+var values: Set = [1, 2, 3]
+var moreValues: Set = [4, 5, 6]
+
+values.formUnion(moreValues)
+print(values) // [6, 3, 5, 4, 2, 1]

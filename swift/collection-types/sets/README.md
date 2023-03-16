@@ -148,11 +148,17 @@ print(containsFive) // false
 let containsThree = nums.contains(3)
 print(containsThree) // true
 ```
-You can also use the `contains(where:)` method to check if a set contains values that meet a certain criteria.
+You can also use the `contains(where:)` method to check if a set contains values that meet a certain criteria:
 
 ```swift
 let containsOddNumbers = nums.contains(where: {$0 % 2 == 1})
 print(containsOddNumbers) // true
+```
+Use `allSatisfy` to check if all the elements in a set meet a certain condition:
+
+```swift
+let allValuesAreLessThanTwenty = nums.allSatisfy({$0 < 20})
+print(allValuesAreLessThanTwenty) // true
 ```
 
 <br/>
@@ -211,6 +217,8 @@ The `subtracting` method is the only set operation where the order of the sets m
 let subtracting1 = mammals.subtracting(marineAnimals)
 print(subtracting1) // ["Tiger", "Lion", "Cow"]
 ```
+> Tip: You can modify a set in place by using these methods’ mutating counterparts: `formUnion(_:)`, `formIntersection(_:)`, `formSymmetricDifference(_:)`, and `subtract(_:)`.
+
 <br/>
 
 ## Set Membership and Equality
