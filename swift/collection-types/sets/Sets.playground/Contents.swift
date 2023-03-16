@@ -83,3 +83,28 @@ print(containsThree) // true
 
 let containsOddNumbers = nums.contains(where: {$0 % 2 == 1})
 print(containsOddNumbers) // true
+
+
+
+let marineAnimals: Set = ["Fish", "Whale", "Dolphin", "Crab"]
+let mammals: Set = ["Cow", "Whale", "Gorilla", "Dolphin"]
+
+
+// Get all marine animals that are also mammals
+let intersection = marineAnimals.intersection(mammals)
+print(intersection) // ["Dolphin", "Whale"]
+
+// Get all animals that are not marine and mammal
+let symmetricDifference = marineAnimals.symmetricDifference(mammals)
+print(symmetricDifference) // ["Cow", "Fish", "Gorilla", "Crab"]
+
+// Get all animals
+let union = marineAnimals.union(mammals)
+print(union) // ["Whale", "Crab", "Gorilla", "Cow", "Dolphin", "Fish"]
+
+// Get all marine animals that are not mammals
+let subtracting = marineAnimals.subtracting(mammals)
+print(subtracting) // ["Fish", "Crab"]
+
+let subtracting1 = mammals.subtracting(marineAnimals)
+print(subtracting1) // ["Cow", "Gorilla"]

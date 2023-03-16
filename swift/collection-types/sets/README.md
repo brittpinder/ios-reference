@@ -157,6 +157,63 @@ print(containsOddNumbers) // true
 
 <br/>
 
+## Performing Set Operations
+
+There are four set operations you can perform to efficiently combine two sets together, determine which values two sets have in common or determine whether two sets contain all, some or none of the same values:
+
+![](images/0.png)
+
+The examples below use the following two sets containing marine animals and mammals:
+
+```swift
+let marineAnimals: Set = ["Fish", "Whale", "Dolphin", "Crab"]
+let mammals: Set = ["Cow", "Whale", "Gorilla", "Dolphin"]
+```
+
+### Intersection
+
+Creates a new set with only the values common to both sets. This allows us to create a set with all of the marine animals that are also mammals.
+
+```swift
+let intersection = marineAnimals.intersection(mammals)
+print(intersection) // ["Dolphin", "Whale"]
+```
+
+### Symmetric Difference
+
+Creates a new set with values in either set, but not both. This allows us to create a set with all animals that are either marine animals or mammals, but not both.
+
+```swift
+let symmetricDifference = marineAnimals.symmetricDifference(mammals)
+print(symmetricDifference) // ["Cow", "Fish", "Gorilla", "Crab"]
+```
+
+### Union
+
+Creates a new set with all the values in both sets. This allows us to create a set with all animals, marine and/or mammal:
+
+```swift
+let union = marineAnimals.union(mammals)
+print(union) // ["Whale", "Crab", "Gorilla", "Cow", "Dolphin", "Fish"]
+```
+
+### Subtracting
+
+Creates a new set with values not in the specified set. This allows us to create a set with all marine animals that are not mammals.
+
+```swift
+let subtracting = marineAnimals.subtracting(mammals)
+print(subtracting) // ["Fish", "Crab"]
+```
+The `subtracting` method is the only set operation where the order of the sets matter. If we were to reverse the two sets in the above operation, we would instead create a set with all mammals that aren't marine animals:
+
+```swift
+let subtracting1 = mammals.subtracting(marineAnimals)
+print(subtracting1) // ["Cow", "Gorilla"]
+```
+
+<br/>
+
 ## Links
 
 * [Set API Reference](https://developer.apple.com/documentation/swift/set)
