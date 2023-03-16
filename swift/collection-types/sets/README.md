@@ -94,6 +94,69 @@ print(fruits.capacity) // 0
 ```
 <br/>
 
+## Iterating over a Set
+
+To iterate over the elements of a set, use a `for-in` loop:
+
+```swift
+var colors: Set = ["blue", "yellow", "green", "red"]
+
+for color in colors {
+    print(color)
+}
+// yellow
+// red
+// green
+// blue
+```
+Since sets are unordered, the order can and will vary every time you iterate over a set. One way around this is to use the `sorted()` method which returns the set's elements as an array sorted using the `<` operator:
+
+```swift
+for color in colors.sorted() {
+    print(color)
+}
+// blue
+// green
+// red
+// yellow
+```
+You can also use `forEach` to call a closure on every element of a set (with a random order):
+
+```swift
+colors.forEach { color in
+    print(color)
+}
+// green
+// blue
+// yellow
+// red
+```
+> Note: When using `forEach` you cannot use `continue` or `break` to skip iterations or exit out of the loop. Using `return` will only exit from the current call of the closure and won't skip subsequent calls.
+
+<br/>
+
+## Finding Elements in a Set
+
+To check whether a set contains a particular value, use the `contains` method:
+
+```swift
+var nums: Set = [4, 3, 10, 15]
+
+let containsFive = nums.contains(5)
+print(containsFive) // false
+
+let containsThree = nums.contains(3)
+print(containsThree) // true
+```
+You can also use the `contains(where:)` method to check if a set contains values that meet a certain criteria.
+
+```swift
+let containsOddNumbers = nums.contains(where: {$0 % 2 == 1})
+print(containsOddNumbers) // true
+```
+
+<br/>
+
 ## Links
 
 * [Set API Reference](https://developer.apple.com/documentation/swift/set)

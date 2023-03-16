@@ -38,3 +38,48 @@ print(fruits.capacity) // 6
 
 fruits = []
 print(fruits.capacity) // 0
+
+
+
+var colors: Set = ["blue", "yellow", "green", "red"]
+
+for color in colors {
+    print(color)
+}
+// yellow
+// red
+// green
+// blue
+
+print("\n\n")
+
+for color in colors.sorted() {
+    print(color)
+}
+// blue
+// green
+// red
+// yellow
+
+print("\n\n")
+
+colors.forEach { color in
+    print(color)
+}
+// green
+// blue
+// yellow
+// red
+
+print("\n\n")
+
+var nums: Set = [4, 3, 10, 15]
+
+let containsFive = nums.contains(5)
+print(containsFive) // false
+
+let containsThree = nums.contains(3)
+print(containsThree) // true
+
+let containsOddNumbers = nums.contains(where: {$0 % 2 == 1})
+print(containsOddNumbers) // true
