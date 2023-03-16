@@ -315,6 +315,6 @@ print(peopleCopy[0].name) // Dwight
 
 ## Links
 
-* [Apple Documentation on Arrays](https://developer.apple.com/documentation/swift/array)
+* [Array API Reference](https://developer.apple.com/documentation/swift/array)
 * [Array Transformations](https://developer.apple.com/documentation/swift/array/map(_:)-87c4d)
 * [Array Slices](https://developer.apple.com/documentation/swift/arrayslice)
