@@ -86,8 +86,10 @@ print(containsOddNumbers) // true
 
 
 
-let marineAnimals: Set = ["Fish", "Whale", "Dolphin", "Crab"]
-let mammals: Set = ["Cow", "Whale", "Gorilla", "Dolphin"]
+let marineAnimals: Set = ["Shark", "Whale", "Dolphin", "Crab"]
+let mammals: Set = ["Cow", "Whale", "Lion", "Dolphin", "Tiger"]
+let bigCats: Set = ["Lion", "Tiger"]
+let africanPredators: Set = ["Tiger", "Lion"]
 
 
 // Get all marine animals that are also mammals
@@ -96,15 +98,43 @@ print(intersection) // ["Dolphin", "Whale"]
 
 // Get all animals that are not marine and mammal
 let symmetricDifference = marineAnimals.symmetricDifference(mammals)
-print(symmetricDifference) // ["Cow", "Fish", "Gorilla", "Crab"]
+print(symmetricDifference) // ["Tiger", "Crab", "Shark", "Lion", "Cow"]
 
 // Get all animals
 let union = marineAnimals.union(mammals)
-print(union) // ["Whale", "Crab", "Gorilla", "Cow", "Dolphin", "Fish"]
+print(union) // ["Crab", "Whale", "Dolphin", "Cow", "Lion", "Tiger", "Shark"]
 
 // Get all marine animals that are not mammals
 let subtracting = marineAnimals.subtracting(mammals)
-print(subtracting) // ["Fish", "Crab"]
+print(subtracting) // ["Shark", "Crab"]
 
+// Get all mammals that are not marine animals
 let subtracting1 = mammals.subtracting(marineAnimals)
-print(subtracting1) // ["Cow", "Gorilla"]
+print(subtracting1) // ["Tiger", "Lion", "Cow"]
+
+
+
+print(bigCats.isSubset(of: mammals)) // true
+print(bigCats.isSubset(of: africanPredators)) // true
+print(bigCats.isSubset(of: marineAnimals)) // false
+
+
+print(mammals.isSuperset(of: bigCats)) // true
+print(africanPredators.isSuperset(of: bigCats)) // true
+print(marineAnimals.isSubset(of: bigCats)) // false
+
+
+print(bigCats.isStrictSubset(of: mammals)) // true
+print(bigCats.isStrictSubset(of: africanPredators)) // false
+
+
+print(mammals.isStrictSuperset(of: bigCats)) // true
+print(africanPredators.isStrictSuperset(of: bigCats)) // false
+
+
+print(bigCats.isDisjoint(with: marineAnimals)) // true
+print(bigCats.isDisjoint(with: mammals)) // false
+
+
+print(bigCats == africanPredators) // true
+print(mammals == marineAnimals) // false

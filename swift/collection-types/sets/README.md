@@ -166,8 +166,8 @@ There are four set operations you can perform to efficiently combine two sets to
 The examples below use the following two sets containing marine animals and mammals:
 
 ```swift
-let marineAnimals: Set = ["Fish", "Whale", "Dolphin", "Crab"]
-let mammals: Set = ["Cow", "Whale", "Gorilla", "Dolphin"]
+let marineAnimals: Set = ["Shark", "Whale", "Dolphin", "Crab"]
+let mammals: Set = ["Cow", "Whale", "Lion", "Dolphin", "Tiger"]
 ```
 
 ### Intersection
@@ -185,7 +185,7 @@ Creates a new set with values in either set, but not both. This allows us to cre
 
 ```swift
 let symmetricDifference = marineAnimals.symmetricDifference(mammals)
-print(symmetricDifference) // ["Cow", "Fish", "Gorilla", "Crab"]
+print(symmetricDifference) // ["Tiger", "Crab", "Shark", "Lion", "Cow"]
 ```
 
 ### Union
@@ -194,7 +194,7 @@ Creates a new set with all the values in both sets. This allows us to create a s
 
 ```swift
 let union = marineAnimals.union(mammals)
-print(union) // ["Whale", "Crab", "Gorilla", "Cow", "Dolphin", "Fish"]
+print(union) // ["Crab", "Whale", "Dolphin", "Cow", "Lion", "Tiger", "Shark"]
 ```
 
 ### Subtracting
@@ -203,13 +203,94 @@ Creates a new set with values not in the specified set. This allows us to create
 
 ```swift
 let subtracting = marineAnimals.subtracting(mammals)
-print(subtracting) // ["Fish", "Crab"]
+print(subtracting) // ["Shark", "Crab"]
 ```
 The `subtracting` method is the only set operation where the order of the sets matter. If we were to reverse the two sets in the above operation, we would instead create a set with all mammals that aren't marine animals:
 
 ```swift
 let subtracting1 = mammals.subtracting(marineAnimals)
-print(subtracting1) // ["Cow", "Gorilla"]
+print(subtracting1) // ["Tiger", "Lion", "Cow"]
+```
+<br/>
+
+## Set Membership and Equality
+
+When comparing sets to each other, there are certain words that are used to describe these comparisons. The following illustration depicts three sets, a, b and c.
+* Set a is a *superset* of set b, because it contains all the elements in b.
+* Set b is a *subset* of set a, because all of the elements in b are also contained by a.
+* Set b and set c are *disjoint* because they share no common elements
+
+![](images/1.png)
+
+The following examples use the sets from above along with the new sets, `bigCats` and `africanPredators`:
+
+```swift
+let marineAnimals: Set = ["Shark", "Whale", "Dolphin", "Crab"]
+let mammals: Set = ["Cow", "Whale", "Lion", "Dolphin", "Tiger"]
+let bigCats: Set = ["Lion", "Tiger"]
+let africanPredators: Set = ["Tiger", "Lion"]
+```
+
+### isSubset(of:)
+
+The set `bigCats` is a subset of both `mammals` and `africanPredators` because all of its elements are also contained by both of those sets.
+
+```swift
+print(bigCats.isSubset(of: mammals)) // true
+print(bigCats.isSubset(of: africanPredators)) // true
+print(bigCats.isSubset(of: marineAnimals)) // false
+```
+
+### isSuperset(of:)
+
+Conversely, both `mammals` and `africanPredators` are supersets of `bigCats` because they both contain all the elements that are in `bigCats`.
+
+```swift
+print(mammals.isSuperset(of: bigCats)) // true
+print(africanPredators.isSuperset(of: bigCats)) // true
+print(marineAnimals.isSubset(of: bigCats)) // false
+```
+
+### isStrictSubset(of:)
+
+This method determines whether a set is a subset, but not equal to, a specified set.
+
+* The set `bigCats` is a strict subset of `mammals` because all of its elements are contained by `mammals` but it is not *equal to* `mammals`.
+* The set `bigCats` is a subset of `africanPredators` but not a *strict* subset because it is equal to `africanPredators`.
+
+``` swift
+print(bigCats.isStrictSubset(of: mammals)) // true
+print(bigCats.isStrictSubset(of: africanPredators)) // false
+```
+
+### isStrictSuperset(of:)
+
+This method determines whether a set is a superset, but not equal to, a specified set.
+
+* The set `mammals` is a strict superset of `bigCats` because it contains all of the elements in `bigCats` but is not *equal to* `bigCats`.
+* The set `africanPredators` is a superset of `bigCats`, but not a *strict* superset because it is equal to `bigCats`.
+
+```swift
+print(mammals.isStrictSuperset(of: bigCats)) // true
+print(africanPredators.isStrictSuperset(of: bigCats)) // false
+```
+
+### isDisjoint(with:)
+
+This method determines whether two sets have no values in common. The set `bigCats` is disjoint with `marineAnimals` because they have no elements in common.
+
+```swift
+print(bigCats.isDisjoint(with: marineAnimals)) // true
+print(bigCats.isDisjoint(with: mammals)) // false
+```
+
+### Equality
+
+To check if two sets contain exactly the same values, use the `==` operator:
+
+```swift
+print(bigCats == africanPredators) // true
+print(mammals == marineAnimals) // false
 ```
 
 <br/>
