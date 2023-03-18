@@ -57,6 +57,27 @@ if let airportName = airports["YYZ"] {
 ```
 <br/>
 
+## Finding Keys/Values in Dictionaries
+
+Use the `contains(where:)` method to check if a dictionary contains keys and/or values that match a certain criteria:
+
+```swift
+let containsToronto = airports.contains(where: {$0.value.contains("Toronto")})
+print(containsToronto) // true
+
+let containsFourLetterCode = airports.contains(where: {$0.key.count == 4})
+print(containsFourLetterCode) // false
+```
+
+Use `allSatisfy` to check if all of the key/value pairs meet a certain criteria:
+
+```swift
+let codesAllHaveLengthThree = airports.allSatisfy({$0.key.count == 3})
+print(codesAllHaveLengthThree) // true
+```
+
+<br/>
+
 ## Adding Key-Value Pairs to a Dictionary
 
 To add a key-value pair to a dictionary, simply use subscript syntax like so:

@@ -22,6 +22,17 @@ var airports = ["YYZ": "Toronto Pearson", "ARN": "Stockholm-Arlanda"]
 print(airports.count) // 2
 print(airports.isEmpty) // false
 
+
+let containsToronto = airports.contains(where: {$0.value.contains("Toronto")})
+print(containsToronto) // true
+
+let containsFourLetterCode = airports.contains(where: {$0.key.count == 4})
+print(containsFourLetterCode) // false
+
+let codesAllHaveLengthThree = airports.allSatisfy({$0.key.count == 3})
+print(codesAllHaveLengthThree) // true
+
+
 print(airports["YYZ"]) // Optional("Toronto Pearson")
 print(airports["CDG"]) // nil
 
