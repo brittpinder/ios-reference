@@ -65,3 +65,41 @@ print(airports.capacity) // 6
 airports = [:]
 print(airports) // [:]
 print(airports.capacity) // 0
+
+
+var groceryItems = ["Bread": 2.5, "Tomato": 1.25, "Avocado": 3.75]
+
+for item in groceryItems {
+    print("\(item.key) costs \(item.value)")
+}
+// Bread costs 2.5
+// Tomato costs 1.25
+// Avocado costs 3.75
+
+for (food, price) in groceryItems {
+    print("\(food) costs \(price)")
+}
+// Avocado costs 3.75
+// Tomato costs 1.25
+// Bread costs 2.5
+
+groceryItems.forEach { (food, price) in
+    print("\(food) costs \(price)")
+}
+// Bread costs 2.5
+// Avocado costs 3.75
+// Tomato costs 1.25
+
+for food in groceryItems.keys {
+    print(food)
+}
+// Tomato
+// Bread
+// Avocado
+
+for price in groceryItems.values {
+    print(price)
+}
+// 1.25
+// 2.5
+// 3.75

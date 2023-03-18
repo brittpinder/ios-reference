@@ -125,6 +125,62 @@ airports = [:]
 print(airports) // [:]
 print(airports.capacity) // 0
 ```
+<br/>
+
+## Iterating over Dictionaries
+
+You can iterate over the key-value pairs in a dictionary using a `for-in` loop. Each item in the dictionary is returned as a `(key, value)` tuple:
+
+```swift
+var groceryItems = ["Bread": 2.5, "Tomato": 1.25, "Avocado": 3.75]
+
+for item in groceryItems {
+    print("\(item.key) costs \(item.value)")
+}
+// Bread costs 2.5
+// Tomato costs 1.25
+// Avocado costs 3.75
+```
+You can decompose the tuple's members into temporary variables as part of the iteration:
+
+```swift
+for (food, price) in groceryItems {
+    print("\(food) costs \(price)")
+}
+// Avocado costs 3.75
+// Tomato costs 1.25
+// Bread costs 2.5
+```
+A `forEach` loop can also be used to iterate over a Dictionary by performing a closure on every key-value pair in the dictionary:
+
+```swift
+groceryItems.forEach { (food, price) in
+    print("\(food) costs \(price)")
+}
+// Bread costs 2.5
+// Avocado costs 3.75
+// Tomato costs 1.25
+```
+> Note: When using `forEach` you cannot use `continue` or `break` to skip iterations or exit out of the loop. Using `return` will only exit from the current call of the closure and won't skip subsequent calls.
+
+If you are only interested in iterating over the keys or values, you can do that by accessing the `keys` and `values` properties:
+
+```swift
+for food in groceryItems.keys {
+    print(food)
+}
+// Tomato
+// Bread
+// Avocado
+
+for price in groceryItems.values {
+    print(price)
+}
+// 1.25
+// 2.5
+// 3.75
+```
+> Notice in the above examples, that the order of iteration is different every time. This is because dictionaries are *unordered* collection types.
 
 <br/>
 
