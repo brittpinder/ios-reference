@@ -4,7 +4,7 @@ There are three primary collection types in Swift:
 
 1. [**Arrays**](https://github.com/brittpinder/ios-reference/tree/main/swift/collection-types/arrays) - ordered collections of values
 2. [**Sets**](https://github.com/brittpinder/ios-reference/tree/main/swift/collection-types/sets) - unordered collections of unique values
-3. [**Dictionaries**](https://github.com/brittpinder/ios-reference/tree/main/swift/collection-types/dictionaries) - unordered collection sof key-value associations
+3. [**Dictionaries**](https://github.com/brittpinder/ios-reference/tree/main/swift/collection-types/dictionaries) - unordered collections of key-value associations
 
 <br/>
 
