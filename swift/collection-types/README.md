@@ -12,6 +12,16 @@ There are three primary collection types in Swift:
 
 <br/>
 
+## Other Collection Types
+
+* [OptionSet](https://developer.apple.com/documentation/swift/optionset)
+* [Range](https://developer.apple.com/documentation/swift/range)
+* [ClosedRange](https://developer.apple.com/documentation/swift/closedrange)
+* [Stride](https://developer.apple.com/documentation/swift/stride(from:to:by:))
+* [CollectionOfOne](https://developer.apple.com/documentation/swift/collectionofone)
+* [EmptyCollection](https://developer.apple.com/documentation/swift/emptycollection)
+* [KeyValuePairs](https://developer.apple.com/documentation/swift/keyvaluepairs)
+
 ## Links
 
 * [Apple Documentation on Collections](https://developer.apple.com/documentation/swift/collections)

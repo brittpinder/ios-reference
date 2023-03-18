@@ -201,7 +201,7 @@ for price in groceryItems.values {
 // 2.5
 // 3.75
 ```
-> Notice in the above examples, that the order of iteration is different every time. This is because dictionaries are *unordered* collection types.
+> Notice in the above examples, that the order of iteration is different every time. This is because dictionaries are *unordered* collection types. If order is important but performance is not, you can instead use the collection type [`KeyValuePairs`](https://developer.apple.com/documentation/swift/keyvaluepairs).
 
 <br/>
 

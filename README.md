@@ -2,7 +2,7 @@
 
 ## Swift
 
-* [Collection Types - wip](https://github.com/brittpinder/ios-reference/tree/main/swift/collection-types)
+* [Collection Types](https://github.com/brittpinder/ios-reference/tree/main/swift/collection-types)
 * [Optionals](https://github.com/brittpinder/ios-reference/tree/main/swift/optionals)
 * [Functions](https://github.com/brittpinder/ios-reference/tree/main/swift/functions)
 * [Closures - wip](https://github.com/brittpinder/ios-reference/tree/main/swift/closures)
@@ -86,7 +86,7 @@
 	* [Setting a Default Property Value with a Closure or Function](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Setting-a-Default-Property-Value-with-a-Closure-or-Function)
 * Type Casting
 * Subscripts
-* Ranges
+* Other collection types (ranges, strides, KeyValuePairs)
 * [Bool.toggle](https://www.hackingwithswift.com/example-code/language/how-to-toggle-a-boolean-value)
 * Argument Labels
 * Properties
