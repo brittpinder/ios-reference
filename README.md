@@ -57,6 +57,7 @@
 	1. Gesture Recognizers
 1. **Networking**
 	1. 	**Dispatch Methods**
+	2. DispatchGroup
 	1. 	JSON Encoder
 1. [**Race Conditions & Multithreading**](https://www.youtube.com/watch?v=iTcq6L-PaDQ&ab_channel=SeanAllen)
 	1. [Main vs Background Thread](https://medium.com/@jon.lazar/my-approach-to-learning-ios-fccf943aead
@@ -104,6 +105,9 @@
 * [Patterns](https://docs.swift.org/swift-book/ReferenceManual/Patterns.html#)
 	* Protocol Delegate Pattern
 	* DataSource Pattern
+	* MVC, MVVM
+	* [Avoiding large view controllers with MVC](https://www.youtube.com/watch?v=Ni70aTksJWg&t=0s&ab_channel=JohnSundell)
+		* [Child View Controllers](https://www.swiftbysundell.com/basics/child-view-controllers/)
 * Dates
 	* DateFormatter
 	* DateComponents
@@ -122,7 +126,9 @@
 * Modal presentation that covers part of the screen (adaptiveSheetPresentationController)
 * [**UIScrollView**](https://github.com/jrasmusson/ios-professional-course/tree/main/Bankey/5-Scrollable-ViewControllers)
 	* [Scrollview video explanation](https://www.youtube.com/watch?v=TYM65qxEQNs&ab_channel=SwiftArcade)
+	* UIRefresh
 * UICollectionView
+* UIAlertController
 * Autolayout
 	* More detail about predefined layout guides and creating your own
 	* [Interesting way of pinning to view](https://www.youtube.com/watch?v=2yVzeFIMtyc&ab_channel=iOSAcademy)
