@@ -109,7 +109,7 @@ for color in colors {
 // green
 // blue
 ```
-Since sets are unordered, the order can and will vary every time you iterate over a set. One way around this is to use the `sorted()` method which returns the set's elements as an array sorted using the `<` operator:
+Since sets are unordered, the order can vary every time you iterate over a set. One way around this is to use the `sorted()` method which returns the set's elements as an array sorted using the `<` operator:
 
 ```swift
 for color in colors.sorted() {

@@ -148,7 +148,7 @@ friends[1...2] = []
 print(friends) // ["Joey", "Phoebe"]
 ```
 
-To empty an array, you can either use the `removeAll` function with provides you the option of maintaining the capacity of the array, or you can simply assign the array to an empty array indicated by `[]`:
+To empty an array, you can either use the `removeAll` function which provides you the option of maintaining the capacity of the array, or you can simply assign the array to an empty array indicated by `[]`:
 
 ```swift
 friends.removeAll(keepingCapacity: true)
@@ -245,7 +245,7 @@ let firstNumberGreaterThanTwenty = nums.first(where: {$0 > 20})
 print(firstNumberGreaterThanTwenty) // nil
 ```
 
-To find the first and last index of a specific value, use the `firstIndex(of:)` and `lastIndex(of:)` functions (or the alternatives, `firstIndex(where:)` and `lastIndex(where:)`:
+To find the first and last index of a specific value, use the `firstIndex(of:)` and `lastIndex(of:)` functions - or the alternatives, `firstIndex(where:)` and `lastIndex(where:)`:
 
 ```swift
 let firstIndexOfNine = nums.firstIndex(of: 9)
