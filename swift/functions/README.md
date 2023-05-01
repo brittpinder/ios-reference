@@ -52,8 +52,14 @@ func getBounds(array: [Int]) -> (min: Int, max: Int)? {
 }
 
 if let bounds = getBounds(array: [2, 7, 4, 9, -3, 6]) {
-    print(bounds) // (min: -3, max: 9)
+    print(bounds)
 }
+// Prints: (min: -3, max: 9)
+
+if let bounds = getBounds(array: []) {
+    print(bounds)
+}
+// Doesn't print anything
 ```
 
 <br/>
@@ -158,7 +164,7 @@ let redButton = createButton(width: 40, height: 40, color: .red)
 
 Function parameters are constants by default meaning that you cannot change their values within the body of the function. If you want a function to modify a parameter's value and you want those changes to persist after the function call has ended, define that parameter as an *in-out parameter* by placing the `inout` keyword right before the parameter's type. When passing an argument for an in-out parameter, you need to put an ampersand (`&`) directly before the variable's name.
 
-The below example takes two in-out parameters and swaps their values:
+The function below takes two in-out parameters and swaps their values:
 
 ```swift
 func swapValues(_ a: inout Int, _ b: inout Int) {
@@ -248,7 +254,7 @@ You can use a function type as the return type of another function by writing a 
 For example, suppose we had two more similar functions, `subtract` and `divide`. We could then write a function that returns a mathematical function depending on the operation symbol we provide:
 
 ```swift
-func chooseCalculation(operation: String) -> (Int, Int) -> Int {
+func chooseCalculation(operation: String) -> ((Int, Int) -> Int)? {
     switch operation {
     case "+":
         return add
@@ -259,16 +265,20 @@ func chooseCalculation(operation: String) -> (Int, Int) -> Int {
     case "/":
         return divide
     default:
-        // Obviously this case would need to be handled in a better way
-        return add
+        return nil
     }
 }
 
-var calculation = chooseCalculation(operation: "-")
-print(calculation(7, 2)) // 5
+if let calculation = chooseCalculation(operation: "-") {
+    print(calculation(7, 2))
+}
+// Prints: 5
 
-let calculationResult = chooseCalculation(operation: "/")(12, 3)
-print(calculationResult) // 4
+// This example uses optional chaining to unwrap the returned optional function and execute it
+if let calculationResult = chooseCalculation(operation: "/")?(12, 3) {
+    print(calculationResult)
+}
+// Prints: 4
 ```
 
 <br/>
@@ -282,7 +292,7 @@ All of the functions encountered so far have been defined at a global scope - th
 For example, the `chooseCalculation` function from above could be rewritten like this:
 
 ```swift
-func chooseCalculation(operation: String) -> (Int, Int) -> Int {
+func calculate(operation: String) -> ((Int, Int) -> Int)? {
     func addition(_ a: Int, _ b: Int) -> Int {
         return a + b
     }
@@ -309,14 +319,14 @@ func chooseCalculation(operation: String) -> (Int, Int) -> Int {
     case "/":
         return division
     default:
-        // Obviously this case would need to be handled in a better way
-        return addition
+        return nil
     }
 }
 
-var mathOperation = chooseCalculation(operation: "+")
-print(mathOperation(2, 7)) // 9
-
+if let mathOperation = calculate(operation: "+") {
+    print(mathOperation(2, 7))
+}
+// Prints: 9
 ```
 
 ## Links
