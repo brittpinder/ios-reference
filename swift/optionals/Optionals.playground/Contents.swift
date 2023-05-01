@@ -164,10 +164,10 @@ if dog?.bark() != nil {
 // Prints "woof"
 // Prints "Good dog"
 
-if (dog?.name = "Aayla") != nil {
+if (dog?.name = "Luna") != nil {
     print("Dog's name was set to \(dog?.name)")
 }
-// Prints "Dog's name was set to Optional("Aayla")
+// Prints "Dog's name was set to Optional("Luna")
 
 
 

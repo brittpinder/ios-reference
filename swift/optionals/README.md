@@ -38,7 +38,7 @@ print(age) // Optional(65)
 print(age!) // 65
 ```
 
-Force unwrapping an optional is the easiest method but also the most dangerous because if your optional doesn't contain a value, your app will crash.
+Force unwrapping an optional is the easiest method but also the most dangerous because if you force unwrap an optional that doesn't contain a value, your app will crash.
 
 ```swift
 var age: Int?
@@ -48,7 +48,7 @@ print(age!) // Fatal error: Unexpectedly found nil while unwrapping an Optional 
 ```
 
 
-You should only force unwrap an optional if you are 100% sure that it contains a value (for example, if you explicitly check that the value is not `nil`)
+You should only force unwrap an optional if you are absolutely certain that it contains a value (for example, if you explicitly check that the value is not `nil`)
 
 ```swift
 if age != nil {
@@ -137,7 +137,7 @@ printGreeting(name: "Gary") // Hello Gary
 ```
 Notice in the above example that the temporary variable `safeName` exists outside the scope of the `guard let` statement. This is one of the main differences between `guard let` and `if let`.
 
-`if let` should be used when the nil case is valid (ex: a text field being empty) whereas `guard let` should be used when the nil case represents some sort of error.
+> Tip: As a guiding principle, `if let` should be used when the nil case is valid (ex: a text field being empty) whereas `guard let` should be used when the nil case represents some sort of error.
 
 <br/>
 
@@ -152,7 +152,7 @@ enum Optional<Wrapped> : ExpressibleByNilLiteral {
 }
 ```
 
-This means that you optionally bind by switching on the two enum values:
+This means that you can optionally bind by switching on the two enum values:
 
 ```swift
 var name: String? = "Taylor"
@@ -256,7 +256,7 @@ if dog?.bark() != nil {
 
 #### Setting Properties through Optional Chaining
 
-Optional chaining can also be used to set properties on optional variables. In the following example, `toy` is only set when `dog` contains a value.
+Optional chaining can also be used to set properties on optional variables. In the following example, `name` is only set when `dog` contains a value.
 
 ```swift
 var dog: Dog?
@@ -272,10 +272,10 @@ print(dog?.name) // Aayla
 Any attempt to set a property through optional chaining returns a value of type `Void?` which means that you can compare against nil to check if the property was set successfully:
 
 ```swift
-if (dog?.name = "Aayla") != nil {
+if (dog?.name = "Luna") != nil {
     print("Dog's name was set to \(dog?.name)")
 }
-// Prints "Dog's name was set to Optional("Aayla")
+// Prints "Dog's name was set to Optional("Luna")
 ```
 <br/>
 
@@ -341,7 +341,7 @@ print(menu) // Regular Menu
 
 An implicitly unwrapped optional, written with an exclamation mark (!) after the type (ex: `String!`), is like a regular optional in that it can contain a value or be `nil`, however it doesn't need to be unwrapped before it is used. There is a danger in this because if for whatever reason, your implicitly unwrapped optional contains `nil`, your app will crash and you won't be able to prevent it. Therefore implicitly unwrapped optionals require you to be absolutely sure there's a value before you use them.
 
-The most common reason for using an implicitly unwrapped optional is in the case where something will start off as `nil` but contain a value by the time we need it and won't be `nil` ever again. For example, when you create outlets using Interface Builder, they are created as implicitly unwrapped optionals because when your view controller is being created, those outlets will all be `nil`, but shortly after they get set to real views and won't be destroyed until the whole view controller is destroyed.
+The most common reason for using an implicitly unwrapped optional is in the case where something will start off as `nil` but contain a value by the time it's needed and won't be `nil` ever again. For example, when outlets are created using Interface Builder, they are created as implicitly unwrapped optionals because they are `nil` when the view controller is being created and get set to real values shortly after (and won't be destroyed until the view controller is destroyed).
 
 `@IBOutlet weak var searchTextField: UITextField!`
 
