@@ -173,7 +173,7 @@ The examples below use the following two sets containing marine animals and mamm
 
 ```swift
 let marineAnimals: Set = ["Shark", "Whale", "Dolphin", "Crab"]
-let mammals: Set = ["Cow", "Whale", "Lion", "Dolphin", "Tiger"]
+let mammals: Set = ["Cow", "Whale", "Lion", "Dolphin", "Cheetah"]
 ```
 
 ### Intersection
@@ -191,7 +191,7 @@ Creates a new set with values in either set, but not both. This allows us to cre
 
 ```swift
 let symmetricDifference = marineAnimals.symmetricDifference(mammals)
-print(symmetricDifference) // ["Tiger", "Crab", "Shark", "Lion", "Cow"]
+print(symmetricDifference) // ["Cheetah", "Crab", "Shark", "Lion", "Cow"]
 ```
 
 ### Union
@@ -200,7 +200,7 @@ Creates a new set with all the values in both sets. This allows us to create a s
 
 ```swift
 let union = marineAnimals.union(mammals)
-print(union) // ["Crab", "Whale", "Dolphin", "Cow", "Lion", "Tiger", "Shark"]
+print(union) // ["Crab", "Whale", "Dolphin", "Cow", "Lion", "Cheetah", "Shark"]
 ```
 
 ### Subtracting
@@ -215,7 +215,7 @@ The `subtracting` method is the only set operation where the order of the sets m
 
 ```swift
 let subtracting1 = mammals.subtracting(marineAnimals)
-print(subtracting1) // ["Tiger", "Lion", "Cow"]
+print(subtracting1) // ["Cheetah", "Lion", "Cow"]
 ```
 > Tip: You can modify a set in place by using these methods’ mutating counterparts: `formUnion(_:)`, `formIntersection(_:)`, `formSymmetricDifference(_:)`, and `subtract(_:)`.
 
@@ -234,9 +234,9 @@ The following examples use the sets from above along with the new sets, `bigCats
 
 ```swift
 let marineAnimals: Set = ["Shark", "Whale", "Dolphin", "Crab"]
-let mammals: Set = ["Cow", "Whale", "Lion", "Dolphin", "Tiger"]
-let bigCats: Set = ["Lion", "Tiger"]
-let africanPredators: Set = ["Tiger", "Lion"]
+let mammals: Set = ["Cow", "Whale", "Lion", "Dolphin", "Cheetah"]
+let bigCats: Set = ["Lion", "Cheetah"]
+let africanPredators: Set = ["Cheetah", "Lion"]
 ```
 
 ### isSubset(of:)

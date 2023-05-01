@@ -90,9 +90,9 @@ print(allValuesAreLessThanTwenty) // true
 
 
 let marineAnimals: Set = ["Shark", "Whale", "Dolphin", "Crab"]
-let mammals: Set = ["Cow", "Whale", "Lion", "Dolphin", "Tiger"]
-let bigCats: Set = ["Lion", "Tiger"]
-let africanPredators: Set = ["Tiger", "Lion"]
+let mammals: Set = ["Cow", "Whale", "Lion", "Dolphin", "Cheetah"]
+let bigCats: Set = ["Lion", "Cheetah"]
+let africanPredators: Set = ["Cheetah", "Lion"]
 
 
 // Get all marine animals that are also mammals
@@ -101,11 +101,11 @@ print(intersection) // ["Dolphin", "Whale"]
 
 // Get all animals that are not marine and mammal
 let symmetricDifference = marineAnimals.symmetricDifference(mammals)
-print(symmetricDifference) // ["Tiger", "Crab", "Shark", "Lion", "Cow"]
+print(symmetricDifference) // ["Cheetah", "Crab", "Shark", "Lion", "Cow"]
 
 // Get all animals
 let union = marineAnimals.union(mammals)
-print(union) // ["Crab", "Whale", "Dolphin", "Cow", "Lion", "Tiger", "Shark"]
+print(union) // ["Crab", "Whale", "Dolphin", "Cow", "Lion", "Cheetah", "Shark"]
 
 // Get all marine animals that are not mammals
 let subtracting = marineAnimals.subtracting(mammals)
@@ -113,7 +113,7 @@ print(subtracting) // ["Shark", "Crab"]
 
 // Get all mammals that are not marine animals
 let subtracting1 = mammals.subtracting(marineAnimals)
-print(subtracting1) // ["Tiger", "Lion", "Cow"]
+print(subtracting1) // ["Cheetah", "Lion", "Cow"]
 
 
 
