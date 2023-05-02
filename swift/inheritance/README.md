@@ -153,7 +153,7 @@ print("There are \(numDogs) dogs") // There are 3 dogs
 
 When you believe that a constant or variable of a certain class type may actually refer to an instance of a subclass, you can try to downcast it to the subclass with a *type cast operator* (`as?` or `as!`).
 
-The following examples will use these classes:
+The following examples use these classes:
 
 ```swift
 class Animal {
