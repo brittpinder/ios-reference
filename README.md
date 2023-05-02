@@ -5,7 +5,7 @@
 * [Collection Types](https://github.com/brittpinder/ios-reference/tree/main/swift/collection-types)
 * [Optionals](https://github.com/brittpinder/ios-reference/tree/main/swift/optionals)
 * [Functions](https://github.com/brittpinder/ios-reference/tree/main/swift/functions)
-* [Closures - wip](https://github.com/brittpinder/ios-reference/tree/main/swift/closures)
+* [Closures](https://github.com/brittpinder/ios-reference/tree/main/swift/closures)
 * [Enums](https://github.com/brittpinder/ios-reference/tree/main/swift/enums)
 * [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes)
 * [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties)
@@ -20,8 +20,8 @@
 ## UIKit
 * [Creating a Project Without Storyboards](https://github.com/brittpinder/ios-reference/tree/main/uikit/no-storyboards)
 * [Auto Layout](https://github.com/brittpinder/ios-reference/tree/main/uikit/autolayout)
-* [UIViewController - wip](https://github.com/brittpinder/ios-reference/tree/main/uikit/uiviewcontroller)
+* [UIViewController](https://github.com/brittpinder/ios-reference/tree/main/uikit/uiviewcontroller)
 * [UIStackView](https://github.com/brittpinder/ios-reference/tree/main/uikit/uistackview)
-* [UITableView - wip](https://github.com/brittpinder/ios-reference/tree/main/uikit/uitableview)
+* [UITableView](https://github.com/brittpinder/ios-reference/tree/main/uikit/uitableview)
 
 
