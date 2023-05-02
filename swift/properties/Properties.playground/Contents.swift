@@ -41,7 +41,7 @@ struct File {
 }
 
 let file = File(name: "house", fileExtension: "png")
-print(file.filename)
+print(file.filename) // house.png
 
 //file.filename = "chair.png" // Error: Cannot assign to property: 'filename' is a get-only property
 

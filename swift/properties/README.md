@@ -40,11 +40,13 @@ person.age = 33
 let constantPerson = Person(name: "Jake", age: 12)
 constantPerson.age = 70 // This is ok
 ```
-When `let` is used to create an instance of a class, it means that the reference cannot be changed. So you can modify the variable values but you cannot reassign the reference:
+When `let` is used to create an instance of a class, it means that the reference cannot be changed. You can modify the value it references, but you cannot reassign the reference:
 
 ```swift
 constantPerson = Person("Amy", 39) // Error: Cannot assign to value: constantPerson is a let constant
 ```
+
+<br/>
 
 ## Computed Properties
 Computed properties are calculated on the fly whenever they are needed. Computed properties don't actually store a value, they instead provide a getter and an optional setter to retrieve and set other properties and values indirectly. Class, structures and even enumerations can have computed properties.
@@ -61,7 +63,7 @@ struct File {
 }
 
 let file = File(name: "house", fileExtension: "png")
-print(file.filename)
+print(file.filename) // house.png
 ```
 To make the computed property even simpler, you can remove the `return` keyword:
 
@@ -84,6 +86,9 @@ var filename: String {
     }
 }
 ```
+
+<br/>
+
 ### Setting Computed Properties
 Here is an example of a computed property with a setter. Notice that whenever the `end` property is set, the `start` property gets updated accordingly.
 
@@ -107,7 +112,7 @@ print(range.end) // 7
 range.end = 10
 print(range.start) // 5
 ```
-In the above example, the keyword `newValue` represents the value that has just been assigned. If you want to you can give this new value your own name:
+In the above example, the keyword `newValue` represents the value that has just been assigned. If you want, you can define your own name for the new value:
 
 ```swift
 set(newEnd) {
@@ -136,6 +141,8 @@ struct Content {
 
 > Important: Computed properties perform their operation *every* time they are called which means that heavy operations (ex: sorting) can easily result in a performance decrease. If your computed property is making its calculations using static data, consider making this calculation once during initialization and storing the result in a stored property instead.
 
+<br/>
+
 ### Computed Properties within an Extension
 Another useful thing about computed properties is that they can be used within extensions. In this example, we can create quick access to the width and height of a view:
 
@@ -151,8 +158,10 @@ extension UIView {
 }
 ```
 
+<br/>
+
 ### Overriding Computed Properties
-Within subclasses, you can override read-only properties computed properties:
+Within subclasses, you can override read-only computed properties:
 
 ```swift
 class University {
@@ -178,10 +187,11 @@ class Carleton: University {
     override var tuition: Int = 2000 // Cannot override stored property 'tuition'
 }
 ```
+
+<br/>
+
 ## Lazy Stored Properties
 A *lazy stored property* is a property whose initial value isn't calculated until the first time it's used. It is indicated by using the `lazy` modifier before its declaration.
-
-> Note: A lazy property must always be declared with `var` because its initial value might not be retrieved until after instance initialization completes. Constant properties must always have a value before initialization completes, and therefore can't be declared as lazy.
 
 Lazy properties are useful when the initial value for a property is dependent on outside factors whose values aren’t known until after an instance’s initialization is complete. They are also useful when the initial value for a property requires complex or computationally expensive setup that shouldn’t be performed unless or until it’s needed. In the following example, `oldest` is only calculated once it's referenced.
 
@@ -214,10 +224,14 @@ print(family.youngest)
 // Prints: "Youngest initialized"
 // Prints: "Person(name: "Warren", age: 31)"
 ```
-An advantage of using lazy stored properties is that if the property is never used, you can avoid unnecssary allocation and computation.
+An advantage of using lazy stored properties is that if the property is never used, you can avoid unnecessary allocation and computation.
+
+> Note: A lazy property must always be declared with `var` because its initial value might not be retrieved until after instance initialization completes. Constant properties must always have a value before initialization completes, and therefore can't be declared as lazy.
+
+<br/>
 
 ### Differences Between Lazy Stored and Computed Properties
-Lazy stored variables are calculated the first time they are referenced whereas computed properties are caluclated *every* time they are referenced. Lazy stored variables are therefore more performant than computed properties, but this performance gain comes with a cost: it is calculated using the state at the moment it is called.
+Lazy stored variables are calculated the first time they are referenced whereas computed properties are calculated *every* time they are referenced. Lazy stored variables are therefore more performant than computed properties, but this performance gain comes with a cost: lazy stored variables are calculated using the state at the moment they are called.
 
 Consider the example above with `members` being declared with `var` instead of `let`:
 
@@ -236,8 +250,8 @@ struct Family {
     }
 }
 
-var family = Family(members: [Person(name: "Dianne", age: 60),
-                              Person(name: "Harry", age: 58),
+var family = Family(members: [Person(name: "Dianne", age: 62),
+                              Person(name: "Harry", age: 60),
                               Person(name: "Brittany", age: 33),
                               Person(name: "Warren", age: 31)]) // Prints: "Family initialized"
 
@@ -250,6 +264,8 @@ print(family.youngest)
 // Prints: "Person(name: "Warren", age: 31)"
 ```
 After adding "Baby" with an age of 1, you would expect `youngest` to return "Baby". However, as `youngest` has already been initialized before the mutation took place, the stored value is set to Warren with age 31. In this scenario a computed property would be more appropriate.
+
+<br/>
 
 ## Property Observers
 Property observers allow you to observe and respond to changes in properties. There are two property observers:
@@ -301,7 +317,9 @@ doSomething(strength: &hero.strength)
 // Prints: "Strength was changed from 20 to 20"
 ```
 
-## Helpful Links
+<br/>
+
+## Links
 * [Swift Documentation](https://docs.swift.org/swift-book/LanguageGuide/Properties.html)
 * [SwiftLee - Computed Properties](https://www.avanderlee.com/swift/computed-property/)
 * [SwiftLee - Lazy Stored Properties](https://www.avanderlee.com/swift/lazy-var-property/)
