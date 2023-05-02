@@ -188,6 +188,8 @@ class Carleton: University {
 }
 ```
 
+See Also: [Overriding Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/inheritance#overriding-properties)
+
 <br/>
 
 ## Lazy Stored Properties
