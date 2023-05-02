@@ -1,5 +1,7 @@
 # Structures and Classes
 
+Structures and classes are custom data types that allow you to define a collection of related properties and methods. They have many similarities and differences which will be discussed below.
+
 Structures and classes have similar definition syntax:
 
 ```swift
@@ -29,7 +31,7 @@ struct Dog {
     }
 }
 
-var dog = Dog(name: "Aayla", age: 5) // Using default init
+var dog = Dog(name: "Aayla", age: 5) // Using default initializer
 ```
 
 However, you can still declare one if you want:
@@ -77,7 +79,7 @@ var dog = Dog(name: "Aayla", age: 5)
 ## Value vs. Reference Types
 It is very important to remember that structs are *value* types whereas classes are *references* types.
 
-A *value* type is a type whose value is *copied* when it's assigned to a variable or constant, or when it's passed to a function. In the following example, when the var `otherDog` is created and assigned to `dog`, a copy of `dog` is created and assigned to `otherDog`:
+A *value* type is a type whose value is *copied* when it's assigned to a variable or constant, or when it's passed to a function. In the following example, when the variable `otherDog` is created and assigned to `dog`, a copy of `dog` is created and assigned to `otherDog`:
 
 ```swift
 struct Dog {
@@ -97,7 +99,7 @@ otherDog.name = "Jango"
 print(dog.name) // "Aayla"
 print(otherDog.name) // "Jango"
 ```
-However, notice what happens when we change the structure to a class. *Reference types* are not copied when they’re assigned to a variable or constant, or when they’re passed to a function. Rather than a copy, a reference to the same existing instance is used. So in this example, `otherDog` is a reference to `dog` which means that any changes we make to `otherDog` are also made to `dog`:
+However, notice what happens when we change the structure to a class - modifying the name of `otherDog` modifies the name of `dog` as well:
 
 ```swift
 class Dog {
@@ -117,6 +119,10 @@ otherDog.name = "Jango"
 print(dog.name) // "Jango"
 print(otherDog.name) // "Jango"
 ```
+
+This is because `dog` is a *reference* type. When the variable `otherDog` is created and assigned to `dog`, a copy of the *reference* is made rather than the value. Both `dog` and `otherDog` are now referencing the same object instance, so any changes made to the value of that instance will be reflected in both variables.
+
+
 You can compare two variables using the identity operators `===` and `!==` to see if they are referencing the same class instance:
 
 ```swift
