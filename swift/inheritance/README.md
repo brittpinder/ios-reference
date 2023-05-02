@@ -50,12 +50,12 @@ class Car: Vehicle {
     override var description: String {
         return super.description + " in gear \(gear)"
     }
-    
+
     override var currentSpeed: Double {
-	    didSet {
-	        gear = Int(self.currentSpeed / 30)
-	    }
-	}
+        didSet {
+            gear = Int(self.currentSpeed / 30)
+        }
+    }
 }
     
 var myCar = Car()
@@ -130,7 +130,7 @@ makeNoise(with: Husky()) // Awwwooooo
 
 ## Type Checking
 
-You can use the *type check operator* (`is`) to check whether an instance is of a certain subclass type. In the below example, we can count the number of dogs in the pet array using `is` to check the type.
+You can use the *type check operator* (`is`) to check whether an instance is of a certain subclass type. In the below example, we can count the number of dogs in the pets array using `is` to check the type.
 
 ```swift
 let pets = [Pet(), Dog(), Dog(), Pet(), Husky()]
@@ -145,13 +145,45 @@ for pet in pets {
 
 print("There are \(numDogs) dogs") // There are 3 dogs
 ```
-> Notice how the husky is counted as a dog since it inherits from `Dog`
+> Notice that the `Husky` instance is counted since it inherits from `Dog`
 
 <br/>
 
 ## Downcasting
 
 When you believe that a constant or variable of a certain class type may actually refer to an instance of a subclass, you can try to downcast it to the subclass with a *type cast operator* (`as?` or `as!`).
+
+The following examples will use these classes:
+
+```swift
+class Animal {
+    func identify() {
+        print("I am an animal")
+    }
+}
+
+class Bird: Animal {
+    override func identify() {
+        print("I am a bird")
+    }
+
+    func fly() {
+        print("Flapping wings")
+    }
+}
+
+class Reptile: Animal {
+    override func identify() {
+        print("I am a reptile")
+    }
+
+    func shedSkin() {
+        print("Shedding skin")
+    }
+}
+```
+
+<br/>
 
 ### Optional Downcasting with `as?`
 
@@ -173,10 +205,11 @@ for animal in animals {
 // Shedding skin
 // Flapping wings
 ```
+<br/>
 
 ### Forced Downcasting with `as!`
 
-If you are absolutely certain of an instance's subclass you can force downcast using `as!`. However, if you are wrong, this will crash your app, so be careful.
+If you are absolutely certain of an instance's subclass you can force downcast using `as!`. However, if you are wrong, this will crash your app.
 
 In the below example we have an array of `Animal` objects but we can see that it only contains instances of type `Bird`, so we can safely use `as!` to force downcast them.
 
@@ -215,9 +248,9 @@ bird.identify() // I am a bird
 
 let animal: Animal = bird as Animal
 animal.identify() // I am a bird
-//animal.fly() // Error: Value of type 'Animal' has no member 'fly'
+animal.fly() // Error: Value of type 'Animal' has no member 'fly'
 ```
-> Notice how after we perform the upcast and call `animal.identify()`, it calls the `identify()` function of `Bird`. This is because `animal` is still of type `Bird` behind the scenes.
+Notice how after we perform the upcast and call `animal.identify()`, the `identify()` function of `Bird` is called. This is because `animal` is referencing an object of type `Bird` so the overriding function from the subclass is called. However, the variable is of type `Animal` so it does not have access to the `fly()` function of the `Bird` class.
 
 <br/>
 
