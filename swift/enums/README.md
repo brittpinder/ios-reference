@@ -83,9 +83,10 @@ print(Weekday.fri.rawValue) // Friday
 ```
 
 ### Implicitly Assigned Raw Values
-When you’re working with enumerations that store integer or string raw values, you don’t have to explicitly assign a raw value for each case. When you don’t, Swift automatically assigns the values for you.
 
-For example, when integers are used for raw values, the implicit value for each case is one more than the previous case. If the first case doesn’t have a value set, its value is 0.
+If you don't explicitly assign raw values to enumerations that store an integer or string, Swift will automatically assign raw values for you.
+
+For example, when integers are used as raw values, the implicit value for each case is one more than the previous case. If the first case doesn’t have a value set, its value is 0.
 
 ```swift
 enum Color: Int {
