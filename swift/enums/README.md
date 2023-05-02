@@ -142,12 +142,12 @@ You can even store tuples as the value of an enumeration. For example, a transfo
 
 ```swift
 enum Transform {
-    case position(x: Double, y: Double, z: Double)
-    case rotation(x: Double, y: Double, z: Double)
+    case translate(x: Double, y: Double, z: Double)
+    case rotate(x: Double, y: Double, z: Double)
     case scale(Double)
 }
 
-let transforms = [Transform.position(x: 2.0, y: 0.0, z: 10.0), Transform.scale(0.5)]
+let transforms = [Transform.translate(x: 2.0, y: 0.0, z: 10.0), Transform.scale(0.5)]
 
 for transform in transforms {
     // Apply transform
