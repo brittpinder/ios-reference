@@ -130,7 +130,7 @@ var bread = ShoppingListItem(name: "Bread", purchased: true)
 var juice = ShoppingListItem(name: "Juice", quantity: 2)
 var unknown = ShoppingListItem(quantity: 4)
 ```
-> Note: When you omit properties in a memberwise initializer, the remaining properties still need to be provided in order
+> Note: When you omit properties in a memberwise initializer, the remaining properties still need to be provided in the order in which they are declared
 
 <br/>
 
@@ -305,13 +305,13 @@ override func viewDidLoad() {
     // No need to manually configure button3 because the convenience initializer takes care of it
 }
 ```
-> Some implementation details such as arranging the buttons in a stackview have been excluded in order to better highlight the important parts of the example.
+> Some implementation details such as arranging the buttons in a stackview have been excluded in order to better highlight the benefits of using convenience initializers.
 
 <br/>
 
 ### Two-Phase Initialization
 
-Class initialization in Swift can be broken down into a two-phase process: Initialization and Customization. During the first phase, each stored property is assigned an initial value by the class that introduced it. After that, the second phase begins and each class is given the opportunity to customize its stored properties further before the new instance is considered ready for use.
+Class initialization in Swift can be broken down into a two-phase process: *Initialization* and *Customization*. During the first phase, each stored property is assigned an initial value by the class that introduced it. After that, the second phase begins and each class is given the opportunity to customize its stored properties further before the new instance is considered ready for use.
 
 Two-phase initialization prevents property values from being accessed before they’re initialized, and prevents property values from being set to a different value by another initializer unexpectedly. Swift’s compiler performs four helpful safety-checks to make sure that two-phase initialization is completed without error:
 
@@ -335,14 +335,14 @@ class LandVehicle: Vehicle {
     var numberOfWheels: Int
 
     override init() {
-        numberOfWheels = 0  // Initialize values introduced by this class
-        super.init()        // Initialize inherited values
-        maxSpeed = 100      // Customize inherited values
+        numberOfWheels = 0  // 1. Initialize values introduced by this class
+        super.init()        // 2. Initialize inherited values
+        maxSpeed = 100      // 3. Customize inherited values
     }
 
     convenience init(bicycleWithMaxSpeed: Float) {
-        self.init()         // Call designated initializer
-        numberOfWheels = 2  // Customize inherited values and values introduced by this class
+        self.init()         // 1. Call designated initializer
+        numberOfWheels = 2  // 2. Customize inherited values and values introduced by this class
         maxSpeed = bicycleWithMaxSpeed
     }
 }
@@ -352,7 +352,7 @@ class LandVehicle: Vehicle {
 
 ## Failable Initializers
 
-If an initializer can run into problems that prevent it from propertly initializing a struct, class or enum (ex: due to invalid parameter values or the absence of a required external resource), you can make it a *failable* initializer. Failable initializers create optional values and are indicated by `init?`. At the point where initialization fails, you simply return `nil`.
+If an initializer can run into problems that prevent it from propertly initializing a struct, class or enum (ex: due to invalid parameter values or the absence of a required external resource), you can make it a *failable initializer*. Failable initializers create optional values and are indicated by `init?`. At the point where initialization fails, you simply return `nil`.
 
 Below is an example of a failable initializer that fails when an empty string is passed as the `name`.
 
@@ -380,7 +380,6 @@ Failable initializers are used for numeric type conversions in Swift:
 ```swift
 let number = Int("34")
 print(number) // Optional(34)
-
 
 let anotherNumber = Int("three")
 print(anotherNumber) // nil
@@ -415,13 +414,15 @@ enum MeasurementUnit {
 if MeasurementUnit(symbol: "cm") != nil {
     print("Initialization succeeded")
 }
+// Initialization succeeded
 
 if MeasurementUnit(symbol: "centimeter") == nil {
     print("Initialization failed")
 }
+// Initialization failed
 ```
 
-When an enum has a raw value, it automatically receives a failable initializer that takes a parameter called `rawValue` which selects a matching enumeration case if one is found or returns nil if no matching value exists.
+When an enum has a raw value, it automatically receives a failable initializer that takes a parameter called `rawValue` which selects a matching enumeration case if one is found or returns `nil` if no matching value exists.
 
 ```swift
 enum Suit: String {
@@ -600,7 +601,7 @@ deinit {
 }
 ```
 
-The following example demonstrates how the deinitializer gets triggered. The function `makeFriend` creates an instance of the class `Friend` and then it immediately goes out of scope, causing it to be deallocated.
+The following example demonstrates how the deinitializer gets triggered. The function `createFriend` creates an instance of the class `Friend` which then goes out of scope, causing it to be deinitialized.
 
 ```swift
 class Friend {
