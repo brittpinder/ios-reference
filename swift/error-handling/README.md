@@ -51,7 +51,7 @@ When an error is thrown, some surrounding piece of code must be responsible for 
 
 <br/>
 
-#### Propogating Errors Using Throwing Functions
+#### 1. Propogating Errors Using Throwing Functions
 
 Any piece of code that has the possibility of throwing an error, must be wrapped in a *throwing function*. A throwing function is marked with the `throws` keyword:
 
@@ -85,11 +85,11 @@ struct User {
     }
 }
 ```
-If an error is encountered, the init function will exit and propogate that error to the scope in which the init function was called. That scope can either propogate the error further up the chain or handle it using one of the three remaining methods described below.
+If an error is encountered, the `init` method will exit and propogate that error to the scope in which the `init` method was called. That scope can either propogate the error further up the chain or handle it using one of the three remaining methods described below.
 
 <br/>
 
-#### Handling Errors Using Do-Catch
+#### 2. Handling Errors Using Do-Catch
 
 One common way of handling errors is by using a `do-catch` block because it allows you to handle the various error types differently. If no error occurs, everything in the `do` block of code will be executed. Otherwise, the error will be handled by one of the `catch` blocks.
 
@@ -119,7 +119,8 @@ createUser(name: "jimhalpert") // Created user with name: jimhalpert
 > Notice in the above example that the expression that can throw is preceded by the keyword `try`. This is a requirement; you must put `try` before any function call that can throw. There are two alternatives: `try?` and `try!` which are explained in detail later on.
 
 <br/>
-You can use [patterns](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/patterns/) with `do-catch` blocks to handle errors in many different ways including handling more than one error in one catch block, appending a condition using the `where` keyword, or simply check if the error is of a certain type:
+
+You can use [patterns](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/patterns) with `do-catch` blocks to handle errors in many different ways including handling more than one error in one catch block, appending a condition using the `where` keyword, or simply checking if the error is of a certain type:
 
 ```swift
 func createUser1(name: String) throws -> User? {
@@ -146,7 +147,7 @@ do {
 
 <br/>
 
-#### Converting Errors to Optional Values
+#### 3. Converting Errors to Optional Values
 
 Using `try?` before a throwing function allows you to handle all errors in the same way by converting the result of the throwing expression to an optional.
 
@@ -171,6 +172,7 @@ print(result2) // nil
 In the above example, the first call to `divide` is successful, but because the `try?` keyword was used, the result is converted to an `Optional<Int>`. The second call to `divide` throws an error but it is handled by returning `nil`.
 
 <br/>
+
 It is very common to use `if let` syntax when using `try?` to handle an error:
 
 ```swift
@@ -190,7 +192,7 @@ if let result = try? divide(dividend: 8, divisor: 0) {
 ```
 <br/>
 
-#### Disabling Error Propogation
+#### 4. Disabling Error Propogation
 
 If you are 100% certain that a throwing function won't throw an error at runtime, you can write `try!` before the expression to disable error propogation and wrap the call in a runtime assertion that no error will be thrown.
 
@@ -254,7 +256,7 @@ The five types of assertions and preconditions, in order from lowest to highest 
 
 ### [assert()](https://developer.apple.com/documentation/swift/assert(_:_:file:line:))
 
-`assert()` takes a condition to check along with an optional message to print if that check fails. If the condition fails, your app will crash, but *only* in Debug mode. Assertions get compiled out of Release builds which means they have no performance impact and you should therefore use them liberally throughout your code to sanity check any assumptions you have and help you discover bugs during development and testing.
+`assert()` takes a condition to check along with an optional message to print if that check fails. If the condition fails, your app will crash, but *only* in Debug mode. Assertions get compiled out of Release builds which means they have no performance impact. You should therefore use them liberally throughout your code to sanity check any assumptions you have and help you discover bugs during development and testing.
 
 In the following example, an `assert()` is used to double check that the `Person` struct isn't initialized with an `age` less than 0.
 
@@ -264,8 +266,6 @@ struct Person {
 
     init(age: Int) {
         assert(age >= 0, "A person's age can't be less than zero.")
-        print("Hello World") // This line is executed only in a Release build
-        
         self.age = max(0, age)
     }
 }
@@ -289,11 +289,10 @@ func rollDie() {
         print("You rolled a three!")
     default:
         assertionFailure("Rolling a 3-sided die shouldn't have any other results.")
-        print("Hello World") // This line is executed only in a Release build
     }
 }
 ```
->It is important to note that `assert(false)` and `assertionFailure()`, while similar, are not the same thing. The first expression says to the compiler, *"crash when this line is hit in debug mode if my condition fails"*, whereas the second expression says to the compiler, *"always crash in Debug mode if you hit this line"*. `assertionFailure()` therefore provides an optimization hint to the compiler that it can discard all the code that comes after it - whether or not this actually happens is up to the compiler.
+>It is important to note that `assert(false)` and `assertionFailure()`, while similar, are not the same thing. The first expression says to the compiler, *"crash when this line is hit in debug mode if my condition fails"*, whereas the second expression says to the compiler, *"always crash in Debug mode if you hit this line"*. `assertionFailure()` therefore provides an optimization hint to the compiler that it can discard all the code that comes after it (although whether or not this actually happens is up to the compiler).
 
 <br/>
 
@@ -312,8 +311,6 @@ In the following example, a precondition is used to check that an index is withi
 ```swift
 func removeAtIndex(array: inout [Int], index: Int) {
     precondition(index >= 0 && index < array.count, "Index is out of bounds!")
-    print("Hello World")  // This line is executed only in Release mode if safety checks are disabled
-
     array.remove(at: index)
 }
 ```
@@ -323,7 +320,7 @@ func removeAtIndex(array: inout [Int], index: Int) {
 
 `preconditionFailure()` is the same as `precondition()` except that it doesn't have a condition - it will *always* crash your app (in both Debug and Release builds, as long as safety checks are enabled).
 
-Unlike the previous three assertions, `assert()`, `assertionFailure()` and `precondition()`, `preconditionFailure()` has a return type of [`Never`](https://developer.apple.com/documentation/swift/never), which means that the Swift compiler will automatically warn you if you attempt to put executable code after it. It also means that you aren't forced to return a nonsense value from a function when you know you're in an invalid state. Use `preconditionFailure()` when continuing execution is dangerous and it's better to halt execution than continue.
+Unlike `assert()`, `assertionFailure()` and `precondition()`, `preconditionFailure()` has a return type of [`Never`](https://developer.apple.com/documentation/swift/never), which means that the Swift compiler will automatically warn you if you attempt to put executable code after it. It also means that you aren't forced to return a nonsense value from a function when you know you're in an invalid state. Use `preconditionFailure()` when continuing execution is dangerous and it's better to halt execution than continue.
 
 ```swift
 enum Suit {
@@ -345,7 +342,6 @@ func getSuit(name: String) -> Suit {
         return Suit.club
     default:
         preconditionFailure("Unrecognized suit name!")
-        print("Hello World") // This line is never executed
     }
 }
 ```
@@ -356,12 +352,11 @@ In the above example, if the default case is reached, we aren't forced to return
 
 ### [fatalError()](https://developer.apple.com/documentation/swift/fatalerror(_:file:line:))
 
-`fatalError()` will `always` crash your app, regardless of whether you are building in Debug or Release, or even if you have disabled safety checks. There is no way to disable `fatalError()` assertions. Only use `fatalError()` when something has gone horribly wrong (eg: a core dependency for your app cannot be found)
+`fatalError()` will *always* crash your app, regardless of whether you are building in Debug or Release, or even if you have disabled safety checks. There is no way to disable `fatalError()` assertions. Only use `fatalError()` when something has gone horribly wrong (eg: a core dependency for your app cannot be found)
 
 ```swift
 guard let url = Bundle.main.url(forResource: "input", withExtension: "json") else {
     fatalError("Failed to locate input.json in bundle.")
-    print("Hello World") // This line is never executed
 }
 ```
 > Note: Using `fatalError()` will copy the full path to your current file into your finished program, so you might inadvertently reveal something confidential. If this is a concern, `preconditionFailure()` might be a better choice.

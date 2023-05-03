@@ -14,7 +14,7 @@ func testAssert() {
 
         init(age: Int) {
             assert(age >= 0, "A person's age can't be less than zero.")
-            print("Hello World") // This line is executed only in a Release build
+            print("Hello World") // If the assert fails, this line is executed only in a Release build
 
             self.age = max(0, age)
         }
@@ -37,7 +37,7 @@ func testAssertionFailure() {
             print("You rolled a three!")
         default:
             assertionFailure("Rolling a 3-sided die shouldn't have any other results.")
-            print("Hello World") // This line is executed only in a Release build
+            print("Hello World") // If the default case is triggered, this line is executed only in a Release build
         }
     }
 
@@ -48,7 +48,7 @@ func testPrecondition() {
 
     func removeAtIndex(array: inout [Int], index: Int) {
         precondition(index >= 0 && index < array.count, "Index is out of bounds!")
-        print("Hello World")  // This line is executed only in Release mode if safety checks are disabled
+        print("Hello World") // If the precondition fails, this line is executed only in Release mode if safety checks are disabled
 
         array.remove(at: index)
     }
@@ -79,7 +79,7 @@ func testPreconditionFailure() {
             return Suit.club
         default:
             preconditionFailure("Unrecognized suit name!")
-            print("Hello World") // This line is never executed
+            print("Hello World") // If the default case is hit, this line will never be executed
         }
     }
 
@@ -89,7 +89,7 @@ func testPreconditionFailure() {
 func testFatalError() {
     guard let url = Bundle.main.url(forResource: "input", withExtension: "json") else {
         fatalError("Failed to locate input.json in bundle.")
-        print("Hello World") // This line is never executed
+        print("Hello World") // If the guard block is triggered, this line will never be executed
     }
 
     print(url)
