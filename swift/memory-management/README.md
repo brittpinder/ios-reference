@@ -583,7 +583,7 @@ However, if we pass the *same* object, a conflict will occur because the functio
 ```swift
 kevin.transferEnergy(to: &kevin)
 // Error: Inout arguments are not allowed to alias each other
-// Error: Overlapping accesses to 'maria', but modification requires exclusive access; consider copying to a local variable
+// Error: Overlapping accesses to 'kevin', but modification requires exclusive access; consider copying to a local variable
 ```
 
 <br/>
