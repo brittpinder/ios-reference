@@ -1,24 +1,55 @@
 import UIKit
 
-class Counter {
-    var daysLeft: Int
+class Ordinal {
+    let number: Int
 
-    lazy var displayString: () -> String = { [unowned self] in
-        if self.daysLeft == 1 {
-            return "There is 1 day left"
-        } else {
-            return "There are \(self.daysLeft) days left"
+//    lazy var getDisplayString: () -> String = { [weak self] in
+//        guard let self else {
+//            return ""
+//        }
+//
+//        let lastDigit = self.number % 10
+//        var suffix = "th"
+//
+//        if lastDigit == 1 && self.number != 11 {
+//            suffix = "st"
+//        } else if lastDigit == 2 && self.number != 12 {
+//            suffix = "nd"
+//        } else if lastDigit == 3 && self.number != 13 {
+//            suffix = "rd"
+//        }
+//
+//        return "\(self.number)\(suffix)"
+//    }
+
+    lazy var getDisplayString: () -> String = { [unowned self] in
+        let lastDigit = self.number % 10
+        var suffix = "th"
+
+        if lastDigit == 1 && self.number != 11 {
+            suffix = "st"
+        } else if lastDigit == 2 && self.number != 12 {
+            suffix = "nd"
+        } else if lastDigit == 3 && self.number != 13 {
+            suffix = "rd"
         }
+
+        return "\(self.number)\(suffix)"
     }
 
-    init(daysLeft: Int) {
-        self.daysLeft = daysLeft
+    init(_ number: Int) {
+        self.number = number
     }
 
     deinit {
-        print("Deallocating Counter")
+        print("Deallocating Ordinal")
     }
 }
 
-var counter: Counter? = Counter(daysLeft: 4)
-counter = nil // Deallocating Counter
+var ordinal: Ordinal? = Ordinal(4)
+
+print(ordinal?.getDisplayString())
+// Optional("4th")
+
+ordinal = nil
+// Deallocating Ordinal

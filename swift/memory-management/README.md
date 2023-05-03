@@ -372,83 +372,103 @@ The previous section covered the use of unowned non-optional references. However
 
 So far we have discussed strong reference cycles between two class instances. Strong reference cycles can also occur between a closure and a class instance - particularly if you assign a closure to a property of a class instance and the body of that closure captures the instance (by referencing `self`). This strong reference cycle occurs because closures, like classes, are *reference* types.
 
-For example, suppose we had a class called `Counter` which keeps track of the number of days left until a certain event.
+For example, suppose we had a class called `Ordinal` which represents an ordinal number (ie: 1st, 2nd, 3rd etc.).
 
 ```swift
-class Counter {
-    var daysLeft: Int
+class Ordinal {
+    let number: Int
 
-    lazy var displayString: () -> String = {
-        if self.daysLeft == 1 {
-            return "There is 1 day left"
-        } else {
-            return "There are \(self.daysLeft) days left"
+    lazy var getDisplayString: () -> String = { [unowned self] in
+        let lastDigit = self.number % 10
+        var suffix = "th"
+
+        if lastDigit == 1 && self.number != 11 {
+            suffix = "st"
+        } else if lastDigit == 2 && self.number != 12 {
+            suffix = "nd"
+        } else if lastDigit == 3 && self.number != 13 {
+            suffix = "rd"
         }
+
+        return "\(self.number)\(suffix)"
     }
 
-    init(daysLeft: Int) {
-        self.daysLeft = daysLeft
+    init(_ number: Int) {
+        self.number = number
     }
 
     deinit {
-        print("Deallocating Counter")
+        print("Deallocating Ordinal")
     }
 }
 ```
-Inside this class we have a closure that returns a display string depending on the number of days left (singular or plural). This closure is stored in the variable `displayString` which creates a strong reference from the class instance to the closure. However, within the body of the closure, it references `self.daysLeft`, meaning that there is also a strong reference from the closure to the class instance. We have a strong reference cycle.
+Inside this class we have a closure that returns a display string with the number followed by an appropriate suffix. This closure is stored in the variable `getDisplayString` which creates a strong reference from the class instance to the closure. However, within the body of the closure, it references `self.number`, meaning that there is also a strong reference from the closure to the class instance; we have a strong reference cycle.
 
-This can be demonstrated by creating an instance of the class and then setting it to nil. When the instance is set to nil, nothing is printed to the console, indicating that the `deinit` function was never called.
+This can be demonstrated by creating an instance of the class, calling the closure and then setting the instance to `nil`. When the instance is set to `nil`, nothing is printed to the console, indicating that the `deinit` function was never called.
 
 ```swift
-var counter: Counter? = Counter(daysLeft: 4)
-counter = nil
+var ordinal: Ordinal? = Ordinal(4)
+
+print(ordinal?.getDisplayString())
+// Optional("4th")
+
+ordinal = nil
 ```
 
 <br/>
 
 #### Resolving Strong Reference Cycles for Closures
 
-To resolve a strong reference cyle between a closure and a class instance, you define a `capture list` as part of the closures definition. Within this capture list, you declare each captured reference to be either weak or unowned.
+To resolve a strong reference cycle between a closure and a class instance, you define a "capture list" as part of the closure's definition. Within this capture list, you declare each captured reference to be either weak or unowned.
 
-Using the above example, if we declare a weak reference to self within the closure capture list, we can see that the strong reference cycle is resolved because the `deinit` function is called when the class instance is set to nil.
+Using the above example, if we declare a weak reference to self within the closure capture list, we can see that the strong reference cycle is resolved because the `deinit` function is called when the class instance is set to `nil`.
 
 ```swift
-lazy var displayString: () -> String = { [weak self] in
-    if self?.daysLeft == 1 {
-        return "There is 1 day left"
-    } else {
-        return "There are \(self?.daysLeft) days left"
+lazy var getDisplayString: () -> String = { [weak self] in
+    guard let self else {
+        return ""
     }
+
+    let lastDigit = self.number % 10
+    // ... Remainder of closure
 }
-
-...
-
-var counter: Counter? = Counter(daysLeft: 4)
-counter = nil // Deallocating Counter
 ```
+
+```
+var ordinal: Ordinal? = Ordinal(4)
+
+print(ordinal?.getDisplayString())
+// Optional("4th")
+
+ordinal = nil
+// Deallocating Ordinal
+```
+
 > Notice how when we define `self` as a weak reference, `self` becomes an optional. This is because weak references have the possibility of being set to `nil` so they have to be optional.
 
-We could also resolve the strong reference cycle using an unowned reference to `self`:
+We could also resolve the strong reference cycle by using an unowned reference to `self`:
 
 ```swift
-lazy var displayString: () -> String = { [unowned self] in
-    if self.daysLeft == 1 {
-        return "There is 1 day left"
-    } else {
-        return "There are \(self.daysLeft) days left"
-    }
+lazy var getDisplayString: () -> String = { [unowned self] in
+    let lastDigit = self.number % 10
+    // ... Remainder of closure
 }
+```
 
-...
+```
+var ordinal: Ordinal? = Ordinal(4)
 
-var counter: Counter? = Counter(daysLeft: 4)
-counter = nil // Deallocating Counter
+print(ordinal?.getDisplayString())
+// Optional("4th")
+
+ordinal = nil
+// Deallocating Ordinal
 ```
 > Unowned references are expected to always hold a value, so they are non-optional
 
 **When the captured reference may become `nil` at some point in the future, you should use a weak reference. When the captured reference will never become `nil`, use an unowned reference.**
 
-In the above example, whenever an instance of `Counter` is deallocated, the closure `displayString` should go with it (they have the same lifetime), so in this scenario it makes sense to use an unowned reference.
+In the above example, whenever an instance of `Ordinal` is deallocated, the closure `getDisplayString` should go with it (they have the same lifetime), so in this scenario it makes sense to use an unowned reference.
 
 <br/>
 
