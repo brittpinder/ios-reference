@@ -44,10 +44,10 @@ throw UsernameError.tooShort
 
 When an error is thrown, some surrounding piece of code must be responsible for handling the error - for example, by correcting the problem, trying an alternative approach, or informing the user of the failure. There are four ways of handling errors in Swift:
 
-1. [Propogating Errors Using Throwing Functions](#propogating-errors-using-throwing-functions)
-2. [Handling Errors Using Do-Catch](#handling-errors-using-do-catch)
-3. [Converting Errors to Optional Values](#converting-errors-to-optional-values)
-4. [Disabling Error Propagation](#disabling-error-propogation)
+1. [Propogating Errors Using Throwing Functions](#1-propogating-errors-using-throwing-functions)
+2. [Handling Errors Using Do-Catch](#2-handling-errors-using-do-catch)
+3. [Converting Errors to Optional Values](#3-converting-errors-to-optional-values)
+4. [Disabling Error Propagation](#4-disabling-error-propogation)
 
 <br/>
 
