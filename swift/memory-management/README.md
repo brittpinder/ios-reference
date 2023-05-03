@@ -25,7 +25,7 @@ Primitives (Int, Double, String) |
 * ARC is used to keep track of all references
 
 
-> An good analogy to better understand the difference between values and references is when you share a Google spreadsheet with someone. If you download the spreadsheet and send it to someone in an email, you are creating a unique *copy* of it. They can modify it however they want and it won't affect your original spreadsheet. This is how value types work. If you instead share the link to your google spreadsheet with someone, they have access to the original spreadsheet. Any changes they make will effect your original version. This is how reference types work.
+> A good analogy to better understand the difference between values and references is when you share a Google spreadsheet with someone. If you download the spreadsheet and send it to someone in an email, you are creating a unique *copy* of it. They can modify it however they want and it won't affect your original spreadsheet. This is how value types work. If you instead share the link to your google spreadsheet with someone, they have access to the original spreadsheet. Any changes they make will effect your original version. This is how reference types work.
 
 For a code example of the differences between values and references, see [Structures and Classes](https://github.com/brittpinder/ios-reference/tree/main/swift/structs-vs-classes#value-vs-reference-types)
 
@@ -45,7 +45,7 @@ As mentioned above, value types are allocated on the *stack* whereas reference t
 
 * The heap is a more advanced data structure that allows you to allocate memory with a dynamic lifetime at any location rather than at a specific position (ex: the stack pointer)
 * It is more dynamic than the stack but less efficient
-* The heap is less performant than a stack for the following reasons
+* The heap is less performant than the stack for the following reasons
 	* When allocating memory, the heap data structure needs to be searched to find unused blocks of memory of the appropriate size
 	* When deallocating memory, empty blocks of memory need to be reinserted at the same location
 	* Multiple threads can allocate memory on the heap at the same time so it needs to protect its integrity by using locking or other synchronization methods
@@ -150,7 +150,7 @@ office = nil // Dwight Schrute is being deinitialized
 
 ### Strong Reference Cycles (Retain Cycles)
 
-If you are not careful, it is possible to create situations where the reference count for an object can never reach 0, meaning that that object's memory can never be freed. An example of this is a retain cycle, where two class instances hold strong references to each other, keeping each other alive.
+If you are not careful, it is possible to create situations where the reference count for an object can never reach 0, meaning that an object's memory can never be freed. An example of this is a retain cycle, where two class instances hold strong references to each other, keeping each other alive.
 
 Consider the following classes representing a person and an apartment. Every instance of `Person` has an optional `Apartment`, and every instance of `Apartment` has an optional `Person`:
 
@@ -210,26 +210,30 @@ Strong reference cycles can appear in other ways, such as variables going out of
 
 ```swift
 func memorySafeFunction() {
-    var john = Person(name: "John") // John is being initialized
-    var unit4A = Apartment(unit: "4A") // Apartment 4A is being intialized
+    var john = Person(name: "John")
+    var unit4A = Apartment(unit: "4A")
 }
 
 memorySafeFunction()
+// John is being initialized
+// Apartment 4A is being intialized
 // Apartment 4A is being deinitialized
 // John is being deinitialized
 ```
 
-However, if we link the `Person` and `Apartment` instances inside the function, their strong references to each other will remain after the variables have gone out of scope, meaning that the object instances won't be deallocated when the function exits.
+However, if we link the `Person` and `Apartment` instances inside the function, their strong references to each other will remain after the variables have gone out of scope. This means that the object instances won't be deallocated when the function exits, resulting in a memory leak.
 
 ```swift
 func memoryUnsafeFunction() {
-    var john = Person(name: "John") // John is being initialized
-    var unit4A = Apartment(unit: "4A") // Apartment 4A is being intialized
+    var john = Person(name: "John")
+    var unit4A = Apartment(unit: "4A")
 
     john.apartment = unit4A
     unit4A.tenant = john
 }
 memoryUnsafeFunction()
+// John is being initialized
+// Apartment 4A is being intialized
 ```
 
 <br/>
@@ -294,7 +298,7 @@ unit4A = nil // Apartment 4A is being deinitialized
 
 #### Unowned References
 
-Like a weak reference, an *unowned reference*, (indicated with the `unowned` keyword) doesn’t keep a strong hold on the instance it refers to. Unlike a weak reference, however, an unowned reference is used when the other instance has the same lifetime or a longer lifetime. Since unowned references point to objects that are expected to outlive the instances referring to them, **unowned references are expected to always have a value**. This means that unowned references don't have to be optional and ARC will never set an unowned reference to nil. However, if an instance does happen to be deallocated and you try to access it using an unowned reference, you'll get a runtime error.
+Like a weak reference, an *unowned reference*, (indicated with the `unowned` keyword) doesn’t keep a strong hold on the instance it refers to. Unlike a weak reference, however, an unowned reference should be used when the other instance has the same lifetime or a longer lifetime. Since unowned references point to objects that are expected to outlive the instances referring to them, **unowned references are expected to always have a value**. This means that unowned references don't have to be optional and ARC will never set an unowned reference to nil. However, if an instance does happen to be deallocated and you try to access it using an unowned reference, you'll get a runtime error.
 
 In the following example, a customer may or may not have a credit card, but a credit card will always be associated with a customer. The `person` reference should always outlive any instance of `CreditCard`, so we can mark the reference as `unowned`:
 
@@ -354,7 +358,7 @@ bob!.card = creditCard
 bob = nil
 print(creditCard.customer.name) // CRASH
 ```
-In this scenario, when we set the `Customer` instance to nil, it gets deallocated but the `CreditCard` instance does not because there is still a remaining strong reference to it through the `creditCard` variable. If we then attempt to access the `Customer` instance through the `creditCard` variable, we will get a runtime error because the `Customer` instance no longer exists. This is an example of where a weak pointer should be used instead.
+In this scenario, when we set the `Customer` instance to nil, it gets deallocated but the `CreditCard` instance does not because there is still a remaining strong reference to it through the `creditCard` variable. If we then attempt to access the `Customer` instance through the `creditCard` variable, we will get a runtime error because the `Customer` instance no longer exists. This is an example of where a weak reference should be used instead.
 
 <br/>
 

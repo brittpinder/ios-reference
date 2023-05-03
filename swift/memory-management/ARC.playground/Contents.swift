@@ -90,19 +90,23 @@ unit4A = nil
 print("\n\n")
 
 func memorySafeFunction() {
-    var john = Person(name: "John") // John is being initialized
-    var unit4A = Apartment(unit: "4A") // Apartment 4A is being intialized
+    var john = Person(name: "John")
+    var unit4A = Apartment(unit: "4A")
 }
 
 memorySafeFunction()
+// John is being initialized
+// Apartment 4A is being intialized
 // Apartment 4A is being deinitialized
 // John is being deinitialized
 
 func memoryUnsafeFunction() {
-    var john = Person(name: "John") // John is being initialized
-    var unit4A = Apartment(unit: "4A") // Apartment 4A is being intialized
+    var john = Person(name: "John")
+    var unit4A = Apartment(unit: "4A")
 
     john.apartment = unit4A
     unit4A.tenant = john
 }
 memoryUnsafeFunction()
+// John is being initialized
+// Apartment 4A is being intialized
