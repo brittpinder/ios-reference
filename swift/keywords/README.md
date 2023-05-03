@@ -42,7 +42,7 @@
 ### [`do-catch`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Error-Handling)
 
 * Used in error handling, a `do` statement creates a new containing scope, which allows errors to be propogated to one or more `catch` clauses
-* Referenced in [Error Handling and Assertions](https://github.com/brittpinder/ios-reference/tree/main/swift/error-handling#handling-errors-using-do-catch)
+* Referenced in [Error Handling and Assertions](https://github.com/brittpinder/ios-reference/tree/main/swift/error-handling#2-handling-errors-using-do-catch)
 
 <br/>
 
@@ -72,7 +72,7 @@
 
 * Executes statements depending on the Boolean value of an expression. If the expression is true, the code after the guard statement is executed, otherwise the code within the `else` statement is executed.
 * The accompanying `else` statement is mandatory and must transfer control to exit the code block in which the guard statement appears (using `return`, `break`, `continue`, `throw`, `fatalError` etc.)
-* Referenced in [Optionals](https://github.com/brittpinder/ios-reference/tree/main/swift/optionals#optional-binding)
+* Referenced in [Optionals](https://github.com/brittpinder/ios-reference/tree/main/swift/optionals#optional-binding-with-guard-let)
 
 <br/>
 
@@ -115,7 +115,8 @@
 
 ### [`is`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/typecasting/#Checking-Type)
 
-* The *type check operator* checks wither an instance is of a certain subclass type
+* The *type check operator*
+* Checks whether an instance is of a certain subclass type
 * Referenced in [Inheritance](https://github.com/brittpinder/ios-reference/tree/main/swift/inheritance#type-checking)
 
 <br/>
@@ -158,7 +159,7 @@
 
 ### [`override`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/inheritance#Overriding)
 
-* Overrides a method, property or subscript from the superclass
+* Indicates a method, property or subscript that overrides from the superclass
 * Referenced in [Inheritance](https://github.com/brittpinder/ios-reference/tree/main/swift/inheritance)
 
 <br/>
@@ -196,7 +197,7 @@
 ### [`set`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/properties/#Computed-Properties)
 
 * Defines the "setter" of a computed property
-* Referenced in [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties#setting-computed-properties)
+* Referenced in [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties#setting-computed-properties) and [Access Control](https://github.com/brittpinder/ios-reference/tree/main/swift/access-control#read-only-with-private-setter)
 
 <br/>
 
@@ -217,8 +218,8 @@
 
 ### [`throws`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/errorhandling/#Propagating-Errors-Using-Throwing-Functions)
 
-* Indicates that a function can throw
-* Referenced in [Error Handling and Assertions](https://github.com/brittpinder/ios-reference/tree/main/swift/error-handling#propogating-errors-using-throwing-functions)
+* Indicates that a function can throw an error
+* Referenced in [Error Handling and Assertions](https://github.com/brittpinder/ios-reference/tree/main/swift/error-handling#1-propogating-errors-using-throwing-functions)
 
 <br/>
 
@@ -227,16 +228,15 @@
 * Used before a piece of code that calls a function, method or initializer that can throw an error
 * The alternative `try?` converts the result of the throwing expression to an optional
 * The alternative `try!` disables error propogation by wrapping the call in a runtime assertion that no error will be thrown
-* Referenced in [Error Handling and Assertions](https://github.com/brittpinder/ios-reference/tree/main/swift/error-handling#handling-errors-using-do-catch)
+* Referenced in [Error Handling and Assertions](https://github.com/brittpinder/ios-reference/tree/main/swift/error-handling#2-handling-errors-using-do-catch)
 
 <br/>
 
 ### [`unowned`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/#Unowned-References)
 
 * Declares a reference that doesn't keep a strong hold of the instance it refers to and therefore doesn't stop ARC from disposing of that instance
-* Unowned references should be applied to instances that have the same or longer lifetime than the class containing the unknown reference
-* Unowned references are expected to always hold a value and therefore are non-optional
-* See also: [`weak`](#weak)
+* Unowned references should be applied to instances that have the same or longer lifetime than the class containing the unowned reference
+* Unowned references are expected to always hold a value
 * Referenced in [Memory Management](https://github.com/brittpinder/ios-reference/tree/main/swift/memory-management#unowned-references)
 
 <br/>
@@ -253,7 +253,6 @@
 * Declares a reference that doesn't keep a strong hold of the instance it refers to and therefore doesn't stop ARC from disposing of that instance.
 * Weak references should be applied to instances that have a shorter lifetime than the class containing the weak reference
 * Weak references will be set to `nil` when the instance they point to is deallocated which means weak references must be optional variables
-* See also: [`unowned`](#unowned)
 * Referenced in [Memory Management](https://github.com/brittpinder/ios-reference/tree/main/swift/memory-management#weak-references)
 
 <br/>
