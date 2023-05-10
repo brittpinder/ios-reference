@@ -45,9 +45,9 @@ Besides adding the tableview to your view controller and applying layout and con
 
 <br/>
 
-### 1. Implement the `UITableViewDataSource` protocol
+### 1. Adopt the `UITableViewDataSource` protocol
 
-Implement the `UITableViewDataSource` protocol and the two required functions, `numberOfRowsInSection` and `cellForRowAt` which define the information that will be displayed in the table view.
+Adopt the `UITableViewDataSource` protocol and implement the two required functions, `numberOfRowsInSection` and `cellForRowAt` which define the information that will be displayed in the table view.
 
 ```swift
 extension BasicTableVC: UITableViewDataSource {
@@ -101,7 +101,7 @@ cell.accessoryType = .detailButton
 <br/>
 
 ## Selecting Table Rows
-In order to select table rows, you need to implement the `UITableViewDelegate` protocol, implement the `didSelectRowAt` function and set your table view's delegate to `self`:
+In order to select table rows, you need to adopt the `UITableViewDelegate` protocol, implement the `didSelectRowAt` function and set your table view's delegate to `self`:
 
 ```swift
 tableView.delegate = self
