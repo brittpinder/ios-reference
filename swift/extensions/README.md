@@ -97,6 +97,87 @@ print(4.squared) // 16
 
 ## Initializers
 
+Extensions can add new initializers to existing types, allowing you to provide additional initialization options. Suppose we had the following struct representing a book:
+
+```swift
+struct Book {
+    let title: String
+    let pages: Int
+    let readingHours: Double
+}
+```
+If we wanted to calculate `readingHours` instead of requiring it to be explicitly stated, we could add a custom initializer within an extension:
+
+```swift
+extension Book {
+    init(title: String, pages: Int) {
+        self.title = title
+        self.pages = pages
+        self.readingHours = Double(pages) / 30.0
+    }
+}
+
+let hp = Book(title: "Harry Potter", pages: 223)
+print(hp.readingHours) // 7.43
+```
+
+Because this initializer is defined within an extension, we still have access to the default memberwise initializer:
+
+```swift
+let lotr = Book(title: "Lord of the Rings", pages: 1216, readingHours: 48)
+```
+
+If we had put our custom initializer directly into the `Book` struct instead of within and extension, a memberwise initializer would not be created.
+
+<br/>
+
+### Initializer Extensions for Classes
+
+When working with classes, it is important to note that only convenience initializers can be added to an extension. Designated initializers and deinitializers must always be provided by the original class implementation.
+
+For example, suppose we had the following class representing a square:
+
+```swift
+struct Point {
+    var x: Double
+    var y: Double
+}
+
+class Square {
+    let position: Point
+    let center: Point
+    let length: Double
+
+    init(position: Point, length: Double) {
+        self.position = position
+        self.length = length
+        self.center = Point(x: position.x + length / 2, y: position.y + length / 2)
+    }
+}
+```
+
+If we wanted to provide another initializer that would take the center and length and calculate the position, the following would produce an error:
+
+```swift
+extension Square {
+    init(center: Point, length: Double) { // Error: Designated initializer cannot be declared in an extension
+        self.center = center
+        self.length = length
+        self.position = Point(x: center.x - length / 2, y: center.y - length / 2)
+    }
+}
+```
+
+We would instead have to define a convenience initializer like so:
+
+```swift
+extension Square {
+    convenience init(center: Point, length: Double) {
+        self.init(position: Point(x: center.x - length / 2, y: center.y - length / 2), length: length)
+    }
+}
+```
+
 <br/>
 
 ## Methods
