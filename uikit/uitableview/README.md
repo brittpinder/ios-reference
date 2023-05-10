@@ -2,7 +2,7 @@
 
 ## Basic Table View
 
-This is the bare minimum needed to create a table view:
+Below is an example of a basic table view:
 
 ```swift
 import UIKit
@@ -23,7 +23,7 @@ class BasicTableVC: UIViewController {
         tableView.dataSource = self
 
         view.addSubview(tableView)
-        tableView.pin(to: view) // My own function that takes care of layout and constraints
+        tableView.pin(to: view) // Custom function that takes care of layout and constraints
     }
 }
 
@@ -43,9 +43,11 @@ extension BasicTableVC: UITableViewDataSource {
 
 Besides adding the tableview to your view controller and applying layout and constraints, there are two more required steps:
 
+<br/>
+
 ### 1. Implement the `UITableViewDataSource` protocol
 
-Implement the `UITableViewDataSource` and the two required functions, `numberOfRowsInSection` and `cellForRowAt` which define what information will be displayed in the table view.
+Implement the `UITableViewDataSource` protocol and the two required functions, `numberOfRowsInSection` and `cellForRowAt` which define the information that will be displayed in the table view.
 
 ```swift
 extension BasicTableVC: UITableViewDataSource {
@@ -54,7 +56,7 @@ extension BasicTableVC: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = data[indexPath.row]
         return cell
     }
@@ -68,11 +70,13 @@ tableView.dataSource = self
 
 The `numberOfRowsInSection` function defines how many rows are in each section. In this example we have only one section so we just return the number of items in our `data` array.
 
-The `cellForRowAt` function configures and returns the cell that is used for a particular row. In the above code snippet a new `UITableViewCell` is being created every time the function is called which is not good for performance. Instead it is encouraged to reuse cells by using the `dequeueReusableCell` function:
+The `cellForRowAt` function configures and returns the cell that is used for a particular row. Technically, you can simply create and return a UITableViewCell (`return UITableViewCell()`), however this would create a new cell every time the function is called which is not good for performance. Instead it is encouraged to reuse cells by using the `dequeueReusableCell` function:
 
 ```swift
 let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
 ```
+
+<br/>
 
 ### 2. Register a `UITableViewCell`
 
@@ -120,6 +124,8 @@ In the above example, a checkmark is added to every row that is selected.
 ## Custom Cells
 
 The above examples use the default `UITableView` cell but it's possible to create your own custom cells. You can do this entirely through code or by making use of a nib (.xib) file.
+
+<br/>
 
 ### Creating Custom Cells Programmatically
 
@@ -171,6 +177,8 @@ class CustomCell: UITableViewCell {
 }
 ```
 
+<br/>
+
 #### 2. Register your custom cell
 
 Inside the view controller that contains the table where you will use your custom cell, make sure to register the cell:
@@ -178,6 +186,8 @@ Inside the view controller that contains the table where you will use your custo
 ```swift
 tableView.register(CustomCell.self, forCellReuseIdentifier: CustomCell.identifier)
 ```
+
+<br/>
 
 #### 3. Dequeue your custom cell
 
@@ -205,6 +215,7 @@ Create a new Cocoa Touch Class file and make it subclass `UITableViewCell`. Be s
 
 This will create two files: a `.swift` file and a `.xib` file.
 
+<br/>
 
 #### 2. Design your cell in the Interface Builder
 
@@ -212,17 +223,23 @@ Open the .xib file and add UI components such as labels, images etc. and give th
 
 ![](images/5.png)
 
+<br/>
+
 #### 3. Fill in the Reuse Identifier
 
 Select your nib in the hierarchy and then open the Attributes Inspector. Give the "Identifier" a unique name. Make a note of this name as it will later be used in your code to create an instance of this cell.
 
 ![](images/6.png)
 
+<br/>
+
 #### 4. Create IBOutlets
 
 Open the Assistant Editor and create IBoutlets for any of the controls that you want to dynamically configure.
 
 ![](images/7.png)
+
+<br/>
 
 #### 5. Register your custom cell
 
@@ -231,6 +248,8 @@ This step is the same as if you were creating a custom cell programmatically exc
 ```swift
 tableView.register(UINib(nibName: CustomNibCell.nibName, bundle: nil), forCellReuseIdentifier: CustomNibCell.nibIdentifier)
 ```
+
+<br/>
 
 #### 6. Dequeue your custom cell
 
@@ -256,8 +275,8 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 
 <br/>
 
-## To Do
-* Adding and removing
+## To Add
+* Adding and removing cells
 * Search and filter
 * Sections
 * Swipe actions
