@@ -182,13 +182,59 @@ extension Square {
 
 ## Methods
 
-<br/>
+As demonstrated in previous examples, extensions can add methods to existing types. Below, the `trimmed()` method returns a new `String` with white spaces and new lines removed:
 
-## Subscripts
+```swift
+extension String {
+    func trimmed() -> String {
+        self.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+}
+
+var phrase = "   Hello world   "
+print(phrase.trimmed()) //Hello World
+```
+Instance methods added with an extension can also modify (or *mutate*) the instance itself. Structure and enumeration methods that modify `self` or its properties must mark the instance method `mutating`.
+
+For example, another method could be added to the `String` extension that modifies the instance by trimming the white space and new lines in place:
+
+```swift
+extension String {
+    mutating func trim() {
+        self = self.trimmed()
+    }
+}
+
+phrase.trim()
+print(phrase) //Hello World
+```
 
 <br/>
 
 ## Nested Types
+
+Extensions can add new nested types to existing classes, structures and enumerations. The following example adds a nested enumeration `Kind` to `Int` as well as a computer property `kind`:
+
+```swift
+extension Int {
+    enum Kind {
+        case negative, zero, positive
+    }
+
+    var kind: Kind {
+        switch self {
+        case 0:
+            return .zero
+        case let x where x > 0:
+            return .positive
+        default:
+            return .negative
+        }
+    }
+}
+
+print(42.kind) // positive
+```
 
 <br/>
 
