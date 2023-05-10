@@ -18,6 +18,7 @@ view.addSubview(view2)
 
 Auto Layout is much more powerful because it allows your user interface to dynamically respond to both internal and external changes such as internationalization (changing language, text direction and text size based on locale), varying screen sizes and device rotations.
 
+<br/>
 
 ## Constraints
 
@@ -98,6 +99,8 @@ green.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 >])
 >```
 
+<br/>
+
 ### Layout Guides
 
 [Layout Guides](https://developer.apple.com/documentation/uikit/uilayoutguide) are rectangular regions defined in their owning view's coordinate system that can interact with Auto Layout. You can use predefined layout guides or you can create your own. The most commonly used one is the "Safe Area Layout Guide" which defines the region of the screen where views won't be blocked or hidden by navigation bars, tab bars, tool bars etc. Using `view.safeAreaLayoutGuide`, we can now update the previous example so that the squares are placed within the safe area of the screen:
@@ -124,6 +127,8 @@ Other predefined layout guides include:
 * `readableContentGuide`
 * `keyboardLayoutGuide`
 
+<br/>
+
 ### Constraints are Linear Equations
 
 Every constraint represents a linear equation (y = mx + b). We define the relationship (=, <=, >=), the multiplier (m) and the constant (b) and Auto Layout solves the equation, finding values for y and x (the view attributes that we want to constrain).
@@ -131,6 +136,8 @@ Every constraint represents a linear equation (y = mx + b). We define the relati
 ![](images/3.png)
 
 > This constraint states that the red view’s leading edge must be 8.0 points after the blue view’s trailing edge.
+
+<br/>
 
 When defining constraints, there are a variety of options available depending on the type of attribute you are applying the constraint to.
 
@@ -145,9 +152,13 @@ Constraint Signature | Width/Height | Top/Bottom/Leading/Trailing/CenterY/Center
 
 > Each of the six constraint signatures above contains two variations, "greaterThanOrEqualTo" and "lessThanOrEqualTo", which were omitted for brevity
 
+<br/>
+
 #### constraint(equalTo:)
 
 Returns a constraint that defines one item’s attribute as equal to another. Often used to pin the edges of views to the edges of other views. It can also be used to maintain uniform width and height between different views. Refer to the code snippets above for examples.
+
+<br/>
 
 #### constraint(equalTo: constant:)
 
@@ -172,6 +183,8 @@ yellow.heightAnchor.constraint(equalTo: green.heightAnchor, constant: 40).isActi
 ```
 ![](images/7.png)
 
+<br/>
+
 #### constraint(equalTo: multiplier:)
 
 Returns a constraint that defines the anchor’s size attribute as equal to the specified anchor multiplied by the constant. In the below example, the purple view's width and height are exactly half of the parent view's width and height respectively.
@@ -183,6 +196,8 @@ purple.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5).isActi
 purple.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5).isActive = true
 ```
 ![](images/8.png)
+
+<br/>
 
 #### constraint(equalTo: multiplier: constant:)
 
@@ -199,13 +214,17 @@ blue.heightAnchor.constraint(equalTo: red.heightAnchor, multiplier: 3, constant:
 ```
 ![](images/9.png)
 
+<br/>
+
 #### constraint(equalToConstant:)
 
 Returns a constraint that defines a constant size for the anchor’s size attribute. Refer to the example in the [Layout Anchors Section](#layout-anchors)
 
+<br/>
+
 #### constraint(equalToSystemSpacingBelow/After: multiplier:)
 
-Returns a constraint that defines by how much the current anchor trails the specified anchor. In this case, `multiplier` is a multiple of the system spacing which by default is 8 points. In the below example, the orange view is pinned 16 points (2 * 8) from the edges of the safe area. Note that when dealing with the trailing and bottom anchor you need to reverse the order of the attributes.
+Returns a constraint that defines by how much the current anchor trails the specified anchor. In this case, `multiplier` is a multiple of the system spacing which by default is 8 points. In the below example, the orange view is pinned 16 points (2 * 8) from the edges of the safe area. Note that when dealing with the trailing and bottom anchors you need to reverse the order of the attributes.
 
 ```swift
 orange.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 2).isActive = true
@@ -214,6 +233,8 @@ view.safeAreaLayoutGuide.trailingAnchor.constraint(equalToSystemSpacingAfter: or
 view.safeAreaLayoutGuide.bottomAnchor.constraint(equalToSystemSpacingBelow: orange.bottomAnchor, multiplier: 2).isActive = true
 ```
 ![](images/10.png)
+
+<br/>
 
 ## Intrinsic Content Size
 
@@ -258,6 +279,8 @@ customView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
 
 Whenever possible, you should provided an intrinsic content size for your views as it lets your layout dynamically adapt to views' content changes. It also reduces the number of constraints you need to create a nonambiguous, nonconflicting layout.
 
+<br/>
+
 ### Content Hugging and Compression Resistance (CHCR)
 
 Auto Layout represents a view's intrinsic content size using a pair of constraints for each dimension (vertical and horizontal). These constraints are called *Content Hugging* and *Compression Resistance*.
@@ -281,6 +304,8 @@ View.width >= 0.0 * NotAnAttribute + IntrinsicWidth
 
 Content Hugging is important when you have more room than you need and Auto Layout needs to decide which views to stretch whereas Compression Resistance is important when you don't have enough space and Auto Layout needs to decide which views to shrink.
 
+<br/>
+
 ### Priorities
 
 Since every constraint represents a linear equation, your view hierarchy is simply a series of linear equations. Your goal is to declare a series of equations that have one and only one possible solution. Ambiguous constraints have more than one possible solution and unsatisfiable constraints don't have a valid solution.
@@ -296,6 +321,8 @@ You can set priorities using raw values or using some predefined priorities:
 * `.defaultLow` = 250
 
 By default, views have `.defaultLow` priority for their content hugging and `.defaultHigh` priority for their compression resistance making it easier for them to stretch rather than shrink. Anchor constraints have a priority of `.required` by default. Therefore anchors will always override intrinsic content size.
+
+<br/>
 
 #### Content Hugging Example
 
@@ -331,6 +358,8 @@ label1.setContentHuggingPriority(UILayoutPriority(rawValue: 249), for: .vertical
 ```
 ![](images/15.png)
 
+<br/>
+
 #### Compression Resistance Example
 
 When Auto Layout has determined there isn't enough space to accommodate all your views at their natural size, it has to make a decision about which view to squash to make space for the others. The lower you set a view's compression resistance priority, the more likely it is to be squashed.
@@ -356,6 +385,8 @@ label1.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 751), 
 label2.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 749), for: .horizontal)
 ```
 ![](images/17.png)
+
+<br/>
 
 ## Links
 * [Auto Layout Documentation](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/AutolayoutPG/)

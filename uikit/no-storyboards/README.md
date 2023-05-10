@@ -1,6 +1,6 @@
 # Creating a Project Without Storyboards
 
-Storyboards are great for prototyping or when you are working alone, but on larger, more professional projects, it is more common to create the UI of the application programmatically instead. This is because large storyboards can become very slow in the editor and it is very difficult to resolve merge conflicts in storyboard files which consist of generated xml. When working with storyboards, Xcode will make assumptions and generate code behind the scenes, so creating the UI programmatically also gives you better control and visibility over code.
+Storyboards are great for prototyping or when you are working alone, but on larger, more professional projects, it is more common to create the UI of the application programmatically instead. This is because large storyboards can become very slow in the editor and it is very difficult to resolve merge conflicts in storyboard files which consist of generated xml. When working with storyboards, Xcode will make assumptions and generate code behind the scenes, so creating the UI programmatically also gives you better control and visibility over the code.
 
 <br/>
 
