@@ -2,7 +2,7 @@
 
 ## View Controller Lifecycle
 
-View controller lifecycle methods are called automatically at various points throughout a view controller's lifetime. You can override these methods to add custom functionality at these points in time, but if you do, you must call `super` at some point in your implementation. All of these methods are called no matter if the view controller is created programmatically or from a nib file.
+View controller lifecycle methods are called automatically at various points throughout a view controller's lifetime. You can override these methods to add custom functionality at these points in time, but if you do, you must call `super` at some point in your implementation. All of these methods are called regardless of whether the view controller is created programmatically or from a nib file.
 
 #### [`init`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization#Initializers)
 
