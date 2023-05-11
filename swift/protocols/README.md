@@ -29,15 +29,15 @@ class Airplane: FlyingObject {
     }
 }
 ```
-
-Protocols allow instances of classes and structures to be passed around and referenced using the protocol's type:
+Protocols are types; they allow instances of classes and structures to be passed around and referenced using a protocol's type:
 
 ```swift
 func makeObjectFly(object: FlyingObject) {
     object.fly()
 }
 
-makeObjectFly(object: Eagle()) // The eagle soars through the air
+let flyingThing: FlyingObject = Eagle()
+makeObjectFly(object: flyingThing) // The eagle soars through the air
 makeObjectFly(object: Airplane()) // The airplane takes off
 ```
 
@@ -55,6 +55,38 @@ If a class inherits from a superclass and adopts one or more protocols, list the
 class SomeClass: SomeSuperclass, FirstProtocol, SecondProtocol {
     // class definition goes here
 }
+```
+
+<br/>
+
+## Method Requirements
+
+The example from above, `FlyingObject` demonstrates a protocol that has a method requirement; all types that adopt `FlyingObject` must have a function with the signature `fly() -> Void`. When defining method requirements within a protocol, variadic parameters can be used but default parameters cannot.
+
+### Mutating Method Requirements
+
+If you define a protocol method that's intended to mutate instances of any type that adopts the protocol, mark the method with the `mutating` keyword.
+
+```swift
+protocol Togglable {
+    mutating func toggle()
+}
+
+enum LightSwitch: Togglable {
+    case off, on
+    mutating func toggle() {
+        switch self {
+        case .off:
+            self = .on
+        case .on:
+            self = .off
+        }
+    }
+}
+
+var lightSwitch = LightSwitch.off
+lightSwitch.toggle()
+print(lightSwitch) // on
 ```
 
 <br/>
@@ -166,13 +198,9 @@ struct Human: Named { // Error: Type 'Human' does not conform to protocol 'Named
 }
 ```
 
-## Method Requirements
-
-## Mutating Method Requirements
+<br/>
 
 ## Initializer Requirements
-
-## Protocols as Types
 
 ## Delegation
 

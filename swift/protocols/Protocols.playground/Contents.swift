@@ -20,8 +20,33 @@ func makeObjectFly(object: FlyingObject) {
     object.fly()
 }
 
-makeObjectFly(object: Eagle()) // The eagle soars through the air
+let flyingThing: FlyingObject = Eagle()
+makeObjectFly(object: flyingThing) // The eagle soars through the air
 makeObjectFly(object: Airplane()) // The airplane takes off
+
+let flyingObjects: [FlyingObject] = [Airplane(), Eagle(), Airplane()]
+
+// ----------------------------------------
+
+protocol Togglable {
+    mutating func toggle()
+}
+
+enum LightSwitch: Togglable {
+    case off, on
+    mutating func toggle() {
+        switch self {
+        case .off:
+            self = .on
+        case .on:
+            self = .off
+        }
+    }
+}
+
+var lightSwitch = LightSwitch.off
+lightSwitch.toggle()
+print(lightSwitch) // on
 
 // ----------------------------------------
 
