@@ -46,6 +46,14 @@
 
 <br/>
 
+### [`extension`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/extensions)
+
+* Used to declare an extension
+* An extension adds new functionality to an existing class, structure, enumeration or protocol
+* Referenced in [Extensions](https://github.com/brittpinder/ios-reference/tree/main/swift/extensions)
+
+<br/>
+
 ### [`fileprivate`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/accesscontrol/)
 
 * An access level that can be placed on a type (class, method, enum, property etc.)
@@ -172,6 +180,14 @@
 
 <br/>
 
+### [`protocol`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols)
+
+* Used to define a protocol
+* A protocol is a blueprint of methods, properties and other requirements that can be adopted by a class, structure or enumeration
+* Referenced in [Protocols](https://github.com/brittpinder/ios-reference/tree/main/swift/protocols)
+
+<br/>
+
 ### [`public`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/accesscontrol/)
 
 * An access level that can be placed on a type (class, method, enum, property etc.)
@@ -273,7 +289,6 @@
 * `defer`
 * `dynamic`
 * `enum`
-* `extension`
 * `fallthrough`
 * `func`
 * `import`
@@ -286,7 +301,6 @@
 * `optional`
 * `postfix`
 * `prefix`
-* `protocol`
 * `precedencegroup`
 * `repeat`
 * `rethrows`
