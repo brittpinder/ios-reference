@@ -177,3 +177,53 @@ boss.delegate = intern
 boss.work() // Intern is doing the work
 
 // ----------------------------------------
+
+//class ViewController: UIViewController, UITableViewDelegate, UITextFieldDelegate {
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        // Implementation details
+//    }
+//
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        // Implementation details
+//        return true
+//    }
+//}
+
+class ViewController: UIViewController {
+
+}
+
+extension ViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Implementation details
+    }
+}
+
+extension ViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // Implementation details
+        return true
+    }
+}
+
+// ----------------------------------------
+
+struct Spider {
+    let type: String
+    let numberOfLegs = 8
+}
+
+extension Spider: Legged {}
+
+// ----------------------------------------
+
+extension Array: Legged where Element == any Legged {
+    var numberOfLegs: Int {
+        return self.map { $0.numberOfLegs }.reduce(0,+)
+    }
+}
+
+let leggyThings: [Legged] = [Table(), Spider(type: "Black Widow"), Frog(lifeStage: .tadpole)]
+print(leggyThings.numberOfLegs) // 14
+
+// ----------------------------------------

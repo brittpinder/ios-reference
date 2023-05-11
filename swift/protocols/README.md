@@ -29,7 +29,7 @@ class Airplane: FlyingObject {
     }
 }
 ```
-Protocols are types; they allow instances of classes and structures to be passed around and referenced using a protocol's type:
+Protocols are types; they allow instances of classes and structures to be passed around and referenced using the protocol's name:
 
 ```swift
 func makeObjectFly(object: FlyingObject) {
@@ -39,22 +39,6 @@ func makeObjectFly(object: FlyingObject) {
 let flyingThing: FlyingObject = Eagle()
 makeObjectFly(object: flyingThing) // The eagle soars through the air
 makeObjectFly(object: Airplane()) // The airplane takes off
-```
-
-When adopting more than one protocol, the protocol names should be separated by commas:
-
-```swift
-struct SomeStructure: FirstProtocol, SecondProtocol {
-    // structure definition goes here
-}
-```
-
-If a class inherits from a superclass and adopts one or more protocols, list the superclass first:
-
-```swift
-class SomeClass: SomeSuperclass, FirstProtocol, SecondProtocol {
-    // class definition goes here
-}
 ```
 
 <br/>
@@ -287,11 +271,85 @@ let intern = Intern()
 boss.delegate = intern
 boss.work() // Intern is doing the work
 ```
-The delegate pattern is commonly used in Swift to allow various UI components to communicate with each other. For example, `UITableView` has a delegate, `UITableViewDelegate`, which allows view controllers to respond to various events such as selecting or swiping a row.
+The delegate pattern is commonly used in Swift to allow various UI components to communicate with each other. For example, `UITableView` has a delegate, `UITableViewDelegate`, which allows view controllers to respond to various events such as selecting or swiping a row. Similarly, `UITextField` has a delegate, `UITextFieldDelegate`, which allows view controllers to respond to various events such as text changes and selections.
 
 <br/>
 
 ## Adding Protocol Conformance with an Extension
+
+A type can adopt and conform to more than one protocol by simply listing them, separated by commas. Here we have a custom view controller that adopts the `UITableViewDelegate` and the `UITextFieldDelegate` protocols:
+
+```swift
+class ViewController: UIViewController, UITableViewDelegate, UITextFieldDelegate {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Implementation details
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // Implementation details
+        return true
+    }
+
+}
+```
+> Note: Whenever a class inherits from a subclass and adopts one or more protocols, always list the subclass first.
+
+However, it is common convention to add each individual protocol using an extension instead:
+
+```swift
+class ViewController: UIViewController {
+
+}
+
+extension ViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Implementation details
+    }
+}
+
+extension ViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // Implementation details
+        return true
+    }
+}
+```
+This keeps the code more organized as the various responsibilities are grouped accordingly.
+
+<br/>
+
+### Declaring Protocol Adoption with an Extension
+
+If a type already conforms to all of the requirements of a protocol, but hasn’t yet stated that it adopts that protocol, you can make it adopt the protocol with an empty extension:
+
+```swift
+struct Spider {
+    let type: String
+    let numberOfLegs = 8
+}
+
+extension Spider: Legged {}
+```
+
+<br/>
+
+### Conditionally Conforming to a Protocol
+
+You can make a generic type conditionally conform to a protocol by listing constraints when extending the type. The following extension makes `Array` instances conform to the `Legged` protocol whenever they store elements of a type `Legged`:
+
+```swift
+extension Array: Legged where Element == any Legged {
+    var numberOfLegs: Int {
+        return self.map { $0.numberOfLegs }.reduce(0,+)
+    }
+}
+
+let leggyThings: [Legged] = [Table(), Spider(type: "Black Widow"), Frog(lifeStage: .tadpole)]
+print(leggyThings.numberOfLegs) // 14
+```
+
+<br/>
 
 ## Adopting a Protocol Using a Synthesized Implementation
 
