@@ -534,3 +534,42 @@ print(leggyObjects.allHaveFourLegs()) // false
 
 ## Adopting a Protocol Using a Synthesized Implementation
 
+Swift can automatically provide the protocol conformance for [Equatable](https://developer.apple.com/documentation/swift/equatable), [Hashable](https://developer.apple.com/documentation/swift/hashable), and [Comparable](https://developer.apple.com/documentation/swift/comparable) in many simple cases. Using this synthesized implementation means you don’t have to write repetitive boilerplate code to implement the protocol requirements yourself.
+
+For example, suppose we had a struct defining a point with x and y values:
+
+```swift
+struct Point {
+    var x: Int
+    var y: Int
+}
+```
+If we wanted to check if two points are equivalent (hold the same x and y values), the compiler would complain because it doesn't know how to check for equality between two instances of `Point`:
+
+```swift
+let point1 = Point(x: 2, y: 3)
+let point2 = Point(x: 2, y: 3)
+
+print(point1 == point2) // Error: Binary operator '==' cannot be applied to two 'Point' operands
+```
+We could solve this by overloading the `==` operator:
+
+```swift
+struct Point {
+    var x: Int
+    var y: Int
+
+    static func == (left: Point, right: Point) -> Bool {
+        return left.x == right.x && left.y == right.y
+    }
+}
+```
+But a much more elegant way is to simply inherit from the `Equatable` protocol which provides a default implementation of the `==` and `!=` operators so that you don't have to.
+
+```swift
+struct Point: Equatable {
+    var x: Int
+    var y: Int
+}
+```
+

@@ -336,3 +336,24 @@ extension Array where Element == any Legged {
 
 let leggyObjects: [Legged] = [Table(), Frog(), Insect()]
 print(leggyObjects.allHaveFourLegs()) // false
+
+// ----------------------------------------
+
+//struct Point {
+//    var x: Int
+//    var y: Int
+//
+//    static func == (left: Point, right: Point) -> Bool {
+//        return left.x == right.x && left.y == right.y
+//    }
+//}
+
+struct Point: Equatable {
+    var x: Int
+    var y: Int
+}
+
+let point1 = Point(x: 2, y: 3)
+let point2 = Point(x: 2, y: 3)
+
+print(point1 == point2)
