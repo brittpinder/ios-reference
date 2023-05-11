@@ -438,6 +438,24 @@ for object in objects {
 
 ## Optional Protocol Requirements
 
+So far we have been dealing with protocols that have mandatory requirements. However, it is possible to define protocols with *optional* requirements. To make a requirement optional, prefix it with `@objc optional` and prefix the protocol with `@objc`. Below we have a protocol with two optional functions. Any type that adopts this protocol can choose which functions to implement.
+
+```swift
+@objc protocol ButtonDelegate {
+    @objc optional func leftButtonClicked()
+    @objc optional func rightButtonClicked()
+}
+
+class Game: ButtonDelegate {
+    func leftButtonClicked() {
+        // Do something
+    }
+}
+```
+A practical example of optional protocol requirements is `UITableViewDelegate`. This protocol has dozens of functions but you can adopt it without providing the implementation for any of them. They are all optional requirements so that you can pick and choose which functions you are interested in.
+
+<br/>
+
 ## Protocol Extensions
 
 ### Providing Default Implementations

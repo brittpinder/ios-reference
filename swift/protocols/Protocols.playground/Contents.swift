@@ -283,3 +283,16 @@ for object in objects {
 // Object doesn't have legs
 // Object doesn't have legs
 // Object has 4 legs
+
+// ----------------------------------------
+
+@objc protocol ButtonDelegate {
+    @objc optional func leftButtonClicked()
+    @objc optional func rightButtonClicked()
+}
+
+class Game: ButtonDelegate {
+    func leftButtonClicked() {
+        // Do something
+    }
+}
