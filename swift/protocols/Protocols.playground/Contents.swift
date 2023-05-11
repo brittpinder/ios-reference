@@ -249,3 +249,21 @@ struct Parakeet: Parrot {
 protocol SomeClassOnlyProtocol: AnyObject {
 
 }
+
+// ----------------------------------------
+
+protocol Aged {
+    var age: Int { get }
+}
+
+struct Person: Named, Aged {
+    var name: String
+    var age: Int
+}
+
+func wishHappyBirthday(to celebrator: Named & Aged) {
+    print("Happy Birthday \(celebrator.name)! You are \(celebrator.age) years old.")
+}
+
+let helen = Person(name: "Helen", age: 60)
+wishHappyBirthday(to: helen) // Happy Birthday Helen! You are 60 years old.
