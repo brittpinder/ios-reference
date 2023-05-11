@@ -91,6 +91,34 @@ print(lightSwitch) // on
 
 <br/>
 
+## Initializer Requirements
+
+Protocols can require specific initializers to be implemented by conforming types:
+
+```swift
+protocol Positioned {
+    init(x: Int, y: Int)
+}
+
+struct Sprite: Positioned {
+    init(x: Int, y: Int) {
+        // Implementation details
+    }
+}
+```
+
+When a class conforms to a protocol initializer requirement, the initializer can be either a designated or a convenience initializer, but it must be `required` so that all subclasses of the conforming class also conform to the protocol.
+
+```swift
+class Image: Positioned {
+    required init(x: Int, y: Int) {
+        // Implementation details
+    }
+}
+```
+
+<br/>
+
 ## Property Requirements
 
 A protocol can require any conforming type to provide a property with a particular name and type. The protocol must also specify one of two access requirements for each property:
@@ -199,8 +227,6 @@ struct Human: Named { // Error: Type 'Human' does not conform to protocol 'Named
 ```
 
 <br/>
-
-## Initializer Requirements
 
 ## Delegation
 

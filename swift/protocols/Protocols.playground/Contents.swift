@@ -50,6 +50,24 @@ print(lightSwitch) // on
 
 // ----------------------------------------
 
+protocol Positioned {
+    init(x: Int, y: Int)
+}
+
+struct Sprite: Positioned {
+    init(x: Int, y: Int) {
+        // Implementation details
+    }
+}
+
+class Image: Positioned {
+    required init(x: Int, y: Int) {
+        // Implementation details
+    }
+}
+
+// ----------------------------------------
+
 protocol Legged {
     var numberOfLegs: Int { get }
 }
