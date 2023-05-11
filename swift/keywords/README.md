@@ -6,7 +6,7 @@
 * `as` upcasts a subclass to a superclass
 * `as?` optionally downcasts a superclass to a subclass
 * `as!` force downcasts a superclass to a subclass
-* Referenced in [Inheritance](https://github.com/brittpinder/ios-reference/tree/main/swift/inheritance#downcasting)
+* Referenced in [Inheritance](https://github.com/brittpinder/ios-reference/tree/main/swift/inheritance#downcasting) and [Protocols](https://github.com/brittpinder/ios-reference/tree/main/swift/protocols#checking-for-protocol-conformance)
 
 <br/>
 
