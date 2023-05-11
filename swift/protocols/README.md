@@ -458,9 +458,79 @@ A practical example of optional protocol requirements is `UITableViewDelegate`. 
 
 ## Protocol Extensions
 
+Protocols can be extended to provide method, intializer, subscript and computed property implementations to conforming types. This allows you to define behavior on protocols themselves, rather than in each type’s individual conformance or in a global function.
+
+If we take the earlier example of the `FlyingObject`:
+
+```swift
+protocol FlyingObject {
+    func fly()
+}
+
+struct Eagle: FlyingObject {
+    func fly() {
+        print("The eagle soars through the air")
+    }
+}
+```
+By using an extension, we can add a method to this protocol that is accessible to all types that conform to it:
+
+```swift
+extension FlyingObject {
+    func land() {
+        print("Flying back to the ground")
+    }
+}
+
+let eagle = Eagle()
+eagle.land() // Flying back to the ground
+```
+
+<br/>
+
 ### Providing Default Implementations
 
+Taking this one step further, extensions even allow you to provide a default implementation for any method or computed property requirement. Below we have added a default implementation of the `fly()` function:
+
+```swift
+extension FlyingObject {
+    func fly() {
+        print("The object flies through the sky")
+    }
+}
+```
+Now, any type that adopts the `FlyingObject` protocol no longer has to provide their own implementation of the `fly()` function (although they still can if they want to):
+
+```swift
+struct UFO: FlyingObject {}
+
+let ufo = UFO()
+ufo.fly() // The object flies through the sky
+```
+> Note: Default implementations of protocol requirements can *only* be defined within an extension - they cannot be defined within the original protocol declaration.
+
+<br/>
+
 ### Adding Constraints to Protocol Extensions
+
+When defining a protocol extension, you can specify constraints that conforming types must satisfy before the methods and properties of the extensions are available. The below example adds the function `allHaveFourLegs()` to the type `Array` only if the array contains elements of type `Legged`.
+
+```swift
+extension Array where Element == any Legged {
+    func allHaveFourLegs() -> Bool {
+        for element in self {
+            if element.numberOfLegs != 4 {
+                return false
+            }
+        }
+        return true
+    }
+}
+
+let leggyObjects: [Legged] = [Table(), Frog(), Insect()]
+print(leggyObjects.allHaveFourLegs()) // false
+```
+<br/>
 
 ## Adopting a Protocol Using a Synthesized Implementation
 

@@ -296,3 +296,43 @@ class Game: ButtonDelegate {
         // Do something
     }
 }
+
+// ----------------------------------------
+
+extension FlyingObject {
+    func land() {
+        print("Flying back to the ground")
+    }
+}
+
+let eagle = Eagle()
+eagle.land() // Flying back to the ground
+
+// ----------------------------------------
+
+extension FlyingObject {
+    func fly() {
+        print("The object flies through the sky")
+    }
+}
+
+struct UFO: FlyingObject {}
+
+let ufo = UFO()
+ufo.fly() // The object flies through the sky
+
+// ----------------------------------------
+
+extension Array where Element == any Legged {
+    func allHaveFourLegs() -> Bool {
+        for element in self {
+            if element.numberOfLegs != 4 {
+                return false
+            }
+        }
+        return true
+    }
+}
+
+let leggyObjects: [Legged] = [Table(), Frog(), Insect()]
+print(leggyObjects.allHaveFourLegs()) // false
