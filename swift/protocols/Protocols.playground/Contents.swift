@@ -130,3 +130,50 @@ struct Dog: Named {
 //}
 
 // ----------------------------------------
+
+protocol BossDelegate {
+    func doWork()
+}
+
+//struct Boss {
+//    func work() {
+//        print("Boss is doing the work")
+//    }
+//}
+
+struct Boss {
+    var delegate: BossDelegate?
+
+    func work() {
+        if let delegate {
+            delegate.doWork()
+        } else {
+            print("Boss is doing the work")
+        }
+    }
+}
+
+struct Employee: BossDelegate {
+    func doWork() {
+        print("Employee is doing the work")
+    }
+}
+
+struct Intern: BossDelegate {
+    func doWork() {
+        print("Intern is doing the work")
+    }
+}
+
+var boss = Boss()
+boss.work() // Boss is doing the work
+
+let employee = Employee()
+boss.delegate = employee
+boss.work() // Employee is doing the work
+
+let intern = Intern()
+boss.delegate = intern
+boss.work() // Intern is doing the work
+
+// ----------------------------------------

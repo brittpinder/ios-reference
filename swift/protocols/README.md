@@ -230,6 +230,67 @@ struct Human: Named { // Error: Type 'Human' does not conform to protocol 'Named
 
 ## Delegation
 
+Delegation is a design pattern commonly used in Swift that enables a class or structure to hand off (or delegate) some of its responsibilities to an instance of another type. This design pattern is implemented by defining a protocol that encapsulates the delegated responsibilities, having a type adopt this protocol and then storing a reference to an instance of this type (the delegate).
+
+For example, suppose we had a struct representing a boss that does some type of work:
+
+```swift
+struct Boss {
+    func work() {
+        print("Boss is doing the work")
+    }
+}
+
+var boss = Boss()
+boss.work() // Boss is doing the work
+```
+
+We could have the Boss pass off the work to somebody else by using the delegate pattern. First we would create a protocol defining the responsibilities to be delegated:
+
+```swift
+protocol BossDelegate {
+    func doWork()
+}
+```
+Then we can assign an optional instance of this protocol (the delegate) to the Boss struct and have the delegate do the work if it exists:
+
+```swift
+struct Boss {
+    var delegate: BossDelegate?
+
+    func work() {
+        if let delegate {
+            delegate.doWork()
+        } else {
+            print("Boss is doing the work")
+        }
+    }
+}
+```
+Finally, we can create a new type that adopts this protocol and assign it as the Boss's delegate:
+
+```swift
+struct Employee: BossDelegate {
+    func doWork() {
+        print("Employee is doing the work")
+    }
+}
+
+let employee = Employee()
+boss.delegate = employee
+boss.work() // Employee is doing the work
+```
+The boss doesn't care who does the work as long as the work gets done:
+
+```swift
+let intern = Intern()
+boss.delegate = intern
+boss.work() // Intern is doing the work
+```
+The delegate pattern is commonly used in Swift to allow various UI components to communicate with each other. For example, `UITableView` has a delegate, `UITableViewDelegate`, which allows view controllers to respond to various events such as selecting or swiping a row.
+
+<br/>
+
 ## Adding Protocol Conformance with an Extension
 
 ## Adopting a Protocol Using a Synthesized Implementation
