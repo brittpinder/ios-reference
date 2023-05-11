@@ -239,7 +239,8 @@ print(42.kind) // positive
 <br/>
 
 ## Extending Protocols
-- Separating code using MARK comments
+
+See [Protocol Extensions](https://github.com/brittpinder/ios-reference/tree/main/swift/protocols#protocol-extensions)
 
 <br/>
 
