@@ -227,3 +227,25 @@ let leggyThings: [Legged] = [Table(), Spider(type: "Black Widow"), Frog(lifeStag
 print(leggyThings.numberOfLegs) // 14
 
 // ----------------------------------------
+
+protocol Parrot: Named, FlyingObject {
+    func speak()
+}
+
+struct Parakeet: Parrot {
+    var name: String
+
+    func fly() {
+        print("The parakeet is flying away")
+    }
+
+    func speak() {
+        print("My name is \(name)")
+    }
+}
+
+// ----------------------------------------
+
+protocol SomeClassOnlyProtocol: AnyObject {
+
+}

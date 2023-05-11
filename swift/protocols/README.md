@@ -351,13 +351,46 @@ print(leggyThings.numberOfLegs) // 14
 
 <br/>
 
-## Adopting a Protocol Using a Synthesized Implementation
-
-## Collections of Protocol Types
-
 ## Protocol Inheritance
 
-## Class-Only Protocols
+A protocol can inherit one or more other protocols, adding further requirements on top of the requirements it explicitly defines. For example, the following protocol, `Parrot`, inherits from `Named` and `FlyingObject` and introduces the `speak()` function requirement.
+
+```swift
+protocol Parrot: Named, FlyingObject {
+    func speak()
+}
+```
+Any type that adopts to the `Parrot` protocol must also conform to the requirements of `Named` and `FlyingObject`:
+
+```swift
+struct Parakeet: Parrot {
+    var name: String
+
+    func fly() {
+        print("The parakeet is flying away")
+    }
+
+    func speak() {
+        print("My name is \(name)")
+    }
+}
+```
+
+<br/>
+
+### Class-Only Protocols
+
+You can limit protocol adoption to class types (and not structures or enumerations) by adding the `AnyObject` protocol to a protocol’s inheritance list.
+
+```swift
+protocol SomeClassOnlyProtocol: AnyObject {
+
+}
+```
+
+<br/>
+
+## Adopting a Protocol Using a Synthesized Implementation
 
 ## Protocol Composition
 
