@@ -135,19 +135,19 @@ protocol Legged {
 Types that adopt this protocol must contain a property of type `Int` with the name `numberOfLegs`. The property can be a constant, variable or computed-property, as long as it's readable:
 
 ```swift
-struct Insect: Legged {
+class Insect: Legged {
     let numberOfLegs = 6
 }
 
-struct Table: Legged {
+class Table: Legged {
     var numberOfLegs = 4
 }
 
-struct Frog: Legged {
+class Frog: Legged {
     enum LifeStage {
         case egg, tadpole, adult
     }
-    var lifeStage: LifeStage
+    var lifeStage: LifeStage = .egg
 
     var numberOfLegs: Int {
         switch lifeStage {
@@ -164,7 +164,7 @@ struct Frog: Legged {
 The following protocol adoption does not conform because `numberOfLegs` is `private` and therefore not gettable:
 
 ```swift
-struct Alien: Legged {
+class Alien: Legged {
     private var numberOfLegs: Int // Error: Property 'numberOfLegs' must be declared internal
 }
 ```
@@ -345,8 +345,8 @@ extension Array: Legged where Element == any Legged {
     }
 }
 
-let leggyThings: [Legged] = [Table(), Spider(type: "Black Widow"), Frog(lifeStage: .tadpole)]
-print(leggyThings.numberOfLegs) // 14
+let leggyThings: [Legged] = [Table(), Spider(type: "Black Widow"), Frog()]
+print(leggyThings.numberOfLegs) // 12
 ```
 
 <br/>
@@ -415,6 +415,26 @@ wishHappyBirthday(to: helen) // Happy Birthday Helen! You are 60 years old.
 <br/>
 
 ## Checking for Protocol Conformance
+
+You can use the `is`, `as?` and `as!` operators to check for protocol conformance and to cast to a specific protocol. In the below example, the `as?` operator is used to check for objects that conform to the protocol `Legged`:
+
+```swift
+var objects: [AnyObject] = [Insect(), Airplane(), Image(x: 0, y: 0), Table()]
+
+for object in objects {
+    if let leggedObject = object as? Legged {
+        print("Object has \(leggedObject.numberOfLegs) legs")
+    } else {
+        print("Object doesn't have legs")
+    }
+}
+// Object has 6 legs
+// Object doesn't have legs
+// Object doesn't have legs
+// Object has 4 legs
+```
+
+<br/>
 
 ## Optional Protocol Requirements
 
