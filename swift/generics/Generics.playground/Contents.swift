@@ -44,3 +44,22 @@ numbers.push(3)
 numbers.pop()
 
 print(numbers) // Stack<Int>(items: [5, 8])
+
+// ---------------------------------------
+
+func findIndex<T: Equatable>(of valueToFind: T, in array:[T]) -> Int? {
+    for (index, value) in array.enumerated() {
+        if value == valueToFind {
+            return index
+        }
+    }
+    return nil
+}
+
+let scores = [45, 88, 76, 92, 100]
+let index = findIndex(of: 92, in: scores)
+print(index) // Optional(3)
+
+let names = ["Pam", "Jim", "Dwight", "Angela"]
+let nameIndex = findIndex(of: "Jim", in: names)
+print(nameIndex) // Optional(1)

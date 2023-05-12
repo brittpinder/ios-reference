@@ -75,3 +75,36 @@ print(numbers) // Stack<Int>(items: [5, 8])
 ```
 
 <br/>
+
+## Type Constraints
+
+It is possible to restrict which types can be used by a generic function or type by using *type constraints*. Type constraints specify that a type parameter must inherit from a specific class, or conform to a particular protocol or protocol composition. For example, Swift's `Dictionary` has a constraint which requires the type of the dictionary's `Key` to conform to the [`Hashable`](https://developer.apple.com/documentation/swift/hashable) protocol.
+
+Type constraints are specified by placing a single class or protocol constraint after a type parameter’s name, separated by a colon, as part of the type parameter list:
+
+```swift
+func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
+    // function body goes here
+}
+```
+
+For example, the following function for finding the index of a value within an array requires the use of the "equal to" operator (`==`), so only types that support this operation can be used. This is enforced by requiring the type `T` to conform to the [`Equatable`](https://developer.apple.com/documentation/swift/equatable) protocol. In fact, without this type constraint, the function would not compile.
+
+```swift
+func findIndex<T: Equatable>(of valueToFind: T, in array:[T]) -> Int? {
+    for (index, value) in array.enumerated() {
+        if value == valueToFind {
+            return index
+        }
+    }
+    return nil
+}
+
+let scores = [45, 88, 76, 92, 100]
+let index = findIndex(of: 92, in: scores)
+print(index) // Optional(3)
+
+let names = ["Pam", "Jim", "Dwight", "Angela"]
+let nameIndex = findIndex(of: "Jim", in: names)
+print(nameIndex) // Optional(1)
+```
