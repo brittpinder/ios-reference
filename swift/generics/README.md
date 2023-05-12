@@ -22,7 +22,7 @@ print(num1) // 16
 print(num2) // 34
 ```
 
-Or it can be used to swap to `String` values:
+Or it can be used to swap two `String` values:
 
 ```swift
 var name1 = "Bob"
@@ -44,4 +44,34 @@ Once you specify a type parameter, you can use it to define the type of a functi
 
 You can provide more than one type parameter by writing multiple type parameter names within the angle brackets, separated by commas: `<Type1, Type2, Type3>`
 
-In most cases, type parameters have descriptive names, such as `Key` and `Value` in `Dictionary<Key, Value>` and `Element` in `Array<Element>`. When there isn't an obvious meaningful name, it's common practice to name them using single letters such as `T`, `U` and `V`.
+In most cases, type parameters have descriptive names, such as `Key` and `Value` in `Dictionary<Key, Value>` and `Element` in `Array<Element>`. When there isn't an obvious name, it's common practice to name them using single letters such as `T`, `U` and `V`.
+
+<br/>
+
+## Generic Types
+
+As well as generic functions, you can define your own generic types. The following is a generic collection type for a stack:
+
+```swift
+struct Stack<Element> {
+    var items: [Element] = []
+
+    mutating func push(_ item: Element) {
+        items.append(item)
+    }
+
+    mutating func pop() -> Element {
+        return items.removeLast()
+    }
+}
+
+var numbers = Stack<Int>()
+numbers.push(5)
+numbers.push(8)
+numbers.push(3)
+numbers.pop()
+
+print(numbers) // Stack<Int>(items: [5, 8])
+```
+
+<br/>
