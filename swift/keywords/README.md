@@ -281,6 +281,15 @@
 
 <br/>
 
+### [`where`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow#Where)
+
+* Defines a where clause
+* Where clauses are used to specify additional constraints on generic types, functions and associated types.
+* They define requirements that must be satisfied in order for the code to compile and execute properly
+* Referenced in [Generics](https://github.com/brittpinder/ios-reference/tree/main/swift/generics#generic-where-clauses)
+
+<br/>
+
 ### [`willSet`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/properties/#Property-Observers)
 
 * A *property observer* that gets called right before a property is set
@@ -316,7 +325,6 @@
 * `subscript`
 * `super`
 * `typealias`
-* `where`
 * `#available`
 * `#column`
 * `#else`

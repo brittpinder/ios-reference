@@ -254,3 +254,13 @@ As you can see, this function will cause a compiler error when used on an array 
 let foods = [Food(name: "Apple", calories: 52), Food(name: "Apple", calories: 52)]
 print(foods.allAreEqual()) // Error: Referencing instance method 'allAreEqual()' on 'Array' requires that 'Food' conform to 'Comparable'
 ```
+
+<br/>
+
+Generic where clauses can be used in many more ways as can be seen in the examples in [Apple's documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/generics/#Generic-Where-Clauses).
+
+<br/>
+
+## Links
+
+* [Where usage in Swift](https://www.avanderlee.com/swift/where-using-swift/)
