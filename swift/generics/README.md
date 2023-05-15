@@ -1,4 +1,4 @@
-# Generics
+# [Generics](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/generics/)
 
 Generics in Swift are like templates in C++. They enable you to write flexible, reusable code that can be used with any type, subject to requirements that you define. For example, the following function allows you to swap two values of any type, as long as they have the same type:
 
@@ -107,4 +107,50 @@ print(index) // Optional(3)
 let names = ["Pam", "Jim", "Dwight", "Angela"]
 let nameIndex = findIndex(of: "Jim", in: names)
 print(nameIndex) // Optional(1)
+```
+
+<br/>
+
+## Associated Types
+
+Associated types allow you to apply generic behaviour to protocols. An associated type, declared using `associatedtype`, gives a placeholder name to a type that's used as part of a protocol. The actual type to use for that associated type isn't specified until the protocol is adopted.
+
+For example, the following protocol has an associated type called `Art`:
+
+```swift
+protocol Artist {
+    associatedtype Art
+    func create(art: Art) -> Art
+}
+```
+
+Structs and classes that adopt this protocol will need to define the type that `Art` will represent. In this case, `Art` represents a `Song`:
+
+```swift
+struct Song {
+    let name: String
+    let key: String
+    let length: Double
+}
+
+struct Musician: Artist {
+    func create(art: Song) -> Song {
+        return Song(name: "Prelude", key: "A flat major", length: 3.5)
+    }
+}
+```
+
+And in this example, `Art` represents a `Painting`:
+
+```swift
+struct Painting {
+    let size: (width: Double, height: Double)
+    let value: Double
+}
+
+struct Painter: Artist {
+    func create(art: Painting) -> Painting {
+        return Painting(size: (width: 8.5, height: 11), value: 150)
+    }
+}
 ```

@@ -63,3 +63,33 @@ print(index) // Optional(3)
 let names = ["Pam", "Jim", "Dwight", "Angela"]
 let nameIndex = findIndex(of: "Jim", in: names)
 print(nameIndex) // Optional(1)
+
+// ---------------------------------------
+
+protocol Artist {
+    associatedtype Art
+    func create(art: Art) -> Art
+}
+
+struct Song {
+    let name: String
+    let key: String
+    let length: Double
+}
+
+struct Musician: Artist {
+    func create(art: Song) -> Song {
+        return Song(name: "Prelude", key: "A flat major", length: 3.5)
+    }
+}
+
+struct Painting {
+    let size: (width: Double, height: Double)
+    let value: Double
+}
+
+struct Painter: Artist {
+    func create(art: Painting) -> Painting {
+        return Painting(size: (width: 8.5, height: 11), value: 150)
+    }
+}
