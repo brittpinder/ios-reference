@@ -10,6 +10,14 @@
 
 <br/>
 
+### [`associatedtype`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/generics/#Associated-Types)
+
+* A placeholder name for a type that's used as part of a protocol
+* Associated types allow you to apply generic behaviour to protocols
+* Referenced in [Generics](https://github.com/brittpinder/ios-reference/tree/main/swift/generics#associated-types)
+
+<br/>
+
 ### [`class`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures)
 
 * A custom data type that allows you to define a collection of related properties and methods
@@ -282,7 +290,6 @@
 
 ## To Add
 * `_`
-* `associatedType`
 * `associativity`
 * `async`
 * `await`
@@ -330,6 +337,8 @@
 * `@dynamicCallable`
 * `@dynamicMemberLookup`
 * `@escaping`
+* `@frozen`
+* `@inlinable`
 * `@objc`
 * `@objcMembers`
 * `@unknown`
