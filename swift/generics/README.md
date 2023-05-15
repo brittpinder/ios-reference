@@ -225,3 +225,32 @@ struct Bookstore: Store {
 
 getHighestCalorieItem(from: Bookstore()) // Error: Global function 'getHighestCalorieItem(from:)' requires the types 'Book' and 'Food' be equivalent
 ```
+
+<br/>
+
+### Extensions with a Generic Where Clause
+
+Generic where clauses can also be used as part of an extension. For example, the extension below adds a function to `Array` only when the elements of the array conform to the `Comparable` protocol:
+
+```swift
+extension Array where Element: Comparable {
+    func allAreEqual() -> Bool {
+        for i in 1..<count {
+            if self[i] != self[0] {
+                return false
+            }
+        }
+        return true
+    }
+}
+
+print([4, 6, 4, 3].allAreEqual()) // false
+print(["hello", "hello", "hello"].allAreEqual()) // true
+print([2.1, 2.2].allAreEqual()) // false
+```
+As you can see, this function will cause a compiler error when used on an array of elements that don't conform to `Comparable`:
+
+```swift
+let foods = [Food(name: "Apple", calories: 52), Food(name: "Apple", calories: 52)]
+print(foods.allAreEqual()) // Error: Referencing instance method 'allAreEqual()' on 'Array' requires that 'Food' conform to 'Comparable'
+```

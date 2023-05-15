@@ -142,3 +142,21 @@ struct Bookstore: Store {
 //getHighestCalorieItem(from: Bookstore()) // Error: Global function 'getHighestCalorieItem(from:)' requires the types 'Book' and 'Food' be equivalent
 
 // ---------------------------------------
+
+extension Array where Element: Comparable {
+    func allAreEqual() -> Bool {
+        for i in 1..<count {
+            if self[i] != self[0] {
+                return false
+            }
+        }
+        return true
+    }
+}
+
+print([4, 6, 4, 3].allAreEqual()) // false
+print(["hello", "hello", "hello"].allAreEqual()) // true
+print([2.1, 2.2].allAreEqual()) // false
+
+let foods = [Food(name: "Apple", calories: 52), Food(name: "Apple", calories: 52)]
+//print(foods.allAreEqual()) // Error: Referencing instance method 'allAreEqual()' on 'Array' requires that 'Food' conform to 'Comparable'
