@@ -154,3 +154,74 @@ struct Painter: Artist {
     }
 }
 ```
+
+<br/>
+
+## Generic Where Clauses
+
+Generic where clauses use the `where` keyword to define requirements for associated types. For example, suppose we had the following protocol for a store:
+
+```swift
+protocol Store {
+    associatedtype Item
+    var items: [Item] { get }
+    mutating func addItem(_ item: Item)
+}
+```
+
+And the following struct `Market` that adopts the `Store` protocol and assigns the associated type `Item` to `Food`:
+
+```swift
+struct Food {
+    var name: String
+    var calories: Int
+}
+
+struct Market: Store {
+    var items = [Food]()
+
+    mutating func addItem(_ item: Food) {
+        items.append(item)
+    }
+}
+```
+
+We could then write the following function for getting the item with the highest calories from a store:
+
+```swift
+func getHighestCalorieItem<S: Store>(from store: S) -> Food? where S.Item == Food {
+    return store.items.max(by: { $1.calories > $0.calories })
+}
+```
+
+This function goes through the `items` array and finds the item with the highest calorie count, so it will only work with items that are of type `Food`. This is enforced using the where clause: `where S.Item == Food`.
+
+This function can be used by an instance of `Market` because its associated type `Item` is equivalent to `Food`:
+
+```swift
+var market = Market()
+market.addItem(Food(name: "Apple", calories: 52))
+market.addItem(Food(name: "Banana", calories: 110))
+market.addItem(Food(name: "Lemon", calories: 17))
+
+print(getHighestCalorieItem(from: market)?.name) // Optional("Banana")
+```
+
+However it cannot be used by an instance of `Bookstore` since `Book` is not equal to `Food`:
+
+```swift
+struct Book {
+    var name: String
+    var pages: Int
+}
+
+struct Bookstore: Store {
+    var items = [Book]()
+
+    mutating func addItem(_ item: Book) {
+        items.append(item)
+    }
+}
+
+getHighestCalorieItem(from: Bookstore()) // Error: Global function 'getHighestCalorieItem(from:)' requires the types 'Book' and 'Food' be equivalent
+```

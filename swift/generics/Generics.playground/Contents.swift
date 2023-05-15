@@ -93,3 +93,52 @@ struct Painter: Artist {
         return Painting(size: (width: 8.5, height: 11), value: 150)
     }
 }
+
+// ---------------------------------------
+
+protocol Store {
+    associatedtype Item
+    var items: [Item] { get }
+    mutating func addItem(_ item: Item)
+}
+
+struct Food {
+    var name: String
+    var calories: Int
+}
+
+struct Market: Store {
+    var items = [Food]()
+
+    mutating func addItem(_ item: Food) {
+        items.append(item)
+    }
+}
+
+func getHighestCalorieItem<S: Store>(from store: S) -> Food? where S.Item == Food {
+    return store.items.max(by: { $1.calories > $0.calories })
+}
+
+var market = Market()
+market.addItem(Food(name: "Apple", calories: 52))
+market.addItem(Food(name: "Banana", calories: 110))
+market.addItem(Food(name: "Lemon", calories: 17))
+
+print(getHighestCalorieItem(from: market)?.name) // Optional("Banana")
+
+struct Book {
+    var name: String
+    var pages: Int
+}
+
+struct Bookstore: Store {
+    var items = [Book]()
+
+    mutating func addItem(_ item: Book) {
+        items.append(item)
+    }
+}
+
+//getHighestCalorieItem(from: Bookstore()) // Error: Global function 'getHighestCalorieItem(from:)' requires the types 'Book' and 'Food' be equivalent
+
+// ---------------------------------------
