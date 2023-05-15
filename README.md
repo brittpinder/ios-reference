@@ -4,6 +4,7 @@
 
 ## Swift
 
+* [Types](https://github.com/brittpinder/ios-reference/tree/main/swift/types)
 * [Collection Types](https://github.com/brittpinder/ios-reference/tree/main/swift/collection-types)
 * [Optionals](https://github.com/brittpinder/ios-reference/tree/main/swift/optionals)
 * [Functions](https://github.com/brittpinder/ios-reference/tree/main/swift/functions)
