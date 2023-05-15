@@ -15,6 +15,7 @@
 * [Initialization](https://github.com/brittpinder/ios-reference/tree/main/swift/initialization)
 * [Extensions](https://github.com/brittpinder/ios-reference/tree/main/swift/extensions)
 * [Protocols](https://github.com/brittpinder/ios-reference/tree/main/swift/protocols)
+* [Generics](https://github.com/brittpinder/ios-reference/tree/main/swift/generics)
 * [Error Handling and Assertions](https://github.com/brittpinder/ios-reference/tree/main/swift/error-handling)
 * [Memory Management](https://github.com/brittpinder/ios-reference/tree/main/swift/memory-management)
 * [Access Control](https://github.com/brittpinder/ios-reference/tree/main/swift/access-control)
