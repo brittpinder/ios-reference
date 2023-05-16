@@ -141,10 +141,13 @@ func describePoint(_ point: (Int, Int)) {
     }
 }
 
-describePoint((1, 1)) // Prints "(1, 1) is inside the box"
-describePoint((0, 7)) // (0, 7) is on the y-axis
+describePoint((1, 1))  // (1, 1) is inside the box
+describePoint((0, 7))  // (0, 7) is on the y-axis
 describePoint((-4, 2)) // (-4, 2) is outside of the box
+describePoint((0, 0))  // (0, 0) is at the origin
 ```
+
+> Note: Unlike C, Swift allows multiple switch cases to consider the same value or values. In fact, the point (0, 0) could match all four of the cases in this example. However, if multiple matches are possible, the first matching case is always used.
 
 <br/>
 

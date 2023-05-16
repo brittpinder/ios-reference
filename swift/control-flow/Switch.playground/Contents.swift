@@ -96,6 +96,7 @@ func describePoint(_ point: (Int, Int)) {
     }
 }
 
-describePoint((1, 1)) // Prints "(1, 1) is inside the box"
-describePoint((0, 7)) // (0, 7) is on the y-axis
+describePoint((1, 1))  // Prints "(1, 1) is inside the box"
+describePoint((0, 7))  // (0, 7) is on the y-axis
 describePoint((-4, 2)) // (-4, 2) is outside of the box
+describePoint((0, 0))  // (0, 0) is at the origin
