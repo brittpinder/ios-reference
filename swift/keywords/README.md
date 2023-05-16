@@ -302,7 +302,7 @@
 * Defines a where clause
 * Where clauses are used to specify additional constraints on generic types, functions and associated types.
 * They define requirements that must be satisfied in order for the code to compile and execute properly
-* Referenced in [Generics](https://github.com/brittpinder/ios-reference/tree/main/swift/generics#generic-where-clauses)
+* Referenced in [Generics](https://github.com/brittpinder/ios-reference/tree/main/swift/generics#generic-where-clauses) and [Control Flow](https://github.com/brittpinder/ios-reference/tree/main/swift/control-flow#where-clauses)
 
 <br/>
 
