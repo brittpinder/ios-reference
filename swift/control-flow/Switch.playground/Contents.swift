@@ -55,3 +55,47 @@ default:
     print("Not the letter A")
 }
 // The letter A
+
+// -------------------------------------------
+
+func getTicketPrice(for age: UInt) -> Double {
+    switch age {
+    case 0..<2:
+        return 0
+    case 2..<18:
+        return 24.99
+    case 18..<65:
+        return 49.99
+    case 65..<100:
+        return 39.00
+    default:
+        return 0
+    }
+}
+
+print(getTicketPrice(for: 1))
+print(getTicketPrice(for: 6))
+print(getTicketPrice(for: 18))
+print(getTicketPrice(for: 40))
+print(getTicketPrice(for: 72))
+
+// -------------------------------------------
+
+func describePoint(_ point: (Int, Int)) {
+    switch point {
+    case (0, 0):
+        print("\(point) is at the origin")
+    case (_, 0):
+        print("\(point) is on the x-axis")
+    case (0, _):
+        print("\(point) is on the y-axis")
+    case (-2...2, -2...2):
+        print("\(point) is inside the box")
+    default:
+        print("\(point) is outside of the box")
+    }
+}
+
+describePoint((1, 1)) // Prints "(1, 1) is inside the box"
+describePoint((0, 7)) // (0, 7) is on the y-axis
+describePoint((-4, 2)) // (-4, 2) is outside of the box

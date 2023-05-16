@@ -98,7 +98,55 @@ default:
 
 ### Interval Matching
 
+Values in switch cases can be checked for their inclusion in an interval. For example, the following switch case returns a price for a ticket based on the age of a person (infant, child, adult, senior):
+
+```swift
+func getTicketPrice(for age: UInt) -> Double {
+    switch age {
+    case 0..<2:
+        return 0
+    case 2..<18:
+        return 24.99
+    case 18..<65:
+        return 49.99
+    case 65..<100:
+        return 39.00
+    default:
+        return 0
+    }
+}
+```
+
+<br/>
+
 ### Tuple Matching
+
+Tuples can be used to test multiple values within the same switch statement. Each element of the tuple can be tested against a different value or interval of values. You can even use the wildcard pattern (`_`) to match any possible value.
+
+For example, the following switch case describes where a point lies on a graph depending on its x and y values:
+
+```swift
+func describePoint(_ point: (Int, Int)) {
+    switch point {
+    case (0, 0):
+        print("\(point) is at the origin")
+    case (_, 0):
+        print("\(point) is on the x-axis")
+    case (0, _):
+        print("\(point) is on the y-axis")
+    case (-2...2, -2...2):
+        print("\(point) is inside the box")
+    default:
+        print("\(point) is outside of the box")
+    }
+}
+
+describePoint((1, 1)) // Prints "(1, 1) is inside the box"
+describePoint((0, 7)) // (0, 7) is on the y-axis
+describePoint((-4, 2)) // (-4, 2) is outside of the box
+```
+
+<br/>
 
 ### Value Bindings
 
