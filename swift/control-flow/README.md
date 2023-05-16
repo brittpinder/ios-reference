@@ -60,7 +60,7 @@ default:
 
 <br/>
 
-### No Implicit Fallthrough
+### [No Implicit Fallthrough](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow/#No-Implicit-Fallthrough)
 
 In contrast with switch statements in C and Objective-C, switch statements in Swift don’t fall through the bottom of each case and into the next one by default. Instead, the entire switch statement finishes its execution as soon as the first matching switch case is completed, without requiring an explicit break statement. This makes the switch statement safer and easier to use than the one in C and avoids executing more than one switch case by mistake.
 
@@ -93,10 +93,11 @@ default:
 }
 // The letter A
 ```
+> Note: This problem can also be solved using [Compound Cases](#compound-cases)
 
 <br/>
 
-### Interval Matching
+### [Interval Matching](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow/#Interval-Matching)
 
 Values in switch cases can be checked for their inclusion in an interval. For example, the following switch case returns a price for a ticket based on the age of a person (infant, child, adult, senior):
 
@@ -119,7 +120,7 @@ func getTicketPrice(for age: UInt) -> Double {
 
 <br/>
 
-### Tuple Matching
+### [Tuple Matching](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow/#Tuples)
 
 Tuples can be used to test multiple values within the same switch statement. Each element of the tuple can be tested against a different value or interval of values. You can even use the wildcard pattern (`_`) to match any possible value.
 
@@ -151,8 +152,75 @@ describePoint((0, 0))  // (0, 0) is at the origin
 
 <br/>
 
-### Value Bindings
+### [Value Bindings](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow/#Value-Bindings)
 
-### Where Clauses
+A switch case can name the value or values it matches to temporary constants or variables, for use in the body of the case:
 
-### Compound Cases
+```swift
+let point = (2, 0)
+
+switch point {
+case (let x, 0):
+    print("on the x-axis with an x value of \(x)")
+case (0, let y):
+    print("on the y-axis with a y value of \(y)")
+case let (x, y):
+    print("somewhere else at (\(x), \(y))")
+}
+// on the x-axis with an x value of 2
+```
+
+For another example of value bindings, see [Enums](https://github.com/brittpinder/ios-reference/tree/main/swift/enums#associated-values-of-different-types)
+
+<br/>
+
+### [Where Clauses](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow/#Where)
+
+A switch case can use a where clause to check for additional conditions:
+
+```swift
+let anotherPoint = (1, -1)
+
+switch anotherPoint {
+case let (x, y) where x == y:
+    print("(\(x), \(y)) is on the line x == y")
+case let (x, y) where x == -y:
+    print("(\(x), \(y)) is on the line x == -y")
+case let (x, y):
+    print("(\(x), \(y)) is just some arbitrary point")
+}
+// (1, -1) is on the line x == -y
+```
+
+<br/>
+
+### [Compound Cases](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow/#Compound-Cases)
+
+Instead of using `fallthrough`, multiple switch cases that share the same body can be combined by writing several patterns after `case`, with a comma between each of the patterns. If any of the patterns match, then the case is considered to match. 
+
+```swift
+let character: Character = "Z"
+
+switch someCharacter {
+case "a", "A":
+    print("The first letter of the alphabet")
+case "z", "Z":
+    print("The last letter of the alphabet")
+default:
+    print("Some other character")
+}
+// The last letter of the alphabet
+```
+Compound cases can also include value bindings. For example, the following switch statement has a compound case that matches any point that lies on an axis:
+
+```swift
+let somePoint = (9, 0)
+
+switch somePoint {
+case (let distance, 0), (0, let distance):
+    print("On an axis, \(distance) from the origin")
+default:
+    print("Not on an axis")
+}
+// On an axis, 9 from the origin
+```
