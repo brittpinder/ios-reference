@@ -6,6 +6,7 @@
 
 * [Types](https://github.com/brittpinder/ios-reference/tree/main/swift/types)
 * [Collection Types](https://github.com/brittpinder/ios-reference/tree/main/swift/collection-types)
+* [Control Flow](https://github.com/brittpinder/ios-reference/tree/main/swift/control-flow)
 * [Optionals](https://github.com/brittpinder/ios-reference/tree/main/swift/optionals)
 * [Functions](https://github.com/brittpinder/ios-reference/tree/main/swift/functions)
 * [Closures](https://github.com/brittpinder/ios-reference/tree/main/swift/closures)
