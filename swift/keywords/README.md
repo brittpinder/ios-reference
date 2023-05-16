@@ -1,5 +1,13 @@
 # Swift Keywords
 
+### `any`
+
+* Used to define an existential type
+* Existential types can represent any type that conforms to a specific protocol or protocol composition. The actual underlying type is only known at runtime meaning that dynamic dispatch is required to resolve the actual type.
+* Referenced in [Types](https://github.com/brittpinder/ios-reference/tree/main/swift/types#existential-types)
+
+<br/>
+
 ### [`as`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/typecasting/#Downcasting)
 
 * The *type cast operator*, used to cast a class instance to another class type within its inheritance hierarchy
@@ -222,6 +230,14 @@
 
 * Defines the "setter" of a computed property
 * Referenced in [Properties](https://github.com/brittpinder/ios-reference/tree/main/swift/properties#setting-computed-properties) and [Access Control](https://github.com/brittpinder/ios-reference/tree/main/swift/access-control#read-only-with-private-setter)
+
+<br/>
+
+### [`some`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/types/#Opaque-Type)
+
+* Used to define an opaque type
+* Opaque types conform to a protocol or protocol composition without specifying the underlying concrete type. The compiler knows the actual type but the user of the opaque type only knows what protocol it conforms to.
+* Referenced in [Types](https://github.com/brittpinder/ios-reference/tree/main/swift/types#opaque-types)
 
 <br/>
 

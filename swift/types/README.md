@@ -74,9 +74,9 @@ let nsObjects: [NSObject] = [button, NSNumber(value: 42), NSString(string: "hell
 
 ## [Opaque Types](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/opaquetypes)
 
-An opaque type conforms to a protocol or protocol composition without specifying the underlying concrete type. Opaque types are indicated by the keyword `some`, and have the form `some <#constraint#>` where the constraint is a class type, protocol type, protocol composition type or `Any`.
+An opaque type conforms to a protocol or protocol composition without specifying the underlying concrete type. The compiler knows the actual type but the user of the opaque type only knows what protocol it conforms to.
 
-Opaque types are often used as the return type of a function or the type of a property. For example, the following function returns an opaque type of the protocol `Numeric`:
+Opaque types are indicated by the keyword `some`, and have the form `some <#constraint#>` where the constraint is a class type, protocol type, protocol composition type or `Any`. Opaque types are often used as the return type of a function or the type of a property. For example, the following function returns an opaque type of the protocol `Numeric`:
 
 ```swift
 func getRandomNumber() -> some Numeric {
