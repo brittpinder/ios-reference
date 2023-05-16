@@ -1,5 +1,44 @@
 # [Types](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/types/)
 
+<br/>
+
+## [Tuples](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Tuples)
+
+Tuples group multiple values into a single compound value. The values within a tuple can be of any type and don’t have to be of the same type as each other. Tuples are written as a comma-separated list of types, enclosed in parenthesis.
+
+For example, the following tuple has a type of `(Int, String)`:
+
+```swift
+let httpError = (404, "Not Found")
+```
+
+You can decompose a tuple's contents into separate constants or variables:
+
+```swift
+let (code, message) = httpError
+print("The code is \(code)") // The code is 404
+print("The message is \(message)") // The message is Not Found
+```
+
+Alternatively, you can access the individual element values in a tuple using index numbers starting at zero:
+
+```swift
+print("The code is \(httpError.0)")  // The code is 404
+print("The message is \(httpError.1)")  // The message is Not Found
+```
+
+You can provide names for the elements in a tuple when the tuple is defined:
+
+```swift
+let httpStatus = (statusCode: 200, description: "OK")
+print("The status code is \(httpStatus.statusCode)") // The status code is 200
+print("The description is \(httpStatus.description)") // The description is OK
+```
+
+Tuples are particularly useful for returning multiple values from a function: See [Functions with Multiple Return Values](https://github.com/brittpinder/ios-reference/tree/main/swift/functions#functions-with-multiple-return-values)
+
+<br/>
+
 
 ## Any, AnyObject and NSObject
 

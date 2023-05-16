@@ -1,5 +1,20 @@
 import UIKit
 
+let httpError = (404, "Not Found")
+
+let (code, message) = httpError
+print("The code is \(code)") // The code is 404
+print("The message is \(message)") // The message is Not Found
+
+print("The code is \(httpError.0)")  // The code is 404
+print("The message is \(httpError.1)")  // The message is Not Found
+
+let httpStatus = (statusCode: 200, description: "OK")
+print("The status code is \(httpStatus.statusCode)") // The status code is 200
+print("The description is \(httpStatus.description)") // The description is OK
+
+// ----------------------------------------
+
 struct Book {
     let name: String
 }
