@@ -9,6 +9,8 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    var translationX: CGFloat = 0
+    var translationY: CGFloat = 0
     var rotation: CGFloat = 0
     var scale: CGFloat = 1
 
@@ -18,6 +20,8 @@ class ViewController: UIViewController {
     var boundsLabel = UILabel()
 
     let sliderStackView = UIStackView()
+    let translationXSlider = SliderView(viewModel: SliderView.SliderViewModel(min: -100, max: 100, title: "Translation X"), initialValue: 0)
+    let translationYSlider = SliderView(viewModel: SliderView.SliderViewModel(min: -100, max: 100, title: "Translation Y"), initialValue: 0)
     let scaleSlider = SliderView(viewModel: SliderView.SliderViewModel(min: 0.1, max: 2, title: "Scale"), initialValue: 1.0)
     let rotationSlider = SliderView(viewModel: SliderView.SliderViewModel(min: 0, max: 2 * .pi, title: "Rotation"), initialValue: 0.0)
 
@@ -69,10 +73,14 @@ class ViewController: UIViewController {
     }
 
     private func configureSliders() {
+        translationXSlider.delegate = self
+        translationYSlider.delegate = self
         scaleSlider.delegate = self
         rotationSlider.delegate = self
 
         view.addSubview(sliderStackView)
+        sliderStackView.addArrangedSubview(translationXSlider)
+        sliderStackView.addArrangedSubview(translationYSlider)
         sliderStackView.addArrangedSubview(scaleSlider)
         sliderStackView.addArrangedSubview(rotationSlider)
 
@@ -89,7 +97,7 @@ class ViewController: UIViewController {
 //MARK: - Actions
 extension ViewController {
     private func updateTransform() {
-        blueView.transform = CGAffineTransform(rotationAngle: rotation).concatenating(CGAffineTransform(scaleX: scale, y: scale))
+        blueView.transform = CGAffineTransform(translationX: translationX, y: translationY).concatenating(CGAffineTransform(rotationAngle: rotation)).concatenating(CGAffineTransform(scaleX: scale, y: scale))
     }
 
     private func updateDebugInfo() {
@@ -118,6 +126,10 @@ extension ViewController {
 extension ViewController: SliderViewDelegate {
     func sliderValueChanged(sliderView: SliderView, value: Float) {
         switch(sliderView) {
+        case translationXSlider:
+            translationX = CGFloat(value)
+        case translationYSlider:
+            translationY = CGFloat(value)
         case scaleSlider:
             scale = CGFloat(value)
         case rotationSlider:
@@ -128,8 +140,5 @@ extension ViewController: SliderViewDelegate {
 
         updateTransform()
         updateDebugInfo()
-
-        print("Frame: \(blueView.frame)")
-        print("Bounds: \(blueView.bounds)")
     }
 }
