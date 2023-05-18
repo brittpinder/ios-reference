@@ -30,7 +30,7 @@ class ViewController: UIViewController {
         }
     }
 
-    var blueView = UIView()
+    var greenView = UIView()
     var frameOutline = UIView()
     var frameLabel = UILabel()
     var boundsLabel = UILabel()
@@ -67,11 +67,11 @@ class ViewController: UIViewController {
     }
 
     private func configureView() {
-        blueView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
-        blueView.center = CGPoint(x: view.center.x, y: 300)
-        blueView.translatesAutoresizingMaskIntoConstraints = false
-        blueView.backgroundColor = .systemBlue
-        view.addSubview(blueView)
+        greenView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
+        greenView.center = CGPoint(x: view.center.x, y: 300)
+        greenView.translatesAutoresizingMaskIntoConstraints = false
+        greenView.backgroundColor = .systemGreen
+        view.addSubview(greenView)
     }
 
     private func configureDebugComponents() {
@@ -89,7 +89,7 @@ class ViewController: UIViewController {
 
         boundsLabel.text = "Bounds"
         boundsLabel.font = UIFont.systemFont(ofSize: 12)
-        boundsLabel.textColor = .systemBlue
+        boundsLabel.textColor = .systemGreen
         boundsLabel.numberOfLines = -1
         boundsLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(boundsLabel)
@@ -151,27 +151,27 @@ class ViewController: UIViewController {
 //MARK: - Actions
 extension ViewController {
     private func updateTransform() {
-        blueView.transform = CGAffineTransform(translationX: translationX, y: translationY).concatenating(CGAffineTransform(rotationAngle: rotation)).concatenating(CGAffineTransform(scaleX: scale, y: scale))
+        greenView.transform = CGAffineTransform(translationX: translationX, y: translationY).concatenating(CGAffineTransform(rotationAngle: rotation)).concatenating(CGAffineTransform(scaleX: scale, y: scale))
         updateDebugInfo()
     }
 
     private func updateDebugInfo() {
-        frameOutline.frame = CGRect(x: blueView.frame.origin.x,
-                                    y: blueView.frame.origin.y,
-                                    width: blueView.frame.size.width,
-                                    height: blueView.frame.size.height)
+        frameOutline.frame = CGRect(x: greenView.frame.origin.x,
+                                    y: greenView.frame.origin.y,
+                                    width: greenView.frame.size.width,
+                                    height: greenView.frame.size.height)
 
-        let frameX = Int(blueView.frame.origin.x)
-        let frameY = Int(blueView.frame.origin.y)
-        let frameWidth = Int(blueView.frame.width)
-        let frameHeight = Int(blueView.frame.height)
+        let frameX = Int(greenView.frame.origin.x)
+        let frameY = Int(greenView.frame.origin.y)
+        let frameWidth = Int(greenView.frame.width)
+        let frameHeight = Int(greenView.frame.height)
 
         frameLabel.text = "Frame\nx: \(frameX)\ny: \(frameY)\nwidth: \(frameWidth)\nheight: \(frameHeight)"
 
-        let boundsX = Int(blueView.bounds.origin.x)
-        let boundsY = Int(blueView.bounds.origin.y)
-        let boundsWidth = Int(blueView.bounds.width)
-        let boundsHeight = Int(blueView.bounds.height)
+        let boundsX = Int(greenView.bounds.origin.x)
+        let boundsY = Int(greenView.bounds.origin.y)
+        let boundsWidth = Int(greenView.bounds.width)
+        let boundsHeight = Int(greenView.bounds.height)
 
         boundsLabel.text = "Bounds\nx: \(boundsX)\ny: \(boundsY)\nwidth: \(boundsWidth)\nheight: \(boundsHeight)"
     }
