@@ -13,13 +13,18 @@ protocol SliderViewDelegate: AnyObject {
 
 class SliderView: UIView {
 
-    struct SliderViewModel {
+    enum RoundingType {
+        case nearestInt, nearestHundredth
+    }
+
+    struct ViewModel {
         var min: Float
         var max: Float
         var title: String
     }
 
-    let viewModel: SliderViewModel
+    let viewModel: ViewModel
+    let roundingType: RoundingType
 
     weak var delegate: SliderViewDelegate?
 
@@ -27,8 +32,9 @@ class SliderView: UIView {
     let label = UILabel()
     let slider = UISlider()
 
-    init(viewModel: SliderViewModel, initialValue: Float) {
+    init(viewModel: ViewModel, initialValue: Float, roundingType: RoundingType) {
         self.viewModel = viewModel
+        self.roundingType = roundingType
         super.init(frame: .zero)
 
         setup()
@@ -52,6 +58,7 @@ class SliderView: UIView {
         stackView.alignment = .leading
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
+        label.font = UIFont.systemFont(ofSize: 14)
         updateLabel()
 
         slider.minimumValue = viewModel.min
@@ -65,7 +72,8 @@ class SliderView: UIView {
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            slider.widthAnchor.constraint(equalTo: widthAnchor)
+            slider.widthAnchor.constraint(equalTo: widthAnchor),
+            slider.heightAnchor.constraint(equalToConstant: 15)
         ])
     }
 }
@@ -78,12 +86,20 @@ extension SliderView {
     }
 
     private func updateLabel() {
-        let roundedValue = round(slider.value * 100) / 100.0
-        label.text = "\(viewModel.title): \(roundedValue)"
+        label.text = "\(viewModel.title): \(getRoundedValue())"
     }
 
     func setValue(_ value: Float) {
         slider.setValue(value, animated: true)
         updateLabel()
+    }
+
+    private func getRoundedValue() -> any Numeric {
+        switch roundingType {
+        case .nearestInt:
+            return Int(slider.value)
+        case .nearestHundredth:
+            return round(slider.value * 100) / 100.0
+        }
     }
 }

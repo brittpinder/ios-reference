@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ImageViewController.swift
 //  Views
 //
 //  Created by Brittany Pinder on 2023-05-18.
@@ -7,7 +7,10 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ImageViewController: UIViewController {
+
+    static let defaultImageWidth = 100
+    static let defaultImageHeight = 125
 
     var translationX: CGFloat {
         didSet {
@@ -29,18 +32,37 @@ class ViewController: UIViewController {
             scaleSlider.setValue(Float(scale))
         }
     }
+    var boundsX: CGFloat {
+        didSet {
+            boundsXSlider.setValue(Float(boundsX))
+        }
+    }
+    var boundsY: CGFloat {
+        didSet {
+            boundsYSlider.setValue(Float(boundsY))
+        }
+    }
+    var imageClipsToBounds: Bool {
+        didSet {
+            clipsSwitch.setValue(imageClipsToBounds)
+        }
+    }
 
-    var greenView = UIView()
+    var containerView = UIView()
+    var imageView = UIImageView()
     var frameOutline = UIView()
     var frameLabel = UILabel()
     var boundsLabel = UILabel()
 
-    let sliderStackView = UIStackView()
+    let clipsSwitch = SwitchView(title: "Clips to Bounds", initialValue: true)
 
-    let translationXSlider = SliderView(viewModel: SliderView.ViewModel(min: -100, max: 100, title: "Translation X"), initialValue: 0, roundingType: .nearestInt)
-    let translationYSlider = SliderView(viewModel: SliderView.ViewModel(min: -100, max: 100, title: "Translation Y"), initialValue: 0, roundingType: .nearestInt)
+    let sliderStackView = UIStackView()
+    let translationXSlider = SliderView(viewModel: SliderView.ViewModel(min: Float(-defaultImageWidth), max: Float(defaultImageWidth), title: "Translation X"), initialValue: 0, roundingType: .nearestInt)
+    let translationYSlider = SliderView(viewModel: SliderView.ViewModel(min: Float(-defaultImageHeight), max: Float(defaultImageHeight), title: "Translation Y"), initialValue: 0, roundingType: .nearestInt)
     let scaleSlider = SliderView(viewModel: SliderView.ViewModel(min: 0, max: 2, title: "Scale"), initialValue: 1.0, roundingType: .nearestHundredth)
     let rotationSlider = SliderView(viewModel: SliderView.ViewModel(min: -.pi, max: .pi, title: "Rotation"), initialValue: 0.0, roundingType: .nearestHundredth)
+    let boundsXSlider = SliderView(viewModel: SliderView.ViewModel(min: Float(-defaultImageWidth), max: Float(defaultImageWidth), title: "Bounds X"), initialValue: 0, roundingType: .nearestInt)
+    let boundsYSlider = SliderView(viewModel: SliderView.ViewModel(min: Float(-defaultImageHeight), max: Float(defaultImageHeight), title: "Bounds Y"), initialValue: 0, roundingType: .nearestInt)
 
     let resetButton = UIButton(type: .system)
 
@@ -49,6 +71,9 @@ class ViewController: UIViewController {
         self.translationY = 0
         self.rotation = 0
         self.scale = 1
+        self.boundsX = 0
+        self.boundsY = 0
+        self.imageClipsToBounds = true
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -62,15 +87,20 @@ class ViewController: UIViewController {
 
         configureView()
         configureDebugComponents()
+        configureClipsSwitch()
         configureSliders()
         configureResetButton()
     }
 
     private func configureView() {
-        greenView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
-        greenView.center = CGPoint(x: view.center.x, y: 300)
-        greenView.backgroundColor = .systemGreen
-        view.addSubview(greenView)
+        containerView = UIView(frame: CGRect(x: 0, y: 0, width: ImageViewController.defaultImageWidth, height: ImageViewController.defaultImageHeight))
+        containerView.center = CGPoint(x: view.center.x, y: 270)
+        containerView.backgroundColor = .systemGreen
+        view.addSubview(containerView)
+
+        imageView = UIImageView(image: UIImage(named: "dog.jpeg")!)
+        imageView.frame.size = CGSize(width: containerView.frame.width, height: containerView.frame.height)
+        containerView.addSubview(imageView)
     }
 
     private func configureDebugComponents() {
@@ -102,17 +132,30 @@ class ViewController: UIViewController {
         updateDebugInfo()
     }
 
+    private func configureClipsSwitch() {
+        view.addSubview(clipsSwitch)
+
+        clipsSwitch.delegate = self
+        clipsSwitch.translatesAutoresizingMaskIntoConstraints = false
+        clipsSwitch.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 1).isActive = true
+        view.safeAreaLayoutGuide.trailingAnchor.constraint(equalToSystemSpacingAfter: clipsSwitch.trailingAnchor, multiplier: 1).isActive = true
+    }
+
     private func configureSliders() {
         translationXSlider.delegate = self
         translationYSlider.delegate = self
         scaleSlider.delegate = self
         rotationSlider.delegate = self
+        boundsXSlider.delegate = self
+        boundsYSlider.delegate = self
 
         view.addSubview(sliderStackView)
         sliderStackView.addArrangedSubview(translationXSlider)
         sliderStackView.addArrangedSubview(translationYSlider)
         sliderStackView.addArrangedSubview(scaleSlider)
         sliderStackView.addArrangedSubview(rotationSlider)
+        sliderStackView.addArrangedSubview(boundsXSlider)
+        sliderStackView.addArrangedSubview(boundsYSlider)
 
         sliderStackView.translatesAutoresizingMaskIntoConstraints = false
         sliderStackView.axis = .vertical
@@ -128,6 +171,8 @@ class ViewController: UIViewController {
             translationYSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
             scaleSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
             rotationSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
+            boundsXSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
+            boundsYSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor)
         ])
     }
 
@@ -147,30 +192,33 @@ class ViewController: UIViewController {
 }
 
 //MARK: - Actions
-extension ViewController {
-    private func updateTransform() {
-        greenView.transform = CGAffineTransform(translationX: translationX, y: translationY).concatenating(CGAffineTransform(rotationAngle: rotation)).concatenating(CGAffineTransform(scaleX: scale, y: scale))
+extension ImageViewController {
+    private func updateImage() {
+        containerView.transform = CGAffineTransform(translationX: translationX, y: translationY).concatenating(CGAffineTransform(rotationAngle: rotation)).concatenating(CGAffineTransform(scaleX: scale, y: scale))
+
+        containerView.bounds.origin = CGPoint(x: boundsX, y: boundsY)
+        containerView.clipsToBounds = imageClipsToBounds
 
         updateDebugInfo()
     }
 
     private func updateDebugInfo() {
-        frameOutline.frame = CGRect(x: greenView.frame.origin.x,
-                                    y: greenView.frame.origin.y,
-                                    width: greenView.frame.size.width,
-                                    height: greenView.frame.size.height)
+        frameOutline.frame = CGRect(x: containerView.frame.origin.x,
+                                    y: containerView.frame.origin.y,
+                                    width: containerView.frame.size.width,
+                                    height: containerView.frame.size.height)
 
-        let frameX = Int(greenView.frame.origin.x)
-        let frameY = Int(greenView.frame.origin.y)
-        let frameWidth = Int(greenView.frame.width)
-        let frameHeight = Int(greenView.frame.height)
+        let frameX = Int(containerView.frame.origin.x)
+        let frameY = Int(containerView.frame.origin.y)
+        let frameWidth = Int(containerView.frame.width)
+        let frameHeight = Int(containerView.frame.height)
 
         frameLabel.text = "Frame\nx: \(frameX)\ny: \(frameY)\nwidth: \(frameWidth)\nheight: \(frameHeight)"
 
-        let boundsX = Int(greenView.bounds.origin.x)
-        let boundsY = Int(greenView.bounds.origin.y)
-        let boundsWidth = Int(greenView.bounds.width)
-        let boundsHeight = Int(greenView.bounds.height)
+        let boundsX = Int(containerView.bounds.origin.x)
+        let boundsY = Int(containerView.bounds.origin.y)
+        let boundsWidth = Int(containerView.bounds.width)
+        let boundsHeight = Int(containerView.bounds.height)
 
         boundsLabel.text = "Bounds\nx: \(boundsX)\ny: \(boundsY)\nwidth: \(boundsWidth)\nheight: \(boundsHeight)"
     }
@@ -180,12 +228,15 @@ extension ViewController {
         translationY = 0
         scale = 1
         rotation = 0
-        updateTransform()
+        boundsX = 0
+        boundsY = 0
+        imageClipsToBounds = true
+        updateImage()
     }
 }
 
 //MARK: - SliderViewDelegate
-extension ViewController: SliderViewDelegate {
+extension ImageViewController: SliderViewDelegate {
     func sliderValueChanged(sliderView: SliderView, value: Float) {
         switch(sliderView) {
         case translationXSlider:
@@ -196,10 +247,21 @@ extension ViewController: SliderViewDelegate {
             scale = CGFloat(value)
         case rotationSlider:
             rotation = CGFloat(value)
+        case boundsXSlider:
+            boundsX = CGFloat(value)
+        case boundsYSlider:
+            boundsY = CGFloat(value)
         default:
             return
         }
 
-        updateTransform()
+        updateImage()
+    }
+}
+
+extension ImageViewController: SwitchViewDelegate {
+    func switchToggled(switchView: SwitchView, value: Bool) {
+        imageClipsToBounds = value
+        updateImage()
     }
 }

@@ -13,6 +13,9 @@
 		E14438292A165F2B0073A0B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E14438282A165F2B0073A0B3 /* Assets.xcassets */; };
 		E144382C2A165F2B0073A0B3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E144382A2A165F2B0073A0B3 /* LaunchScreen.storyboard */; };
 		E14438362A16695B0073A0B3 /* SliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14438352A16695B0073A0B3 /* SliderView.swift */; };
+		E144383C2A16B22E0073A0B3 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E144383B2A16B22D0073A0B3 /* ImageViewController.swift */; };
+		E144383E2A16B2E60073A0B3 /* dog.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = E144383D2A16B2E60073A0B3 /* dog.jpeg */; };
+		E14438402A16BD810073A0B3 /* SwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E144383F2A16BD810073A0B3 /* SwitchView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		E144382B2A165F2B0073A0B3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E144382D2A165F2B0073A0B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E14438352A16695B0073A0B3 /* SliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderView.swift; sourceTree = "<group>"; };
+		E144383B2A16B22D0073A0B3 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		E144383D2A16B2E60073A0B3 /* dog.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dog.jpeg; sourceTree = "<group>"; };
+		E144383F2A16BD810073A0B3 /* SwitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,10 +65,13 @@
 				E144381F2A165F280073A0B3 /* AppDelegate.swift */,
 				E14438212A165F280073A0B3 /* SceneDelegate.swift */,
 				E14438232A165F280073A0B3 /* ViewController.swift */,
+				E144383B2A16B22D0073A0B3 /* ImageViewController.swift */,
 				E14438352A16695B0073A0B3 /* SliderView.swift */,
+				E144383F2A16BD810073A0B3 /* SwitchView.swift */,
 				E14438282A165F2B0073A0B3 /* Assets.xcassets */,
 				E144382A2A165F2B0073A0B3 /* LaunchScreen.storyboard */,
 				E144382D2A165F2B0073A0B3 /* Info.plist */,
+				E144383D2A16B2E60073A0B3 /* dog.jpeg */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -127,6 +136,7 @@
 			files = (
 				E144382C2A165F2B0073A0B3 /* LaunchScreen.storyboard in Resources */,
 				E14438292A165F2B0073A0B3 /* Assets.xcassets in Resources */,
+				E144383E2A16B2E60073A0B3 /* dog.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +148,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E14438242A165F280073A0B3 /* ViewController.swift in Sources */,
+				E144383C2A16B22E0073A0B3 /* ImageViewController.swift in Sources */,
+				E14438402A16BD810073A0B3 /* SwitchView.swift in Sources */,
 				E14438362A16695B0073A0B3 /* SliderView.swift in Sources */,
 				E14438202A165F280073A0B3 /* AppDelegate.swift in Sources */,
 				E14438222A165F280073A0B3 /* SceneDelegate.swift in Sources */,
