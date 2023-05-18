@@ -14,6 +14,8 @@ class ViewController: UIViewController {
 
     var blueView = UIView()
     var frameOutline = UIView()
+    var frameLabel = UILabel()
+    var boundsLabel = UILabel()
 
     let sliderStackView = UIStackView()
     let scaleSlider = SliderView(viewModel: SliderView.SliderViewModel(min: 0.1, max: 2, title: "Scale"), initialValue: 1.0)
@@ -23,28 +25,50 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
 
-        configureViews()
+        configureView()
+        configureDebugComponents()
         configureSliders()
     }
 
-    func configureViews() {
+    private func configureView() {
         blueView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
         blueView.center = CGPoint(x: view.center.x, y: 300)
         blueView.translatesAutoresizingMaskIntoConstraints = false
         blueView.backgroundColor = .systemBlue
         view.addSubview(blueView)
+    }
 
-        frameOutline = UIView(frame: CGRect(x: blueView.frame.origin.x,
-                                            y: blueView.frame.origin.y,
-                                            width: blueView.frame.size.width,
-                                            height: blueView.frame.size.height))
+    private func configureDebugComponents() {
         frameOutline.translatesAutoresizingMaskIntoConstraints = false
         frameOutline.layer.borderColor = UIColor.red.cgColor
         frameOutline.layer.borderWidth = 1
         view.addSubview(frameOutline)
+
+        frameLabel.text = "Frame"
+        frameLabel.font = UIFont.systemFont(ofSize: 12)
+        frameLabel.textColor = UIColor.red
+        frameLabel.numberOfLines = -1
+        frameLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(frameLabel)
+
+        boundsLabel.text = "Bounds"
+        boundsLabel.font = UIFont.systemFont(ofSize: 12)
+        boundsLabel.textColor = .systemBlue
+        boundsLabel.numberOfLines = -1
+        boundsLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(boundsLabel)
+
+        NSLayoutConstraint.activate([
+            frameLabel.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 1),
+            frameLabel.leadingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.leadingAnchor, multiplier: 1),
+            boundsLabel.topAnchor.constraint(equalTo: frameLabel.topAnchor),
+            boundsLabel.leadingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.leadingAnchor, multiplier: 12)
+        ])
+
+        updateDebugInfo()
     }
 
-    func configureSliders() {
+    private func configureSliders() {
         scaleSlider.delegate = self
         rotationSlider.delegate = self
 
@@ -68,11 +92,25 @@ extension ViewController {
         blueView.transform = CGAffineTransform(rotationAngle: rotation).concatenating(CGAffineTransform(scaleX: scale, y: scale))
     }
 
-    private func updateFrame() {
+    private func updateDebugInfo() {
         frameOutline.frame = CGRect(x: blueView.frame.origin.x,
                                     y: blueView.frame.origin.y,
                                     width: blueView.frame.size.width,
                                     height: blueView.frame.size.height)
+
+        let frameX = Int(blueView.frame.origin.x)
+        let frameY = Int(blueView.frame.origin.y)
+        let frameWidth = Int(blueView.frame.width)
+        let frameHeight = Int(blueView.frame.height)
+
+        frameLabel.text = "Frame\nx: \(frameX)\ny: \(frameY)\nwidth: \(frameWidth)\nheight: \(frameHeight)"
+
+        let boundsX = Int(blueView.bounds.origin.x)
+        let boundsY = Int(blueView.bounds.origin.y)
+        let boundsWidth = Int(blueView.bounds.width)
+        let boundsHeight = Int(blueView.bounds.height)
+
+        boundsLabel.text = "Bounds\nx: \(boundsX)\ny: \(boundsY)\nwidth: \(boundsWidth)\nheight: \(boundsHeight)"
     }
 }
 
@@ -89,7 +127,7 @@ extension ViewController: SliderViewDelegate {
         }
 
         updateTransform()
-        updateFrame()
+        updateDebugInfo()
 
         print("Frame: \(blueView.frame)")
         print("Bounds: \(blueView.bounds)")
