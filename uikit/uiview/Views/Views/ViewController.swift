@@ -69,13 +69,11 @@ class ViewController: UIViewController {
     private func configureView() {
         greenView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
         greenView.center = CGPoint(x: view.center.x, y: 300)
-        greenView.translatesAutoresizingMaskIntoConstraints = false
         greenView.backgroundColor = .systemGreen
         view.addSubview(greenView)
     }
 
     private func configureDebugComponents() {
-        frameOutline.translatesAutoresizingMaskIntoConstraints = false
         frameOutline.layer.borderColor = UIColor.red.cgColor
         frameOutline.layer.borderWidth = 1
         view.addSubview(frameOutline)
