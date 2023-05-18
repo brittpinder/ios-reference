@@ -17,6 +17,8 @@ print(optionalString) // Optional("Hello")
 print(optionalString == nil) // false
 ```
 
+<br/>
+
 ## Unwrapping Optionals
 
 Notice in the above example, when `optionalString` has a value and we print it, it prints `Optional("Hello")` instead of `Hello`. In order to get the value that the optional is storing, we need to "unwrap" it. There are four options for unwrapping optionals:
@@ -344,6 +346,8 @@ An implicitly unwrapped optional, written with an exclamation mark (!) after the
 The most common reason for using an implicitly unwrapped optional is in the case where something will start off as `nil` but contain a value by the time it's needed and won't be `nil` ever again. For example, when outlets are created using Interface Builder, they are created as implicitly unwrapped optionals because they are `nil` when the view controller is being created and get set to real values shortly after (and won't be destroyed until the view controller is destroyed).
 
 `@IBOutlet weak var searchTextField: UITextField!`
+
+<br/>
 
 ## Links
 * [Apple Documentation on Optional](https://developer.apple.com/documentation/swift/optional)
