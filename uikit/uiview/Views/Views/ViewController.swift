@@ -36,11 +36,13 @@ class ViewController: UIViewController {
     var boundsLabel = UILabel()
 
     let sliderStackView = UIStackView()
-    let resetButton = UIButton(type: .system)
+
     let translationXSlider = SliderView(viewModel: SliderView.SliderViewModel(min: -100, max: 100, title: "Translation X"), initialValue: 0)
     let translationYSlider = SliderView(viewModel: SliderView.SliderViewModel(min: -100, max: 100, title: "Translation Y"), initialValue: 0)
     let scaleSlider = SliderView(viewModel: SliderView.SliderViewModel(min: 0.1, max: 2, title: "Scale"), initialValue: 1.0)
     let rotationSlider = SliderView(viewModel: SliderView.SliderViewModel(min: -.pi, max: .pi, title: "Rotation"), initialValue: 0.0)
+
+    let resetButton = UIButton(type: .system)
 
     init() {
         self.translationX = 0
