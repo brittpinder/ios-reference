@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     let translationXSlider = SliderView(viewModel: SliderView.SliderViewModel(min: -100, max: 100, title: "Translation X"), initialValue: 0)
     let translationYSlider = SliderView(viewModel: SliderView.SliderViewModel(min: -100, max: 100, title: "Translation Y"), initialValue: 0)
     let scaleSlider = SliderView(viewModel: SliderView.SliderViewModel(min: 0.1, max: 2, title: "Scale"), initialValue: 1.0)
-    let rotationSlider = SliderView(viewModel: SliderView.SliderViewModel(min: 0, max: 2 * .pi, title: "Rotation"), initialValue: 0.0)
+    let rotationSlider = SliderView(viewModel: SliderView.SliderViewModel(min: -.pi, max: .pi, title: "Rotation"), initialValue: 0.0)
 
     override func viewDidLoad() {
         super.viewDidLoad()
