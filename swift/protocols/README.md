@@ -1,6 +1,6 @@
 # [Protocols](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols)
 
-Much like interfaces (abstract classes) in C++, protocols define a blueprint of methods, properties and other requirements to be adopted by a class, structure or enumeration. When a type *adopts* a protocol, it must *conform* to that protocol by providing an actual implementation of the protocol's requirements. In other words, protocols are like contracts; they let us define what sort of functionality we expect certain types to support.
+Much like interfaces (abstract classes) in C++, a protocol defines a blueprint of methods, properties and other requirements to be adopted by a class, structure or enumeration. When a type *adopts* a protocol, it must *conform* to that protocol by providing an actual implementation of the protocol's requirements. In other words, protocols are like contracts; they let us define what sort of functionality we expect certain types to support.
 
 <br/>
 
