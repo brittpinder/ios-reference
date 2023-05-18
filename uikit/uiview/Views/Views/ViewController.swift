@@ -9,10 +9,26 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    var translationX: CGFloat = 0
-    var translationY: CGFloat = 0
-    var rotation: CGFloat = 0
-    var scale: CGFloat = 1
+    var translationX: CGFloat {
+        didSet {
+            translationXSlider.setValue(Float(translationX))
+        }
+    }
+    var translationY: CGFloat {
+        didSet {
+            translationYSlider.setValue(Float(translationY))
+        }
+    }
+    var rotation: CGFloat {
+        didSet {
+            rotationSlider.setValue(Float(rotation))
+        }
+    }
+    var scale: CGFloat {
+        didSet {
+            scaleSlider.setValue(Float(scale))
+        }
+    }
 
     var blueView = UIView()
     var frameOutline = UIView()
@@ -20,10 +36,23 @@ class ViewController: UIViewController {
     var boundsLabel = UILabel()
 
     let sliderStackView = UIStackView()
+    let resetButton = UIButton(type: .system)
     let translationXSlider = SliderView(viewModel: SliderView.SliderViewModel(min: -100, max: 100, title: "Translation X"), initialValue: 0)
     let translationYSlider = SliderView(viewModel: SliderView.SliderViewModel(min: -100, max: 100, title: "Translation Y"), initialValue: 0)
     let scaleSlider = SliderView(viewModel: SliderView.SliderViewModel(min: 0.1, max: 2, title: "Scale"), initialValue: 1.0)
     let rotationSlider = SliderView(viewModel: SliderView.SliderViewModel(min: -.pi, max: .pi, title: "Rotation"), initialValue: 0.0)
+
+    init() {
+        self.translationX = 0
+        self.translationY = 0
+        self.rotation = 0
+        self.scale = 1
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +61,7 @@ class ViewController: UIViewController {
         configureView()
         configureDebugComponents()
         configureSliders()
+        configureResetButton()
     }
 
     private func configureView() {
@@ -86,11 +116,33 @@ class ViewController: UIViewController {
 
         sliderStackView.translatesAutoresizingMaskIntoConstraints = false
         sliderStackView.axis = .vertical
-        sliderStackView.spacing = 8
+        sliderStackView.alignment = .center
+        sliderStackView.spacing = 16
 
-        sliderStackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.leadingAnchor, multiplier: 3).isActive = true
-        view.safeAreaLayoutGuide.trailingAnchor.constraint(equalToSystemSpacingAfter: sliderStackView.trailingAnchor, multiplier: 3).isActive = true
-        view.safeAreaLayoutGuide.bottomAnchor.constraint(equalToSystemSpacingBelow: sliderStackView.bottomAnchor, multiplier: 3).isActive = true
+        NSLayoutConstraint.activate([
+            sliderStackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.leadingAnchor, multiplier: 3),
+            view.safeAreaLayoutGuide.trailingAnchor.constraint(equalToSystemSpacingAfter: sliderStackView.trailingAnchor, multiplier: 3),
+            view.safeAreaLayoutGuide.bottomAnchor.constraint(equalToSystemSpacingBelow: sliderStackView.bottomAnchor, multiplier: 3),
+
+            translationXSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
+            translationYSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
+            scaleSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
+            rotationSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
+        ])
+    }
+
+    private func configureResetButton() {
+        resetButton.setTitle("Reset", for: .normal)
+        resetButton.tintColor = .white
+        resetButton.backgroundColor = .systemBlue
+        resetButton.clipsToBounds = true
+        resetButton.layer.cornerRadius = 5
+        resetButton.addTarget(self, action: #selector(resetButtonPressed), for: .primaryActionTriggered)
+
+        sliderStackView.addArrangedSubview(resetButton)
+
+        resetButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        resetButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
 }
 
@@ -98,6 +150,7 @@ class ViewController: UIViewController {
 extension ViewController {
     private func updateTransform() {
         blueView.transform = CGAffineTransform(translationX: translationX, y: translationY).concatenating(CGAffineTransform(rotationAngle: rotation)).concatenating(CGAffineTransform(scaleX: scale, y: scale))
+        updateDebugInfo()
     }
 
     private func updateDebugInfo() {
@@ -120,6 +173,14 @@ extension ViewController {
 
         boundsLabel.text = "Bounds\nx: \(boundsX)\ny: \(boundsY)\nwidth: \(boundsWidth)\nheight: \(boundsHeight)"
     }
+
+    @objc private func resetButtonPressed() {
+        translationX = 0
+        translationY = 0
+        scale = 1
+        rotation = 0
+        updateTransform()
+    }
 }
 
 //MARK: - SliderViewDelegate
@@ -139,6 +200,5 @@ extension ViewController: SliderViewDelegate {
         }
 
         updateTransform()
-        updateDebugInfo()
     }
 }

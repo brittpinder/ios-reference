@@ -48,7 +48,6 @@ class SliderView: UIView {
         stackView.addArrangedSubview(label)
         stackView.addArrangedSubview(slider)
 
-        stackView.spacing = 8
         stackView.axis = .vertical
         stackView.alignment = .leading
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -81,5 +80,10 @@ extension SliderView {
     private func updateLabel() {
         let roundedValue = round(slider.value * 100) / 100.0
         label.text = "\(viewModel.title): \(roundedValue)"
+    }
+
+    func setValue(_ value: Float) {
+        slider.setValue(value, animated: true)
+        updateLabel()
     }
 }
