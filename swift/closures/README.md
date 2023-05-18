@@ -1,7 +1,6 @@
-# Closures
+# [Closures](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/)
 
-
-Closures are self-contained blocks of functionality that can be passed around and used in your code, much like lambdas in C++.
+Closures are self-contained blocks of functionality that can be assigned to variables or passed as arguments to functions, much like lambdas in C++.
 
 Closures can capture and store references to any constants and variables from the context in which they are defined. This is known as *closing over* those constants and variables. Swift handles all of the memory management of capturing for you.
 
