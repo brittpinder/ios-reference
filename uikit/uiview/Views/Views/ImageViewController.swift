@@ -9,52 +9,54 @@ import UIKit
 
 class ImageViewController: UIViewController {
 
+    enum ViewAttribute: Int {
+        case translationX = 0
+        case translationY
+        case scale
+        case rotation
+        case boundsX
+        case boundsY
+        case boundsWidth
+        case boundsHeight
+    }
+
+    class SliderBinding {
+        let initialValue: CGFloat
+        var value: CGFloat {
+            didSet {
+                sliderView.setValue(Float(value))
+            }
+        }
+        let sliderView: SliderView
+
+        init(initialValue: CGFloat, sliderView: SliderView) {
+            self.initialValue = initialValue
+            self.value = initialValue
+            self.sliderView = sliderView
+        }
+
+        func reset() {
+            value = initialValue
+        }
+    }
+
     static let defaultImageWidth = 100
     static let defaultImageHeight = 125
+
+    private let sliderData: [(attribute: ViewAttribute, initialValue: Float, min: Float, max: Float, title: String, roundingType: SliderView.RoundingType)] = [
+        (attribute: .translationX, initialValue: 0, min: Float(-defaultImageWidth), max: Float(defaultImageWidth), title: "Translation X", roundingType: .nearestInt),
+        (attribute: .translationY, initialValue: 0, min: Float(-defaultImageHeight), max: Float(defaultImageHeight), title: "Translation Y", roundingType: .nearestInt),
+        (attribute: .scale, initialValue: 1, min: 0, max: 2, title: "Scale", roundingType: .nearestHundredth),
+        (attribute: .rotation, initialValue: 0, min: -.pi, max: .pi, title: "Rotation", roundingType: .nearestHundredth),
+        (attribute: .boundsX, initialValue: 0, min: Float(-defaultImageWidth), max: Float(defaultImageWidth), title: "Bounds X", roundingType: .nearestInt),
+        (attribute: .boundsY, initialValue: 0, min: Float(-defaultImageHeight), max: Float(defaultImageHeight), title: "Bounds Y", roundingType: .nearestInt),
+        (attribute: .boundsWidth, initialValue: Float(defaultImageWidth), min: 0, max: Float(defaultImageWidth) * 2, title: "Bounds Width", roundingType: .nearestInt),
+        (attribute: .boundsHeight, initialValue: Float(defaultImageHeight), min: 0, max: Float(defaultImageHeight) * 2, title: "Bounds Height", roundingType: .nearestInt)
+    ]
 
     var imageClipsToBounds: Bool {
         didSet {
             clipsSwitch.setValue(imageClipsToBounds)
-        }
-    }
-    var translationX: CGFloat {
-        didSet {
-            translationXSlider.setValue(Float(translationX))
-        }
-    }
-    var translationY: CGFloat {
-        didSet {
-            translationYSlider.setValue(Float(translationY))
-        }
-    }
-    var rotation: CGFloat {
-        didSet {
-            rotationSlider.setValue(Float(rotation))
-        }
-    }
-    var scale: CGFloat {
-        didSet {
-            scaleSlider.setValue(Float(scale))
-        }
-    }
-    var boundsX: CGFloat {
-        didSet {
-            boundsXSlider.setValue(Float(boundsX))
-        }
-    }
-    var boundsY: CGFloat {
-        didSet {
-            boundsYSlider.setValue(Float(boundsY))
-        }
-    }
-    var boundsWidth: CGFloat {
-        didSet {
-            boundsWidthSlider.setValue(Float(boundsWidth))
-        }
-    }
-    var boundsHeight: CGFloat {
-        didSet {
-            boundsHeightSlider.setValue(Float(boundsHeight))
         }
     }
 
@@ -63,32 +65,20 @@ class ImageViewController: UIViewController {
     var frameOutline = UIView()
     var frameLabel = UILabel()
     var boundsLabel = UILabel()
-
     let clipsSwitch = SwitchView(title: "Clips to Bounds", initialValue: true)
-
-    let sliders: [SliderView]
-    let translationXSlider = SliderView(viewModel: SliderView.ViewModel(min: Float(-defaultImageWidth), max: Float(defaultImageWidth), title: "Translation X"), initialValue: 0, roundingType: .nearestInt)
-    let translationYSlider = SliderView(viewModel: SliderView.ViewModel(min: Float(-defaultImageHeight), max: Float(defaultImageHeight), title: "Translation Y"), initialValue: 0, roundingType: .nearestInt)
-    let scaleSlider = SliderView(viewModel: SliderView.ViewModel(min: 0, max: 2, title: "Scale"), initialValue: 1.0, roundingType: .nearestHundredth)
-    let rotationSlider = SliderView(viewModel: SliderView.ViewModel(min: -.pi, max: .pi, title: "Rotation"), initialValue: 0.0, roundingType: .nearestHundredth)
-    let boundsXSlider = SliderView(viewModel: SliderView.ViewModel(min: Float(-defaultImageWidth), max: Float(defaultImageWidth), title: "Bounds X"), initialValue: 0, roundingType: .nearestInt)
-    let boundsYSlider = SliderView(viewModel: SliderView.ViewModel(min: Float(-defaultImageHeight), max: Float(defaultImageHeight), title: "Bounds Y"), initialValue: 0, roundingType: .nearestInt)
-    let boundsWidthSlider = SliderView(viewModel: SliderView.ViewModel(min: 0, max: Float(defaultImageWidth * 2), title: "Bounds Width"), initialValue: Float(defaultImageWidth), roundingType: .nearestInt)
-    let boundsHeightSlider = SliderView(viewModel: SliderView.ViewModel(min: 0, max: Float(defaultImageHeight * 2), title: "Bounds Height"), initialValue: Float(defaultImageHeight), roundingType: .nearestInt)
-
     let resetButton = UIButton(type: .system)
+
+    var sliders = [ViewAttribute: SliderBinding]()
 
     init() {
         self.imageClipsToBounds = true
-        self.translationX = 0
-        self.translationY = 0
-        self.rotation = 0
-        self.scale = 1
-        self.boundsX = 0
-        self.boundsY = 0
-        self.boundsWidth = CGFloat(ImageViewController.defaultImageWidth)
-        self.boundsHeight = CGFloat(ImageViewController.defaultImageHeight)
-        self.sliders = [translationXSlider, translationYSlider, scaleSlider, rotationSlider, boundsXSlider , boundsYSlider, boundsWidthSlider, boundsHeightSlider]
+
+        for data in sliderData {
+            let sliderView = SliderView(viewModel: SliderView.ViewModel(min: data.min, max: data.max, title: data.title), initialValue: Float(data.initialValue), roundingType: data.roundingType)
+
+            sliders[data.attribute] = SliderBinding(initialValue: CGFloat(data.initialValue), sliderView: sliderView)
+        }
+
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -176,8 +166,8 @@ class ImageViewController: UIViewController {
     }
 
     private func configureSliders() {
-        for slider in sliders {
-            slider.delegate = self
+        for item in sliders {
+            sliders[item.key]!.sliderView.delegate = self
         }
 
         let sliderStackView = UIStackView()
@@ -187,12 +177,11 @@ class ImageViewController: UIViewController {
         sliderStackView.spacing = 16
         view.addSubview(sliderStackView)
 
-
         let halfIndex = Int(Float(Float(sliders.count) / 2.0).rounded())
 
         let sv1 = UIStackView()
         for index in 0..<halfIndex {
-            sv1.addArrangedSubview(sliders[index])
+            sv1.addArrangedSubview(sliders[ViewAttribute(rawValue: index)!]!.sliderView)
         }
         sv1.axis = .vertical
         sv1.spacing = 16
@@ -200,7 +189,7 @@ class ImageViewController: UIViewController {
 
         let sv2 = UIStackView()
         for index in halfIndex..<sliders.count {
-            sv2.addArrangedSubview(sliders[index])
+            sv2.addArrangedSubview(sliders[ViewAttribute(rawValue: index)!]!.sliderView)
         }
         sv2.axis = .vertical
         sv2.spacing = 16
@@ -217,9 +206,10 @@ class ImageViewController: UIViewController {
 //MARK: - Actions
 extension ImageViewController {
     private func updateImage() {
-        containerView.transform = CGAffineTransform(translationX: translationX, y: translationY).concatenating(CGAffineTransform(rotationAngle: rotation)).concatenating(CGAffineTransform(scaleX: scale, y: scale))
 
-        containerView.bounds = CGRect(x: boundsX, y: boundsY, width: boundsWidth, height: boundsHeight)
+        containerView.transform = CGAffineTransform(translationX: sliders[.translationX]!.value, y: sliders[.translationY]!.value).concatenating(CGAffineTransform(rotationAngle: sliders[.rotation]!.value)).concatenating(CGAffineTransform(scaleX: sliders[.scale]!.value, y: sliders[.scale]!.value))
+
+        containerView.bounds = CGRect(x: sliders[.boundsX]!.value, y: sliders[.boundsY]!.value, width: sliders[.boundsWidth]!.value, height: sliders[.boundsHeight]!.value)
         containerView.clipsToBounds = imageClipsToBounds
 
         updateDebugInfo()
@@ -248,14 +238,11 @@ extension ImageViewController {
 
     @objc private func resetButtonPressed() {
         imageClipsToBounds = true
-        translationX = 0
-        translationY = 0
-        scale = 1
-        rotation = 0
-        boundsX = 0
-        boundsY = 0
-        boundsWidth = CGFloat(ImageViewController.defaultImageWidth)
-        boundsHeight = CGFloat(ImageViewController.defaultImageHeight)
+
+        for item in sliders {
+            sliders[item.key]!.reset()
+        }
+
         updateImage()
     }
 }
@@ -263,28 +250,11 @@ extension ImageViewController {
 //MARK: - SliderViewDelegate
 extension ImageViewController: SliderViewDelegate {
     func sliderValueChanged(sliderView: SliderView, value: Float) {
-        switch(sliderView) {
-        case translationXSlider:
-            translationX = CGFloat(value)
-        case translationYSlider:
-            translationY = CGFloat(value)
-        case scaleSlider:
-            scale = CGFloat(value)
-        case rotationSlider:
-            rotation = CGFloat(value)
-        case boundsXSlider:
-            boundsX = CGFloat(value)
-        case boundsYSlider:
-            boundsY = CGFloat(value)
-        case boundsWidthSlider:
-            boundsWidth = CGFloat(value)
-        case boundsHeightSlider:
-            boundsHeight = CGFloat(value)
-        default:
+        if let item = sliders.first(where: {$0.value.sliderView == sliderView}) {
+            sliders[item.key]!.value = CGFloat(value)
+            updateImage()
             return
         }
-
-        updateImage()
     }
 }
 
