@@ -56,6 +56,7 @@ class SliderView: UIView {
 
         stackView.axis = .vertical
         stackView.alignment = .leading
+        stackView.spacing = 4
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         label.font = UIFont.systemFont(ofSize: 14)
@@ -72,8 +73,7 @@ class SliderView: UIView {
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            slider.widthAnchor.constraint(equalTo: widthAnchor),
-            slider.heightAnchor.constraint(equalToConstant: 15)
+            slider.widthAnchor.constraint(equalTo: widthAnchor)
         ])
     }
 }

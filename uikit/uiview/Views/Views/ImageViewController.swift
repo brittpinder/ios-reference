@@ -66,7 +66,7 @@ class ImageViewController: UIViewController {
 
     let clipsSwitch = SwitchView(title: "Clips to Bounds", initialValue: true)
 
-    let sliderStackView = UIStackView()
+    let sliders: [SliderView]
     let translationXSlider = SliderView(viewModel: SliderView.ViewModel(min: Float(-defaultImageWidth), max: Float(defaultImageWidth), title: "Translation X"), initialValue: 0, roundingType: .nearestInt)
     let translationYSlider = SliderView(viewModel: SliderView.ViewModel(min: Float(-defaultImageHeight), max: Float(defaultImageHeight), title: "Translation Y"), initialValue: 0, roundingType: .nearestInt)
     let scaleSlider = SliderView(viewModel: SliderView.ViewModel(min: 0, max: 2, title: "Scale"), initialValue: 1.0, roundingType: .nearestHundredth)
@@ -88,6 +88,7 @@ class ImageViewController: UIViewController {
         self.boundsY = 0
         self.boundsWidth = CGFloat(ImageViewController.defaultImageWidth)
         self.boundsHeight = CGFloat(ImageViewController.defaultImageHeight)
+        self.sliders = [translationXSlider, translationYSlider, scaleSlider, rotationSlider, boundsXSlider , boundsYSlider, boundsWidthSlider, boundsHeightSlider]
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -99,14 +100,14 @@ class ImageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
 
-        configureView()
+        configureImage()
         configureDebugComponents()
         configureClipsSwitch()
-        configureSliders()
         configureResetButton()
+        configureSliders()
     }
 
-    private func configureView() {
+    private func configureImage() {
         containerView = UIView(frame: CGRect(x: 0, y: 0, width: ImageViewController.defaultImageWidth, height: ImageViewController.defaultImageHeight))
         containerView.center = CGPoint(x: view.center.x, y: 270)
         containerView.backgroundColor = .systemGreen
@@ -155,47 +156,6 @@ class ImageViewController: UIViewController {
         view.safeAreaLayoutGuide.trailingAnchor.constraint(equalToSystemSpacingAfter: clipsSwitch.trailingAnchor, multiplier: 1).isActive = true
     }
 
-    private func configureSliders() {
-        translationXSlider.delegate = self
-        translationYSlider.delegate = self
-        scaleSlider.delegate = self
-        rotationSlider.delegate = self
-        boundsXSlider.delegate = self
-        boundsYSlider.delegate = self
-        boundsWidthSlider.delegate = self
-        boundsHeightSlider.delegate = self
-
-        view.addSubview(sliderStackView)
-        sliderStackView.addArrangedSubview(translationXSlider)
-        sliderStackView.addArrangedSubview(translationYSlider)
-        sliderStackView.addArrangedSubview(scaleSlider)
-        sliderStackView.addArrangedSubview(rotationSlider)
-        sliderStackView.addArrangedSubview(boundsXSlider)
-        sliderStackView.addArrangedSubview(boundsYSlider)
-        sliderStackView.addArrangedSubview(boundsWidthSlider)
-        sliderStackView.addArrangedSubview(boundsHeightSlider)
-
-        sliderStackView.translatesAutoresizingMaskIntoConstraints = false
-        sliderStackView.axis = .vertical
-        sliderStackView.alignment = .center
-        sliderStackView.spacing = 16
-
-        NSLayoutConstraint.activate([
-            sliderStackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.leadingAnchor, multiplier: 3),
-            view.safeAreaLayoutGuide.trailingAnchor.constraint(equalToSystemSpacingAfter: sliderStackView.trailingAnchor, multiplier: 3),
-            view.safeAreaLayoutGuide.bottomAnchor.constraint(equalToSystemSpacingBelow: sliderStackView.bottomAnchor, multiplier: 3),
-
-            translationXSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
-            translationYSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
-            scaleSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
-            rotationSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
-            boundsXSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
-            boundsYSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
-            boundsWidthSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
-            boundsHeightSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
-        ])
-    }
-
     private func configureResetButton() {
         resetButton.setTitle("Reset", for: .normal)
         resetButton.tintColor = .white
@@ -203,11 +163,54 @@ class ImageViewController: UIViewController {
         resetButton.clipsToBounds = true
         resetButton.layer.cornerRadius = 5
         resetButton.addTarget(self, action: #selector(resetButtonPressed), for: .primaryActionTriggered)
+        resetButton.translatesAutoresizingMaskIntoConstraints = false
 
-        sliderStackView.addArrangedSubview(resetButton)
+        view.addSubview(resetButton)
 
-        resetButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        resetButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        NSLayoutConstraint.activate([
+            resetButton.widthAnchor.constraint(equalToConstant: 100),
+            resetButton.heightAnchor.constraint(equalToConstant: 40),
+            resetButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            view.safeAreaLayoutGuide.bottomAnchor.constraint(equalToSystemSpacingBelow: resetButton.bottomAnchor, multiplier: 2)
+        ])
+    }
+
+    private func configureSliders() {
+        for slider in sliders {
+            slider.delegate = self
+        }
+
+        let sliderStackView = UIStackView()
+        sliderStackView.translatesAutoresizingMaskIntoConstraints = false
+        sliderStackView.axis = .horizontal
+        sliderStackView.distribution = .fillEqually
+        sliderStackView.spacing = 16
+        view.addSubview(sliderStackView)
+
+
+        let halfIndex = Int(Float(Float(sliders.count) / 2.0).rounded())
+
+        let sv1 = UIStackView()
+        for index in 0..<halfIndex {
+            sv1.addArrangedSubview(sliders[index])
+        }
+        sv1.axis = .vertical
+        sv1.spacing = 16
+        sliderStackView.addArrangedSubview(sv1)
+
+        let sv2 = UIStackView()
+        for index in halfIndex..<sliders.count {
+            sv2.addArrangedSubview(sliders[index])
+        }
+        sv2.axis = .vertical
+        sv2.spacing = 16
+        sliderStackView.addArrangedSubview(sv2)
+
+        NSLayoutConstraint.activate([
+            sliderStackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.leadingAnchor, multiplier: 3),
+            view.safeAreaLayoutGuide.trailingAnchor.constraint(equalToSystemSpacingAfter: sliderStackView.trailingAnchor, multiplier: 3),
+            sliderStackView.bottomAnchor.constraint(equalTo: resetButton.topAnchor, constant: -16)
+        ])
     }
 }
 
