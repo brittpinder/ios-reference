@@ -30,7 +30,7 @@ class ViewController: UIViewController {
         }
     }
 
-    var greenView = UIView()
+    var rectangle = UIView()
     var frameOutline = UIView()
     var frameLabel = UILabel()
     var boundsLabel = UILabel()
@@ -67,10 +67,10 @@ class ViewController: UIViewController {
     }
 
     private func configureView() {
-        greenView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 150))
-        greenView.center = CGPoint(x: view.center.x, y: 300)
-        greenView.backgroundColor = .systemGreen
-        view.addSubview(greenView)
+        rectangle = UIView(frame: CGRect(x: 0, y: 0, width: 150, height: 100))
+        rectangle.center = CGPoint(x: view.center.x, y: 300)
+        rectangle.backgroundColor = .systemGreen
+        view.addSubview(rectangle)
     }
 
     private func configureDebugComponents() {
@@ -149,28 +149,28 @@ class ViewController: UIViewController {
 //MARK: - Actions
 extension ViewController {
     private func updateTransform() {
-        greenView.transform = CGAffineTransform(translationX: translationX, y: translationY).concatenating(CGAffineTransform(rotationAngle: rotation)).concatenating(CGAffineTransform(scaleX: scale, y: scale))
+        rectangle.transform = CGAffineTransform(translationX: translationX, y: translationY).concatenating(CGAffineTransform(rotationAngle: rotation)).concatenating(CGAffineTransform(scaleX: scale, y: scale))
 
         updateDebugInfo()
     }
 
     private func updateDebugInfo() {
-        frameOutline.frame = CGRect(x: greenView.frame.origin.x,
-                                    y: greenView.frame.origin.y,
-                                    width: greenView.frame.size.width,
-                                    height: greenView.frame.size.height)
+        frameOutline.frame = CGRect(x: rectangle.frame.origin.x,
+                                    y: rectangle.frame.origin.y,
+                                    width: rectangle.frame.size.width,
+                                    height: rectangle.frame.size.height)
 
-        let frameX = Int(greenView.frame.origin.x)
-        let frameY = Int(greenView.frame.origin.y)
-        let frameWidth = Int(greenView.frame.width)
-        let frameHeight = Int(greenView.frame.height)
+        let frameX = Int(rectangle.frame.origin.x)
+        let frameY = Int(rectangle.frame.origin.y)
+        let frameWidth = Int(rectangle.frame.width)
+        let frameHeight = Int(rectangle.frame.height)
 
         frameLabel.text = "Frame\nx: \(frameX)\ny: \(frameY)\nwidth: \(frameWidth)\nheight: \(frameHeight)"
 
-        let boundsX = Int(greenView.bounds.origin.x)
-        let boundsY = Int(greenView.bounds.origin.y)
-        let boundsWidth = Int(greenView.bounds.width)
-        let boundsHeight = Int(greenView.bounds.height)
+        let boundsX = Int(rectangle.bounds.origin.x)
+        let boundsY = Int(rectangle.bounds.origin.y)
+        let boundsWidth = Int(rectangle.bounds.width)
+        let boundsHeight = Int(rectangle.bounds.height)
 
         boundsLabel.text = "Bounds\nx: \(boundsX)\ny: \(boundsY)\nwidth: \(boundsWidth)\nheight: \(boundsHeight)"
     }

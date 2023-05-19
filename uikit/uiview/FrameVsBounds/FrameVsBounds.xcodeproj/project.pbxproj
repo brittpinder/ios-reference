@@ -62,18 +62,34 @@
 		E144381E2A165F280073A0B3 /* FrameVsBounds */ = {
 			isa = PBXGroup;
 			children = (
+				E1F573522A17E63B00B7BE2A /* ViewControllers */,
+				E1F573512A17E63200B7BE2A /* Controls */,
 				E144381F2A165F280073A0B3 /* AppDelegate.swift */,
 				E14438212A165F280073A0B3 /* SceneDelegate.swift */,
-				E14438232A165F280073A0B3 /* ViewController.swift */,
-				E144383B2A16B22D0073A0B3 /* ImageViewController.swift */,
-				E14438352A16695B0073A0B3 /* SliderView.swift */,
-				E144383F2A16BD810073A0B3 /* SwitchView.swift */,
 				E14438282A165F2B0073A0B3 /* Assets.xcassets */,
 				E144382A2A165F2B0073A0B3 /* LaunchScreen.storyboard */,
 				E144382D2A165F2B0073A0B3 /* Info.plist */,
 				E144383D2A16B2E60073A0B3 /* dog.jpeg */,
 			);
 			path = FrameVsBounds;
+			sourceTree = "<group>";
+		};
+		E1F573512A17E63200B7BE2A /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				E14438352A16695B0073A0B3 /* SliderView.swift */,
+				E144383F2A16BD810073A0B3 /* SwitchView.swift */,
+			);
+			path = Controls;
+			sourceTree = "<group>";
+		};
+		E1F573522A17E63B00B7BE2A /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				E14438232A165F280073A0B3 /* ViewController.swift */,
+				E144383B2A16B22D0073A0B3 /* ImageViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
