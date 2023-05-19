@@ -67,7 +67,7 @@ class ViewController: UIViewController {
     }
 
     private func configureView() {
-        rectangle = UIView(frame: CGRect(x: 0, y: 0, width: 150, height: 100))
+        rectangle = UIView(frame: CGRect(x: 0, y: 0, width: 150, height: 150))
         rectangle.center = CGPoint(x: view.center.x, y: 300)
         rectangle.backgroundColor = .systemGreen
         view.addSubview(rectangle)
