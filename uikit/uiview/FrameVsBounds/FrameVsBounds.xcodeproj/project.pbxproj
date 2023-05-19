@@ -19,7 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E144381C2A165F280073A0B3 /* Views.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Views.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E144381C2A165F280073A0B3 /* FrameVsBounds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrameVsBounds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E144381F2A165F280073A0B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E14438212A165F280073A0B3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E14438232A165F280073A0B3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -46,7 +46,7 @@
 		E14438132A165F280073A0B3 = {
 			isa = PBXGroup;
 			children = (
-				E144381E2A165F280073A0B3 /* Views */,
+				E144381E2A165F280073A0B3 /* FrameVsBounds */,
 				E144381D2A165F280073A0B3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,12 +54,12 @@
 		E144381D2A165F280073A0B3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E144381C2A165F280073A0B3 /* Views.app */,
+				E144381C2A165F280073A0B3 /* FrameVsBounds.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E144381E2A165F280073A0B3 /* Views */ = {
+		E144381E2A165F280073A0B3 /* FrameVsBounds */ = {
 			isa = PBXGroup;
 			children = (
 				E144381F2A165F280073A0B3 /* AppDelegate.swift */,
@@ -73,15 +73,15 @@
 				E144382D2A165F2B0073A0B3 /* Info.plist */,
 				E144383D2A16B2E60073A0B3 /* dog.jpeg */,
 			);
-			path = Views;
+			path = FrameVsBounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E144381B2A165F280073A0B3 /* Views */ = {
+		E144381B2A165F280073A0B3 /* FrameVsBounds */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E14438302A165F2B0073A0B3 /* Build configuration list for PBXNativeTarget "Views" */;
+			buildConfigurationList = E14438302A165F2B0073A0B3 /* Build configuration list for PBXNativeTarget "FrameVsBounds" */;
 			buildPhases = (
 				E14438182A165F280073A0B3 /* Sources */,
 				E14438192A165F280073A0B3 /* Frameworks */,
@@ -91,9 +91,9 @@
 			);
 			dependencies = (
 			);
-			name = Views;
+			name = FrameVsBounds;
 			productName = Views;
-			productReference = E144381C2A165F280073A0B3 /* Views.app */;
+			productReference = E144381C2A165F280073A0B3 /* FrameVsBounds.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -111,7 +111,7 @@
 					};
 				};
 			};
-			buildConfigurationList = E14438172A165F280073A0B3 /* Build configuration list for PBXProject "Views" */;
+			buildConfigurationList = E14438172A165F280073A0B3 /* Build configuration list for PBXProject "FrameVsBounds" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -124,7 +124,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E144381B2A165F280073A0B3 /* Views */,
+				E144381B2A165F280073A0B3 /* FrameVsBounds */,
 			);
 		};
 /* End PBXProject section */
@@ -293,7 +293,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6MK786DG5L;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Views/Info.plist;
+				INFOPLIST_FILE = FrameVsBounds/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -304,7 +304,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.brittanypinder.Views;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brittanypinder.FrameVsBounds;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -321,7 +321,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6MK786DG5L;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Views/Info.plist;
+				INFOPLIST_FILE = FrameVsBounds/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -332,7 +332,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.brittanypinder.Views;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brittanypinder.FrameVsBounds;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -343,7 +343,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E14438172A165F280073A0B3 /* Build configuration list for PBXProject "Views" */ = {
+		E14438172A165F280073A0B3 /* Build configuration list for PBXProject "FrameVsBounds" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E144382E2A165F2B0073A0B3 /* Debug */,
@@ -352,7 +352,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E14438302A165F2B0073A0B3 /* Build configuration list for PBXNativeTarget "Views" */ = {
+		E14438302A165F2B0073A0B3 /* Build configuration list for PBXNativeTarget "FrameVsBounds" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E14438312A165F2B0073A0B3 /* Debug */,
