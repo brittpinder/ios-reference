@@ -12,6 +12,11 @@ class ImageViewController: UIViewController {
     static let defaultImageWidth = 100
     static let defaultImageHeight = 125
 
+    var imageClipsToBounds: Bool {
+        didSet {
+            clipsSwitch.setValue(imageClipsToBounds)
+        }
+    }
     var translationX: CGFloat {
         didSet {
             translationXSlider.setValue(Float(translationX))
@@ -42,9 +47,14 @@ class ImageViewController: UIViewController {
             boundsYSlider.setValue(Float(boundsY))
         }
     }
-    var imageClipsToBounds: Bool {
+    var boundsWidth: CGFloat {
         didSet {
-            clipsSwitch.setValue(imageClipsToBounds)
+            boundsWidthSlider.setValue(Float(boundsWidth))
+        }
+    }
+    var boundsHeight: CGFloat {
+        didSet {
+            boundsHeightSlider.setValue(Float(boundsHeight))
         }
     }
 
@@ -63,17 +73,21 @@ class ImageViewController: UIViewController {
     let rotationSlider = SliderView(viewModel: SliderView.ViewModel(min: -.pi, max: .pi, title: "Rotation"), initialValue: 0.0, roundingType: .nearestHundredth)
     let boundsXSlider = SliderView(viewModel: SliderView.ViewModel(min: Float(-defaultImageWidth), max: Float(defaultImageWidth), title: "Bounds X"), initialValue: 0, roundingType: .nearestInt)
     let boundsYSlider = SliderView(viewModel: SliderView.ViewModel(min: Float(-defaultImageHeight), max: Float(defaultImageHeight), title: "Bounds Y"), initialValue: 0, roundingType: .nearestInt)
+    let boundsWidthSlider = SliderView(viewModel: SliderView.ViewModel(min: 0, max: Float(defaultImageWidth * 2), title: "Bounds Width"), initialValue: Float(defaultImageWidth), roundingType: .nearestInt)
+    let boundsHeightSlider = SliderView(viewModel: SliderView.ViewModel(min: 0, max: Float(defaultImageHeight * 2), title: "Bounds Height"), initialValue: Float(defaultImageHeight), roundingType: .nearestInt)
 
     let resetButton = UIButton(type: .system)
 
     init() {
+        self.imageClipsToBounds = true
         self.translationX = 0
         self.translationY = 0
         self.rotation = 0
         self.scale = 1
         self.boundsX = 0
         self.boundsY = 0
-        self.imageClipsToBounds = true
+        self.boundsWidth = CGFloat(ImageViewController.defaultImageWidth)
+        self.boundsHeight = CGFloat(ImageViewController.defaultImageHeight)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -148,6 +162,8 @@ class ImageViewController: UIViewController {
         rotationSlider.delegate = self
         boundsXSlider.delegate = self
         boundsYSlider.delegate = self
+        boundsWidthSlider.delegate = self
+        boundsHeightSlider.delegate = self
 
         view.addSubview(sliderStackView)
         sliderStackView.addArrangedSubview(translationXSlider)
@@ -156,6 +172,8 @@ class ImageViewController: UIViewController {
         sliderStackView.addArrangedSubview(rotationSlider)
         sliderStackView.addArrangedSubview(boundsXSlider)
         sliderStackView.addArrangedSubview(boundsYSlider)
+        sliderStackView.addArrangedSubview(boundsWidthSlider)
+        sliderStackView.addArrangedSubview(boundsHeightSlider)
 
         sliderStackView.translatesAutoresizingMaskIntoConstraints = false
         sliderStackView.axis = .vertical
@@ -172,7 +190,9 @@ class ImageViewController: UIViewController {
             scaleSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
             rotationSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
             boundsXSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
-            boundsYSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor)
+            boundsYSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
+            boundsWidthSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
+            boundsHeightSlider.widthAnchor.constraint(equalTo: sliderStackView.widthAnchor),
         ])
     }
 
@@ -196,7 +216,7 @@ extension ImageViewController {
     private func updateImage() {
         containerView.transform = CGAffineTransform(translationX: translationX, y: translationY).concatenating(CGAffineTransform(rotationAngle: rotation)).concatenating(CGAffineTransform(scaleX: scale, y: scale))
 
-        containerView.bounds.origin = CGPoint(x: boundsX, y: boundsY)
+        containerView.bounds = CGRect(x: boundsX, y: boundsY, width: boundsWidth, height: boundsHeight)
         containerView.clipsToBounds = imageClipsToBounds
 
         updateDebugInfo()
@@ -224,13 +244,15 @@ extension ImageViewController {
     }
 
     @objc private func resetButtonPressed() {
+        imageClipsToBounds = true
         translationX = 0
         translationY = 0
         scale = 1
         rotation = 0
         boundsX = 0
         boundsY = 0
-        imageClipsToBounds = true
+        boundsWidth = CGFloat(ImageViewController.defaultImageWidth)
+        boundsHeight = CGFloat(ImageViewController.defaultImageHeight)
         updateImage()
     }
 }
@@ -251,6 +273,10 @@ extension ImageViewController: SliderViewDelegate {
             boundsX = CGFloat(value)
         case boundsYSlider:
             boundsY = CGFloat(value)
+        case boundsWidthSlider:
+            boundsWidth = CGFloat(value)
+        case boundsHeightSlider:
+            boundsHeight = CGFloat(value)
         default:
             return
         }
