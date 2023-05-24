@@ -1,4 +1,4 @@
-# Enums
+# [Enums](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/enumerations/)
 
 
 Each enum value is defined using the keyword `case`
