@@ -14,7 +14,7 @@ Attributes applied to declarations such as functions, structs, enums etc, are ca
 
 <br/>
 
-### @discardableResult
+### [@discardableResult](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/attributes/#discardableResult)
 
 When applied to a function that returns a value, `@discardableResult` suppresses the compiler warning that arises when the returned value is not used.
 
@@ -55,3 +55,55 @@ func removeOdds(_ numbers: inout [Int]) -> [Int] {
 var values = [4, 3, 2, 8, 9]
 removeOdds(&values)
 ```
+
+<br/>
+
+## [Type Attributes](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/attributes/#Type-Attributes)
+
+Attributes applied to types, such as function parameters, are called "type attributes".
+
+<br/>
+
+### [@escaping](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/attributes/#escaping)
+
+This attribute is applied to a function's parameter type to indicate that the parameter's value can leave the scope of the function and be stored for later execution (ie. the value is allowed to outlive the lifetime of the function call).
+
+For example, below we have a function with a non-escaping closure:
+
+```swift
+func doSomething(using closure: () -> Void) {
+    closure()
+}
+```
+
+The closure is executed immediately within the `doSomething` function and has no chance of outliving the function call. However, if we change the behaviour of the function, allowing the closure to be called asynchronously, we would get an error:
+
+```swift
+func doSomethingAsynchronously(using closure: () -> Void) {
+    DispatchQueue.main.async { // Error: Escaping closure captures non-escaping parameter 'closure'
+        closure()
+    }
+}
+```
+
+To resolve this error, the `@escaping` attribute needs to be applied to the closure parameter, telling the compiler and reminding the user that they are dealing with a closure that will outlive the scope of the function it is being passed to.
+
+```swift
+func doSomethingAsynchronously(using closure: @escaping () -> Void) {
+    DispatchQueue.main.async {
+        closure()
+    }
+}
+```
+
+Another way that closures can escape is by being stored in a variable that's defined outside the function. Here we have to mark the `completionHandler` parameter with `@escaping` because it doesn't get executed until after the function completes.
+
+```swift
+var completionHandlers = [() -> Void]()
+
+func storeCompletionHandler(completionHandler: @escaping () -> Void) {
+    completionHandlers.append(completionHandler)
+}
+```
+
+See also, [Escaping Closures](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/#Escaping-Closures)

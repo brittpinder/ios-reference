@@ -16,3 +16,21 @@ func removeOdds(_ numbers: inout [Int]) -> [Int] {
 
 var values = [4, 3, 2, 8, 9]
 removeOdds(&values)
+
+//------------------------------------------
+
+func doSomething(using closure: () -> Void) {
+    closure()
+}
+
+func doSomethingAsynchronously(using closure: @escaping () -> Void) {
+    DispatchQueue.main.async {
+        closure()
+    }
+}
+
+var completionHandlers = [() -> Void]()
+
+func storeCompletionHandler(completionHandler: @escaping () -> Void) {
+    completionHandlers.append(completionHandler)
+}
