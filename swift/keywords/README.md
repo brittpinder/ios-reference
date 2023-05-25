@@ -317,8 +317,16 @@
 
 ### [`@discardableResult`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/attributes/#discardableResult)
 
-* When applied to a function that returns a value, compiler warnings are supressed when the return value of that function is not used
+* Applied to a function that returns a value in order to suppress compiler warnings when the return value of that function is not used
 * Referenced in [Attributes](https://github.com/brittpinder/ios-reference/tree/main/swift/attributes#discardableresult)
+
+<br/>
+
+### [`@escaping`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/attributes/#escaping)
+
+* Applied to a function parameter, indicating that the value of the parameter can be stored for later execution and therefore may outlive, or "escape", the scope of the function
+* Most commonly used with closures passed to functions that perform asynchronous work such as network calls
+* Referenced in [Attributes](https://github.com/brittpinder/ios-reference/tree/main/swift/attributes#escaping)
 
 <br/>
 
@@ -368,7 +376,6 @@
 * `@available`
 * `@dynamicCallable`
 * `@dynamicMemberLookup`
-* `@escaping`
 * `@frozen`
 * `@inlinable`
 * `@objc`
