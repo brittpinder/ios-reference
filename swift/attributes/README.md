@@ -16,7 +16,7 @@ Attributes applied to declarations such as functions, structs, enums etc, are ca
 
 ### @discardableResult
 
-When applied to a function that returns a value, `@discardableResult` supresses the compiler warning that arises when the returned value is not used.
+When applied to a function that returns a value, `@discardableResult` suppresses the compiler warning that arises when the returned value is not used.
 
 For example, the following function removes and returns the odd values from an array of integers.
 
