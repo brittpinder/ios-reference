@@ -8,7 +8,7 @@ Attributes provide additional information about a declaration or a type and are 
 ```
 <br/>
 
-## Declaration Attributes
+## [Declaration Attributes](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/attributes/#Declaration-Attributes)
 
 Attributes applied to declarations such as functions, structs, enums etc, are called "declaration attributes".
 
