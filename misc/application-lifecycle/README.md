@@ -18,7 +18,7 @@ The app is running in the foreground, receiving events and actively being used.
 
 #### Inactive
 
-The app is running in the foreground but is not receiving any events (it may be executing code though). This is generally a brief transition state between the 'Active' state and the 'Background' state. The app is in an 'Inactive' state when it is about to enter the active state (opening or switching to an app) or leave the active state (closing or leaving an app). This state is also entered whenever there is a system interruption such as an incoming phone call or an emergency alert.
+The app is running in the foreground but is not receiving any events (it may be executing code though). This is generally a brief transition state between the 'Active' state and the 'Background' state. The app is in an 'Inactive' state when it is about to enter the active state (opening or switching to an app) or leave the active state (closing or leaving an app). This state is also entered whenever there is a system interruption such as an incoming phone call or an emergency alert. An app in the inactive state should do minimal work while it waits to transition to either the active or background state.
 
 
 #### Background
@@ -47,19 +47,68 @@ The app is not running or loaded in memory, meaning that it cannot execute code 
 
 <br/>
 
-### Transitioning Between States
+> Note: While an application is running, its state can be accessed through [`UIApplication.shared.applicationState`](https://developer.apple.com/documentation/uikit/uiapplication/1623003-applicationstate). This variable holds one of three enum values: `active`, `inactive` or `background`.
 
-The following diagrams show the state transitions that occur in an app. After launch, the system puts the app in the inactive or background state, depending on whether the UI is about to appear onscreen. When launching to the foreground, the system transitions the app to the active state automatically. After that, the state fluctuates between active and background (transitioning through inactive) until the app terminates.
+<br/>
+
+### State Transitions
+
+The following diagrams show the state transitions that occur during an app's life cycle. After launch, the system puts the app in the inactive or background state, depending on whether the UI is about to appear onscreen. When launching to the foreground, the system transitions the app to the active state automatically. After that, the state fluctuates between active and background (transitioning through inactive) until the app terminates.
 
 ![](images/0.png) | ![](images/1.png)
 ---|---
 
 <br/>
 
+### Responding to Life Cycle Events
 
-## UIApplication.State
+In order to respond to life cycle events, you can use various app delegate methods:
 
-An application can have one of three states: `active`, `inactive` or `background`. This state is represented by the enum `UIApplication.State` which can be accessed through [`UIApplication.shared.applicationState`](https://developer.apple.com/documentation/uikit/uiapplication/1623003-applicationstate).
+#### App Initialization
+
+##### [`application(_:willFinishLaunchingWithOptions:)`](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623032-application)
+
+This method is called after your app has been launched and its main storyboard or nib file has been loaded, but before your app’s state has been restored. At the time this method is called, your app is in the inactive state. Use this method along with `application(_:didFinishLaunchingWithOptions:)` to initialize your app and prepare it to run.
+
+##### [`application(_:didFinishLaunchingWithOptions:)`](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622921-application)
+
+This method is called after state restoration has occurred but before your app’s window and other UI have been presented. At the time this method is called, your app is in the inactive state. Use this method along with `application(_:willFinishLaunchingWithOptions:)` to initialize your app and prepare it to run.
+
+<br/>
+
+#### Transitioning to Foreground
+
+##### [`applicationWillEnterForeground`](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623076-applicationwillenterforeground)
+
+This method is called right when the app is about to transition from the background to the active state (passing through the inactive state). Use this method to undo many of the changes you made to your app upon entering the background. This method is followed by a call to `applicationDidBecomeActive`.
+
+##### [`applicationDidBecomeActive`](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622956-applicationdidbecomeactive)
+
+This method is called right after the app has transitioned from the inactive to the active state. The app moves to the active state if it was launched by the user or the system, or if the user ignores an interruption (like an incoming phone call) that sent the app temporarily to the inactive state. Use this method to restart any tasks that were paused (or not yet started) while the app was inactive. For example, use it to restart timers or throttle up OpenGL ES frame rates. If your app was previously in the background, you can also use it to refresh your app’s user interface.
+
+See also: [Preparing your UI to run in the foreground](https://developer.apple.com/documentation/uikit/app_and_environment/scenes/preparing_your_ui_to_run_in_the_foreground)
+
+<br/>
+
+#### Transitioning to Background
+
+##### [`applicationWillResignActive`](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622950-applicationwillresignactive)
+
+This method is called when an app is about to move from the active to the inactive state (due to an interruption such as a phone call or the user exiting the app). Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game. If your app has unsaved user data, you can save it to ensure that it isn’t lost. However, it is recommended that you save user data at appropriate points throughout the execution of your app and to not rely on specific app state transitions to save all of your app’s critical data.
+
+##### [`applicationDidEnterBackground`](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622997-applicationdidenterbackground)
+
+This method is called right after an app transitions to the background state. Use this method to release shared resources, invalidate timers, and store enough app state information to restore your app to its current state in case it's terminated later. You must return from this method as quickly as possible as it has approximately five seconds to execute any tasks before the app will be terminated and purged from memory. If you need additional time to perform any final tasks, request additional execution time from the system by calling [`beginBackgroundTask(expirationHandler:)`](https://developer.apple.com/documentation/uikit/uiapplication/1623031-beginbackgroundtask).
+
+See also: [Preparing your UI to run in the background](https://developer.apple.com/documentation/uikit/app_and_environment/scenes/preparing_your_ui_to_run_in_the_background)
+
+<br/>
+
+#### Termination
+
+##### [`applicationWillTerminate`](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623111-applicationwillterminate)
+
+This method is called when an app is about to be terminated and purged from memory. Use this method to perform any final clean-up tasks for your app, such as freeing shared resources, saving user data, and invalidating timers. Your implementation of this method has approximately five seconds to perform any tasks and return. If the method does not return before time expires, the system may terminate the process altogether.
 
 <br/>
 
