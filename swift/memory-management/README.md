@@ -298,7 +298,9 @@ unit4A = nil // Apartment 4A is being deinitialized
 
 #### Unowned References
 
-Like a weak reference, an *unowned reference*, (indicated with the `unowned` keyword) doesn’t keep a strong hold on the instance it refers to. Unlike a weak reference, however, an unowned reference should be used when the other instance has the same lifetime or a longer lifetime. Since unowned references point to objects that are expected to outlive the instances referring to them, **unowned references are expected to always have a value**. This means that unowned references don't have to be optional and ARC will never set an unowned reference to nil. However, if an instance does happen to be deallocated and you try to access it using an unowned reference, you'll get a runtime error.
+Like a weak reference, an *unowned reference*, (indicated with the `unowned` keyword) doesn’t keep a strong hold on the instance it refers to. Unlike a weak reference, however, when the referenced instance is deallocated, there is no system in place to notify an unowned reference that this has happened, meaning that you can end up with a dangling pointer (and a crash if you try to use it). For this reason, an unowned reference should only be used when the other instance has the same or a longer lifetime.
+
+Unowned references can either be optional or non-optional. Either way, **they are expected to always hold a value** (either a reference to a valid object or `nil` if it is optional) and it is up to you to ensure this. If you are using an optional unowned reference, it is important to remember that unlike a weak reference, it will not have its value set to `nil` when the referenced instance is deallocated.
 
 In the following example, a customer may or may not have a credit card, but a credit card will always be associated with a customer. The `person` reference should always outlive any instance of `CreditCard`, so we can mark the reference as `unowned`:
 
@@ -359,12 +361,6 @@ bob = nil
 print(creditCard.customer.name) // CRASH
 ```
 In this scenario, when we set the `Customer` instance to nil, it gets deallocated but the `CreditCard` instance does not because there is still a remaining strong reference to it through the `creditCard` variable. If we then attempt to access the `Customer` instance through the `creditCard` variable, we will get a runtime error because the `Customer` instance no longer exists. This is an example of where a weak reference should be used instead.
-
-<br/>
-
-##### Unowned Optional References
-
-The previous section covered the use of unowned non-optional references. However, it is possible to create an unowned *optional* reference as well. In terms of the ARC ownership model, an unowned optional reference and a weak reference can both be used in the same contexts. The difference is that when you use an unowned optional reference, you’re responsible for making sure it always refers to a valid object or is set to `nil`.
 
 <br/>
 
@@ -474,9 +470,13 @@ In the above example, whenever an instance of `Ordinal` is deallocated, the clos
 
 ### Weak vs Unowned
 
-One of the key differences between weak and unowned references is what happens when the referred-to object is released: a weak reference becomes nil while an unowned reference still holds a (now invalid) reference to the object, so your program will crash if you try to access it.
+Both weak and unowned references are used to prevent memory leaks caused by retain cycles. The main difference is in how they behave when the instance they refer to is deallocated. A weak reference will be set to `nil` whereas an unowned reference silently becomes a dangling pointer, as it now holds an invalid reference to an object that doesn't exist. In other words, weak references are notified that their referenced instance has been deallocated and unowned references are not.
 
-Since weak references can become nil, they *must* be optional variables. Unowned references however can be both optional or non-optional, constant or variable.
+Weak references are safer than unowned references, but this safety comes with a tradeoff. Weak references require extra overhead in order to track their referenced objects and respond when they are deallocated. Futhermore, since weak references need the ability to be set to `nil`, they must be optional which requires additional runtime overhead and extra code to safely unwrap the value. Because of this, unowned references are preferred, but ***only*** when you are certain that the referenced object has the same or a longer lifetime.
+
+When deciding between a weak or an unowned reference, you need to think about the lifetime of the referenced instance. If the referenced instance could become `nil` in the future (ie. it has a shorter lifetime), you should use a weak reference. When there is no possiblity of the referenced instance becoming `nil` in the future (ie. it has the same or a longer lifetime), you should use an unowned reference (although a weak reference would also work).
+
+<br/>
 
 | | Weak | Unowned
 |---|---|---|
@@ -650,3 +650,4 @@ If the compiler can’t prove the access is safe, it doesn’t allow the access.
 * [Video Explanation of Weak Self](https://www.youtube.com/watch?v=chI-B8u4MBs&ab_channel=iOSAcademy)
 * [Using Instruments to Detect Memory Leaks](https://www.youtube.com/watch?v=sp8qEMY9X6Q&ab_channel=LetsBuildThatApp)
 * [Values and Reference Types](https://developer.apple.com/swift/blog/?id=10)
+* [Internal differences of Weak and Unowned](https://stackoverflow.com/questions/42842336/weak-vs-unowned-in-swift-what-are-the-internal-differences)
