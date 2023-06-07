@@ -326,7 +326,7 @@ By default, views have `.defaultLow` priority for their content hugging and `.de
 
 #### Content Hugging Example
 
-When Auto Layout has determined there is more than enough space to accommodate all your views at their natural size, it has to make a decision about which view to stretch to fill the extra space. The lower you set a view's content hugging priority, the more likely it will be stretched.
+When Auto Layout has determined there is more than enough space to accommodate all your views at their natural size, it has to make a decision about which view to stretch to fill the extra space. The higher you set a view's content hugging priority, the less likely it is to be stretched (ie. the more likely it is to "hug" itself).
 
 In the below example we have two labels. The first label is pinned to the top, leading and trailing edges of its parent view and the second label is pinned to the bottom, leading and trailing edges of its parent view. The bottom of the first label is pinned to the top of the second label. The height of each label is ambiguous so Auto Layout will attempt to resolve the ambiguity by looking at the priorities. But as you can see in the print statements, each label has the same priorities for content hugging and compression resistance. In this situation, Auto Layout simply chooses one label to stretch (`label2`).
 
@@ -362,7 +362,7 @@ label1.setContentHuggingPriority(UILayoutPriority(rawValue: 249), for: .vertical
 
 #### Compression Resistance Example
 
-When Auto Layout has determined there isn't enough space to accommodate all your views at their natural size, it has to make a decision about which view to squash to make space for the others. The lower you set a view's compression resistance priority, the more likely it is to be squashed.
+When Auto Layout has determined there isn't enough space to accommodate all your views at their natural size, it has to make a decision about which view to squash to make space for the others. The higher you set a view's compression resistance priority, the less likely it is to be squashed (ie. the more likely it is to "resist compression").
 
 In the below example we have have two labels pinned to the top, leading and trailing edges of their parent view. The first label's trailing edge is pinned to the second label's leading edge. Because of the length of the text in each label, the view simply cannot accomodate both of their intrinsic widths, so Auto Layout needs to decide which one to squash. In this case it chooses to squash the first label:
 
