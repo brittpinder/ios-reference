@@ -68,11 +68,11 @@ In order to respond to life cycle events, you can use various app delegate metho
 
 ##### [`application(_:willFinishLaunchingWithOptions:)`](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623032-application)
 
-This method is called after your app has been launched and its main storyboard or nib file has been loaded, but before your app’s state has been restored. At the time this method is called, your app is in the inactive state. Use this method along with `application(_:didFinishLaunchingWithOptions:)` to initialize your app and prepare it to run.
+This method is called after your app has been launched and its main storyboard or nib file has been loaded, but before your app’s state has been restored. At the time this method is called, your app is in the inactive state.
 
 ##### [`application(_:didFinishLaunchingWithOptions:)`](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622921-application)
 
-This method is called after state restoration has occurred but before your app’s window and other UI have been presented. At the time this method is called, your app is in the inactive state. Use this method along with `application(_:willFinishLaunchingWithOptions:)` to initialize your app and prepare it to run.
+This method is called after state restoration has occurred but before your app’s window and other UI have been presented. At the time this method is called, your app is in the inactive state. Use this method to initialize your app and prepare it to run. This can include finalizing the interface and providing the root View Controller to the window.
 
 <br/>
 
@@ -81,6 +81,8 @@ This method is called after state restoration has occurred but before your app�
 ##### [`applicationWillEnterForeground`](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623076-applicationwillenterforeground)
 
 This method is called right when the app is about to transition from the background to the active state (passing through the inactive state). Use this method to undo many of the changes you made to your app upon entering the background. This method is followed by a call to `applicationDidBecomeActive`.
+
+> Note: This method is not called when the app starts for the first time. It is only called when it comes from the background state to the active state.
 
 ##### [`applicationDidBecomeActive`](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622956-applicationdidbecomeactive)
 
