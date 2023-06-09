@@ -34,4 +34,7 @@
 * [UIStackView](https://github.com/brittpinder/ios-reference/tree/main/uikit/uistackview)
 * [UITableView](https://github.com/brittpinder/ios-reference/tree/main/uikit/uitableview)
 
+<br/>
 
+## Other
+* [Application Life Cycle](https://github.com/brittpinder/ios-reference/tree/main/other/application-lifecycle)
