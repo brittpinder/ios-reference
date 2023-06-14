@@ -59,3 +59,7 @@ Task 1 ended
 ```
 
 "Task 1 started" and "Task 2 started" are printed right away, indicating that both tasks have been started. Two seconds later, "Task 2 ended" is printed and three seconds after that, "Task 1 ended" is printed. This is because we are now executing the tasks on a concurrent queue. The tasks are started in order and then run simultaneously. Since the second task doesn't take as much time, it finishes before the first task.
+
+#### Pros and Cons
+
+Serial queues have a predictable completion order and therefore prevent race conditions. However they are slower than concurrent queues because tasks can only be executed one at a time. Concurrent queues are fast because they can execute multiple tasks at once, allowing each task to complete sooner. However, the completion order of tasks is unpredictable and can result in race conditions. When the order of task completion is important, serial queues should be used - otherwise concurrent queues can be used.
