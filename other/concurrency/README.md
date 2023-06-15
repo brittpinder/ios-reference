@@ -14,7 +14,7 @@ A dispatch queue is a FIFO queue that stores blocks of code to be executed. Disp
 
 <br/>
 
-### Serials vs. Concurrent Queues
+### Serial vs. Concurrent Queues
 
 Serial queues execute their tasks in order, one at a time. Each task must be completed before the next one can start. Concurrent queues on the other hand can run multiple tasks at the same time. Tasks are started in order but are not necessarily completed in order; tasks started later may finish before tasks that started earlier.
 
