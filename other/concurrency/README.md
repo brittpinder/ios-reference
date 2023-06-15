@@ -160,7 +160,19 @@ DispatchQueue.main.async {
 // Main: true
 ```
 
-All UI related operations must be performed on the main thread. In fact, if you try to update any UI from a background thread it will result in a crash. A common example of this is when a network request returns and you want to update your UI (ex: a tableview) with the retrieved data. In the completion handler of the network request, any code that modifies UI, must be moved to the main thread by putting it inside `DispatchQueue.main.async {}`
+All UI related operations must be performed on the main thread. In fact, if you try to update any UI from a background thread it will result in a crash. A common example of this is when a network request returns and you want to update your UI with the retrieved data. In the completion handler of the network request, any code that modifies UI, must be moved to the main thread by putting it inside `DispatchQueue.main.async {}`:
+
+```swift
+let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+   if let data = data {
+      // Redirect to the main thread.
+      DispatchQueue.main.async {
+         self.label.text = "\(data.count) bytes downloaded"
+      }
+   }
+}
+task.resume()
+```
 
 Since the main thread is used for updating the UI, it should not be used for any long or heavy tasks that could block execution, making the app unresponsive (such as making network requests or I/O operations). These sorts of tasks should be executed on a background queue instead, leaving the main thread free to update the UI.
 
@@ -317,4 +329,4 @@ print("Continue execution right away")
 ## Links
 * [iOS Concurrency and Threading Video](https://www.youtube.com/watch?v=iTcq6L-PaDQ)
 * [Mastering iOS Concurrency](https://youtu.be/X9H2M7xMi9E)
-* [How to Prioritize Work with Quality of Service Classes](https://developer.apple.com/library/archive/documentation/Performance/Conceptual/EnergyGuide-iOS/PrioritizeWorkWithQoS.html#//apple_ref/doc/uid/TP40015243-CH39-SW1)
+* [Diagnosing Threading Issues](https://developer.apple.com/documentation/xcode/diagnosing-memory-thread-and-crash-issues-early)
