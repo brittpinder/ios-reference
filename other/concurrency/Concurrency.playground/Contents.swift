@@ -81,25 +81,105 @@ PlaygroundPage.current.needsIndefiniteExecution = true
 
 // Quality of Service
 
-DispatchQueue.global(qos: .background).async {
-    for _ in 1...5 {
-        print("background")
-    }
+//DispatchQueue.global(qos: .background).async {
+//    for _ in 1...5 {
+//        print("background")
+//    }
+//}
+//
+//DispatchQueue.global(qos: .userInteractive).async {
+//    for _ in 1...5 {
+//        print("userInteractive")
+//    }
+//}
+
+// userInteractive
+// background
+// userInteractive
+// userInteractive
+// userInteractive
+// background
+// userInteractive
+// background
+// background
+// background
+
+//------------------------------------------
+
+// DispatchGroup with enter() and leave()
+
+//let queue = DispatchQueue.global()
+//let group = DispatchGroup()
+//
+//group.enter()
+//queue.async {
+//    sleep(3)
+//    print("Task 1 done")
+//    group.leave()
+//}
+//
+//group.enter()
+//queue.async {
+//    sleep(1)
+//    print("Task 2 done")
+//    group.leave()
+//}
+//
+//group.wait()
+//print("Continue execution")
+
+// Task 2 done
+// Task 1 done
+// Continue execution
+
+//------------------------------------------
+
+// Dispatch Group by passing group to async
+
+//let queue = DispatchQueue.global()
+//let group = DispatchGroup()
+//
+//queue.async(group: group) {
+//    sleep(3)
+//    print("Task 1 done")
+//}
+//
+//queue.async(group: group) {
+//    sleep(1)
+//    print("Task 2 done")
+//}
+//
+//group.wait()
+//print("Continue execution")
+
+// Task 2 done
+// Task 1 done
+// Continue execution
+
+//------------------------------------------
+
+// DispatchGroup with notify()
+
+let queue = DispatchQueue.global()
+let group = DispatchGroup()
+
+queue.async(group: group) {
+    sleep(3)
+    print("Task 1 done")
 }
 
-DispatchQueue.global(qos: .userInteractive).async {
-    for _ in 1...5 {
-        print("userInteractive")
-    }
+queue.async(group: group) {
+    sleep(1)
+    print("Task 2 done")
 }
 
-// userInteractive
-// background
-// userInteractive
-// userInteractive
-// userInteractive
-// background
-// userInteractive
-// background
-// background
-// background
+group.notify(queue: queue) {
+    print("All tasks done")
+}
+
+print("Continue execution right away")
+
+// Continue execution right away
+// Task 2 done
+// Task 1 done
+// All tasks done

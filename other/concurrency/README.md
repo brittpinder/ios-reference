@@ -228,6 +228,92 @@ Because higher priority work is performed more quickly and with more resources t
 
 <br/>
 
+## [Dispatch Group](https://developer.apple.com/documentation/dispatch/dispatchgroup)
+
+Dispatch Groups allow you to aggregate multiple asynchronous tasks together and either wait for or be notified when all the tasks are finished executing. Dispatch Groups are useful when you need to perform more than one asynchronous task before moving on to a secondary step in your program.
+
+The following example uses a Dispatch Group to wait for two asynchronous tasks to complete before continuing execution. 
+
+```swift
+let queue = DispatchQueue.global()
+let group = DispatchGroup()
+
+group.enter()
+queue.async {
+    sleep(3)
+    print("Task 1 done")
+    group.leave()
+}
+
+group.enter()
+queue.async {
+    sleep(1)
+    print("Task 2 done")
+    group.leave()
+}
+
+group.wait()
+print("Continue execution")
+
+// Task 2 done
+// Task 1 done
+// Continue execution
+```
+
+Pairs of `enter()` and `leave()` are used to add tasks to a group. If you forget to call `enter()` before a task, it won't be added to the group. If you forget to call `leave()` when a task finishes, the group will be left waiting and your program's execution won't be resumed. An easier way of adding tasks to a dispatch group is by passing the group into the async method:
+
+```swift
+let queue = DispatchQueue.global()
+let group = DispatchGroup()
+
+queue.async(group: group) {
+    sleep(3)
+    print("Task 1 done")
+}
+
+queue.async(group: group) {
+    sleep(1)
+    print("Task 2 done")
+}
+
+group.wait()
+print("Continue execution")
+
+// Task 2 done
+// Task 1 done
+// Continue execution
+```
+
+If you do not want to wait for all tasks to finish executing, you can instead let the tasks run asynchronously and be notified using the `notify()` method:
+
+```swift
+let queue = DispatchQueue.global()
+let group = DispatchGroup()
+
+queue.async(group: group) {
+    sleep(3)
+    print("Task 1 done")
+}
+
+queue.async(group: group) {
+    sleep(1)
+    print("Task 2 done")
+}
+
+group.notify(queue: queue) {
+    print("All tasks done")
+}
+
+print("Continue execution right away")
+
+// Continue execution right away
+// Task 2 done
+// Task 1 done
+// All tasks done
+```
+
+<br/>
+
 ## Links
 * [iOS Concurrency and Threading Video](https://www.youtube.com/watch?v=iTcq6L-PaDQ)
 * [Mastering iOS Concurrency](https://youtu.be/X9H2M7xMi9E)
