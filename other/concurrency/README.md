@@ -135,3 +135,27 @@ queue.sync {
 // Task 2 started
 // Task 2 ended
 ```
+> Tip: It is helpful to remember that sync/async affects the current thread *from* which you are dispatching, whereas serial/concurrent affects the destination queue *to* which you are dispatching.
+
+<br/>
+
+## Main and Global Dispatch Queues
+
+The examples thus far have used custom, created queues, however iOS provides five dispatch queues for you to use: One serial queue (Main) and four concurrent queues (Global) of varying prioirty. You can still create your own dispatch queues if necessary, but usually the provided ones are enough.
+
+### [Main Dispatch Queue](https://developer.apple.com/documentation/dispatch/dispatchqueue/1781006-main)
+
+The main dispatch queue is a globally available serial queue that executes tasks on the main thread. To schedule a task on the main queue, use `DispatchQueue.main.async`:
+
+```swift
+DispatchQueue.main.async {
+    print("Main: \(Thread.isMainThread)")
+}
+// Main: true
+```
+
+All UI related operations must be performed on the main thread. In fact, if you try to update any UI from a background thread it will result in a crash. A common example of this is when a network request returns and you want to update your UI (ex: a tableview) with the retrieved data. In the completion handler of the network request, any code that modifies UI, must be moved to the main thread by putting it inside `DispatchQueue.main.async {}`
+
+Since the main thread is used for updating the UI, it should not be used for any long or heavy tasks that could block execution, making the app unresponsive (such as making network requests or I/O operations). These sorts of tasks should be executed on a background queue instead, leaving the main thread free to update the UI.
+
+### [Global Dispatch Queues](https://developer.apple.com/documentation/dispatch/dispatchqueue/2300077-global)

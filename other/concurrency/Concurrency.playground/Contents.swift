@@ -44,21 +44,35 @@ PlaygroundPage.current.needsIndefiniteExecution = true
 
 // Sync with Concurrent Queue
 
-let queue = DispatchQueue(label: "example", attributes: .concurrent)
-
-queue.sync {
-    print("Task 1 started")
-    sleep(5)
-    print("Task 1 ended")
-}
-
-queue.sync {
-    print("Task 2 started")
-    sleep(2)
-    print("Task 2 ended")
-}
+//let queue = DispatchQueue(label: "example", attributes: .concurrent)
+//
+//queue.sync {
+//    print("Task 1 started")
+//    sleep(5)
+//    print("Task 1 ended")
+//}
+//
+//queue.sync {
+//    print("Task 2 started")
+//    sleep(2)
+//    print("Task 2 ended")
+//}
 
 // Task 1 started
 // Task 1 ended
 // Task 2 started
 // Task 2 ended
+
+//------------------------------------------
+
+// Main vs Global Queues
+
+DispatchQueue.main.async {
+    print("Main: \(Thread.isMainThread)")
+}
+// Main: true
+
+DispatchQueue.global().async {
+    print("Global: \(Thread.isMainThread)")
+}
+// Global: false
