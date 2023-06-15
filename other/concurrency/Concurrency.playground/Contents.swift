@@ -67,12 +67,39 @@ PlaygroundPage.current.needsIndefiniteExecution = true
 
 // Main vs Global Queues
 
-DispatchQueue.main.async {
-    print("Main: \(Thread.isMainThread)")
-}
+//DispatchQueue.main.async {
+//    print("Main: \(Thread.isMainThread)")
+//}
 // Main: true
 
-DispatchQueue.global().async {
-    print("Global: \(Thread.isMainThread)")
-}
+//DispatchQueue.global().async {
+//    print("Global: \(Thread.isMainThread)")
+//}
 // Global: false
+
+//------------------------------------------
+
+// Quality of Service
+
+DispatchQueue.global(qos: .background).async {
+    for _ in 1...5 {
+        print("background")
+    }
+}
+
+DispatchQueue.global(qos: .userInteractive).async {
+    for _ in 1...5 {
+        print("userInteractive")
+    }
+}
+
+// userInteractive
+// background
+// userInteractive
+// userInteractive
+// userInteractive
+// background
+// userInteractive
+// background
+// background
+// background

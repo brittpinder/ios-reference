@@ -1,5 +1,7 @@
 # Concurrency
 
+<br/>
+
 ## [Grand Central Dispatch (GCD)](https://developer.apple.com/documentation/dispatch)
 
 Grand Central Dispatch is a framework provided by Apple that simplifies the process of writing concurrent code. GCD manages a collection of "dispatch queues" which are used to schedule the execution of tasks. Developers push their tasks onto one of the dispatch queues, and GCD takes care of executing these tasks from a pool of threads.
@@ -9,6 +11,8 @@ Grand Central Dispatch is a framework provided by Apple that simplifies the proc
 ## [Dispatch Queue](https://developer.apple.com/documentation/dispatch/dispatchqueue)
 
 A dispatch queue is a FIFO queue that stores blocks of code to be executed. Dispatch queues can be serial or concurrent and tasks can be scheduled on them either synchronously or asynchronously.
+
+<br/>
 
 ### Serials vs. Concurrent Queues
 
@@ -143,6 +147,8 @@ queue.sync {
 
 The examples thus far have used custom, created queues, however iOS provides five dispatch queues for you to use: One serial queue (Main) and four concurrent queues (Global) of varying prioirty. You can still create your own dispatch queues if necessary, but usually the provided ones are enough.
 
+<br/>
+
 ### [Main Dispatch Queue](https://developer.apple.com/documentation/dispatch/dispatchqueue/1781006-main)
 
 The main dispatch queue is a globally available serial queue that executes tasks on the main thread. To schedule a task on the main queue, use `DispatchQueue.main.async`:
@@ -160,4 +166,69 @@ Since the main thread is used for updating the UI, it should not be used for any
 
 > Important: Tasks should only be dispatched to the main queue asynchronously and **never** synchronously. Using `DispatchQueue.main.sync` will result in a deadlock.
 
-### [Global Dispatch Queues](https://developer.apple.com/documentation/dispatch/dispatchqueue/2300077-global)
+<br/>
+
+### [Global Concurrent Queues](https://developer.apple.com/documentation/dispatch/dispatchqueue/2300077-global)
+
+Global concurrent queues are concurrent and do not execute tasks on the main thread. To schedule a task on a global concurrent queue, use `DispatchQueue.global()` with either `sync` or `async`:
+
+```swift
+DispatchQueue.global().async {
+    print("Global: \(Thread.isMainThread)")
+}
+// Global: false
+```
+
+There are four global dispatch queues of varying priority: high, default, low and background. Tasks on a higher priority queue are more likely to be completed sooner than tasks on a lower priority queue (although this is not guaranteed).
+
+<br/>
+#### [Quality-of-service (QoS)](https://developer.apple.com/documentation/dispatch/dispatchqos)
+
+When scheduling a task on global concurrent queues, you can specify the priority of your task by using the enum [`DispatchQoS.QoSClass`](https://developer.apple.com/documentation/dispatch/dispatchqos/qosclass). There are six different DispatchQoS values, listed below in order from highest priority to lowest.
+
+* [userInteractive](https://developer.apple.com/documentation/dispatch/dispatchqos/1780708-userinteractive): The quality-of-service class for user-interactive tasks, such as animations, event handling, or updates to your app's user interface. The type of work assigned to this QoS should be virtually instantaneous, otherwise the interface may appear frozen.
+
+* [userInitiated](https://developer.apple.com/documentation/dispatch/dispatchqos/1780759-userinitiated): The quality-of-service class for tasks that prevent the user from actively using your app. Assign this QoS to tasks that the user has initiated and that require immediate results, like opening a saved document or loading the content of an email. The type of work assigned to this QoS should be nearly instantaneous, such as a few seconds or less.
+
+* [default](https://developer.apple.com/documentation/dispatch/dispatchqos/2016062-default): The default quality-of-service class. Assign this class to tasks or queues that your app initiates or uses to perform active work on the user's behalf. This value is assigned if you don't specify a quality-of-service value explicitly.
+
+* [utility](https://developer.apple.com/documentation/dispatch/dispatchqos/1780791-utility): The quality-of-service class for tasks that the user does not track actively and that do not prevent the user from continuing to use your app (ex: downloading or importing data).
+
+* [background](https://developer.apple.com/documentation/dispatch/dispatchqos/1780981-background): The quality-of-service class for maintenance or cleanup tasks that you create. Assign this QoS to tasks or dispatch queues that you use to perform work while your app is running in the background.
+
+* [unspecified](https://developer.apple.com/documentation/dispatch/dispatchqos/1780703-unspecified): The absence of a quality-of-service class.
+
+Specifying a different QoS for asynchronous tasks doesn't guarantee the order in which those tasks will be performed since they will be running on different threads. But it is more likely that the tasks running at a higher priority will be completed first. In the following example, a different output is produced every time, but in almost every case, the userInteractive task finishes first. 
+
+```swift
+DispatchQueue.global(qos: .background).async {
+    for _ in 1...5 {
+        print("background")
+    }
+}
+
+DispatchQueue.global(qos: .userInteractive).async {
+    for _ in 1...5 {
+        print("userInteractive")
+    }
+}
+
+// userInteractive
+// background
+// userInteractive
+// userInteractive
+// userInteractive
+// background
+// userInteractive
+// background
+// background
+// background
+```
+Because higher priority work is performed more quickly and with more resources than lower priority work, it typically requires more energy than lower priority work. Accurately specifying appropriate QoS classes for the work your app performs ensures that your app is responsive and energy efficient.
+
+<br/>
+
+## Links
+* [iOS Concurrency and Threading Video](https://www.youtube.com/watch?v=iTcq6L-PaDQ)
+* [Mastering iOS Concurrency](https://youtu.be/X9H2M7xMi9E)
+* [How to Prioritize Work with Quality of Service Classes](https://developer.apple.com/library/archive/documentation/Performance/Conceptual/EnergyGuide-iOS/PrioritizeWorkWithQoS.html#//apple_ref/doc/uid/TP40015243-CH39-SW1)
