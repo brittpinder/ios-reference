@@ -32,30 +32,35 @@ queue.async {
     sleep(2)
     print("Task 2 ended")
 }
-```
-Since it is a serial queue, these tasks are executed one at a time as can be seen by the print statements:
 
+// Task 1 started
+// Task 1 ended
+// Task 2 started
+// Task 2 ended
 ```
-Task 1 started
-Task 1 ended
-Task 2 started
-Task 2 ended
-```
-"Task 1 started" gets printed first, followed by "Task 1 ended" five seconds later. Then "Task 2 started " is printed, followed by "Task 2 ended" two seconds later.
+Since it is a serial queue, these tasks are executed one at a time as can be seen by the print statements. "Task 1 started" gets printed first, followed by "Task 1 ended" five seconds later. Then "Task 2 started " is printed, followed by "Task 2 ended" two seconds later.
 
-However, if we change the queue to a concurrent one like so:
+However, if we change the queue to a concurrent one, the tasks are executed differently:
 
 ```swift
 let queue = DispatchQueue(label: "example", attributes: .concurrent)
-```
 
-The tasks are executed differently:
+queue.async {
+    print("Task 1 started")
+    sleep(5)
+    print("Task 1 ended")
+}
 
-```
-Task 1 started
-Task 2 started
-Task 2 ended
-Task 1 ended
+queue.async {
+    print("Task 2 started")
+    sleep(2)
+    print("Task 2 ended")
+}
+
+// Task 1 started
+// Task 2 started
+// Task 2 ended
+// Task 1 ended
 ```
 
 "Task 1 started" and "Task 2 started" are printed right away, indicating that both tasks have been started. Two seconds later, "Task 2 ended" is printed and three seconds after that, "Task 1 ended" is printed. This is because we are now executing the tasks on a concurrent queue. The tasks are started in order and then run simultaneously. Since the second task doesn't take as much time, it finishes before the first task.
