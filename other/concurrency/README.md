@@ -326,6 +326,19 @@ print("Continue execution right away")
 
 <br/>
 
+## To Cover
+* Other scheduling methods
+	* asyncAfter
+	* asyncAndWait
+	* concurrentPerform
+* Common Multithreading Problems
+	* Race conditions
+	* Data Races
+	* Deadlocks
+	* Thread explosion
+
+<br/>
+
 ## Links
 * [iOS Concurrency and Threading Video](https://www.youtube.com/watch?v=iTcq6L-PaDQ)
 * [Mastering iOS Concurrency](https://youtu.be/X9H2M7xMi9E)
