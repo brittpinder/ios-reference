@@ -158,4 +158,6 @@ All UI related operations must be performed on the main thread. In fact, if you 
 
 Since the main thread is used for updating the UI, it should not be used for any long or heavy tasks that could block execution, making the app unresponsive (such as making network requests or I/O operations). These sorts of tasks should be executed on a background queue instead, leaving the main thread free to update the UI.
 
+> Important: Tasks should only be dispatched to the main queue asynchronously and **never** synchronously. Using `DispatchQueue.main.sync` will result in a deadlock.
+
 ### [Global Dispatch Queues](https://developer.apple.com/documentation/dispatch/dispatchqueue/2300077-global)
