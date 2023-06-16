@@ -1,8 +1,4 @@
-# Concurrency
-
-<br/>
-
-## [Grand Central Dispatch (GCD)](https://developer.apple.com/documentation/dispatch)
+# [Grand Central Dispatch (GCD)](https://developer.apple.com/documentation/dispatch)
 
 Grand Central Dispatch is a framework provided by Apple that simplifies the process of writing concurrent code. GCD manages a collection of "dispatch queues" which are used to schedule the execution of tasks. Developers push their tasks onto one of the dispatch queues, and GCD takes care of executing these tasks from a pool of threads.
 
