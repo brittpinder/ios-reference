@@ -1,8 +1,17 @@
 # [UserDefaults](https://developer.apple.com/documentation/foundation/userdefaults)
 
+
+## How to Use UserDefaults
+
+In order to use UserDefaults, you need access the global instance `UserDefaults.standard`. To simplify the code, this is often stored in a constant like so:
+
+```swift
+let defaults = UserDefaults.standard
+```
+
 <br/>
 
-## Writing to UserDefaults
+### Writing to UserDefaults
 
 Key/value pairs can be written to UserDefaults by using the [`set(_ :forKey:)`](https://developer.apple.com/documentation/foundation/userdefaults/1414067-set) method:
 
@@ -21,7 +30,7 @@ defaults.set(ratings, forKey: "Ratings")
 
 <br/>
 
-## Reading from UserDefaults
+### Reading from UserDefaults
 
 When reading values from UserDefaults, you need to use the function that corresponds with the type of the value you are reading:
 
@@ -56,7 +65,7 @@ print(correctAge) // 25
 
 <br/>
 
-## Removing Values from UserDefaults
+### Removing Values from UserDefaults
 
 In order to remove a key/value pair from UserDefaults, use the [`removeObject(forKey:)`](https://developer.apple.com/documentation/foundation/userdefaults/1411182-removeobject) method, passing in the key you would like to remove:
 
