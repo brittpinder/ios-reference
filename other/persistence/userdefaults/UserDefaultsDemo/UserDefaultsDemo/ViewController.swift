@@ -19,7 +19,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     }
 
-    func saveData() {
+    func writeData() {
         defaults.set(25, forKey: "Age")
         defaults.set("Emily", forKey: "Name")
         defaults.set(true, forKey: "DarkMode")
