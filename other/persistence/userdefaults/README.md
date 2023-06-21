@@ -1,5 +1,14 @@
 # [UserDefaults](https://developer.apple.com/documentation/foundation/userdefaults)
 
+UserDefaults is a system provided by Apple that allows you to store key-value pairs persistently across application launches. These key-value pairs are stored in a Property List (plist) within your app's Library folder.
+
+UserDefaults is *not* a database and should not be used for storing large amounts of data. Any changes made to UserDefaults results in the entire plist being rewritten, and reading even just one key-value pair requires loading the entire plist into memory. As such, the more data that is stored in UserDefaults, the more expensive these operations become.
+
+UserDefaults is intended for storing small bits of data like user preferences and application settings (ex: audio volume, preferred units of measurement, whether or not notification are enabled etc). The values stored in UserDefaults are referred to as *defaults* because they're commonly used to determine an app's default state at startup or the way it acts by default.
+
+> Important: The UserDefaults plist is not encyrpted and is easily accessible, so it should not be used to store sensitive information like passwords, API keys or whether or not the user has paid for premium features.
+
+<br/>
 
 ## How to Use UserDefaults
 
@@ -27,6 +36,8 @@ defaults.set(genres, forKey: "Genres")
 let ratings = ["Harry Potter": 5, "The Great Gatsby": 3]
 defaults.set(ratings, forKey: "Ratings")
 ```
+
+UserDefaults supports any types that can be written to a plist such as floats, doubles, integers, booleans, strings, dates, arrays and dictionaries. Custom types need to be converted to `NSData` before they can be written to UserDefaults.
 
 <br/>
 
