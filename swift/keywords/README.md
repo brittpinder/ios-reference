@@ -386,3 +386,4 @@
 ## Links
 
 * [All the Reserved Keywords in Swift](https://betterprogramming.pub/all-the-reserved-keywords-in-swift-17efcfaa3f3e)
+* [Glossary of Common Swift Terms](https://www.hackingwithswift.com/glossary)
