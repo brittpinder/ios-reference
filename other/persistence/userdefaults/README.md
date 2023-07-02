@@ -119,3 +119,4 @@ If you go into this path, there will be a folder called "Preferences". Inside th
 ## Links
 
 * [UserDefaults Video Tutorial](https://www.youtube.com/watch?v=HxVOahmfwz0&ab_channel=PaulHudson)
+* [UserDefaults in SwiftUI](https://www.hackingwithswift.com/books/ios-swiftui/storing-user-settings-with-userdefaults)

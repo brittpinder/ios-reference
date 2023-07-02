@@ -36,11 +36,11 @@ Allows you to securely store small bits of sensitive data such as passwords, tok
 
 ### Other Persistence Methods
 
+* [CoreData](https://developer.apple.com/documentation/coredata)
 * File System
 * [NSCoding](https://developer.apple.com/documentation/foundation/nscoding)
 * [Codable](https://developer.apple.com/documentation/swift/codable)
 * SQLLite
-* CoreData
 * Realm
 * CloudKit
 * [SwiftData](https://developer.apple.com/xcode/swiftdata/)
