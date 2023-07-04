@@ -44,3 +44,8 @@ Allows you to securely store small bits of sensitive data such as passwords, tok
 * Realm
 * CloudKit
 * [SwiftData](https://developer.apple.com/xcode/swiftdata/)
+
+<br/>
+
+## Links
+* [Using CoreData in SwiftUI](https://www.hackingwithswift.com/books/ios-swiftui/how-to-combine-core-data-and-swiftui)
