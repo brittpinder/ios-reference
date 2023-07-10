@@ -49,3 +49,4 @@ Allows you to securely store small bits of sensitive data such as passwords, tok
 
 ## Links
 * [Using CoreData in SwiftUI](https://www.hackingwithswift.com/books/ios-swiftui/how-to-combine-core-data-and-swiftui)
+* [Writing to Documents Directory](https://www.hackingwithswift.com/books/ios-swiftui/writing-data-to-the-documents-directory)
