@@ -106,6 +106,12 @@ switch yearMark {
         print("Grade: \(firstSemester), \(secondSemester)")
 }
 
+var mark1 = YearMark.grade("A+", "B+")
+
+if case .grade = mark1.self {
+    print("mark1 is of type YearMark.grade")
+}
+
 enum Transform {
     case translate(x: Double, y: Double, z: Double)
     case rotate(x: Double, y: Double, z: Double)

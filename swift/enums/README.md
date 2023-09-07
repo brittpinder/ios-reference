@@ -180,6 +180,17 @@ switch yearMark {
         print("Grade: \(firstSemester), \(secondSemester)")
 }
 ```
+
+To check if an enum is of a certain type, regardless of the associated value, use `if case`:
+
+```swift
+var mark1 = YearMark.grade("A+", "B+")
+
+if case .grade = mark1.self {
+    print("mark1 is of type YearMark.grade")
+}
+```
+
 <br/>
 
 ## Recursive Enumerations
