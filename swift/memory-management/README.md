@@ -374,27 +374,22 @@ For example, suppose we had a class called `Ordinal` which represents an ordinal
 class Ordinal {
     let number: Int
 
-    lazy var getDisplayString: () -> String = { [unowned self] in
-        let lastDigit = self.number % 10
-        var suffix = "th"
-
-        if lastDigit == 1 && self.number != 11 {
-            suffix = "st"
-        } else if lastDigit == 2 && self.number != 12 {
-            suffix = "nd"
-        } else if lastDigit == 3 && self.number != 13 {
-            suffix = "rd"
-        }
-
+    lazy var getDisplayString: () -> String = {
+        let suffix = getSuffix(for: self.number)
         return "\(self.number)\(suffix)"
     }
 
     init(_ number: Int) {
         self.number = number
+        print("Allocating Ordinal")
     }
 
     deinit {
         print("Deallocating Ordinal")
+    }
+
+    private func getSuffix(for number: Int) -> String {
+        // Logic for determining suffix
     }
 }
 ```
@@ -403,10 +398,9 @@ Inside this class we have a closure that returns a display string with the numbe
 This can be demonstrated by creating an instance of the class, calling the closure and then setting the instance to `nil`. When the instance is set to `nil`, nothing is printed to the console, indicating that the `deinit` function was never called.
 
 ```swift
-var ordinal: Ordinal? = Ordinal(4)
+var ordinal: Ordinal? = Ordinal(4) // Allocating Ordinal
 
-print(ordinal?.getDisplayString())
-// Optional("4th")
+print(ordinal?.getDisplayString()) // Optional("4th")
 
 ordinal = nil
 ```
@@ -425,19 +419,17 @@ lazy var getDisplayString: () -> String = { [weak self] in
         return ""
     }
 
-    let lastDigit = self.number % 10
-    // ... Remainder of closure
+    let suffix = getSuffix(for: self.number)
+    return "\(self.number)\(suffix)"
 }
 ```
 
 ```
-var ordinal: Ordinal? = Ordinal(4)
+var ordinal: Ordinal? = Ordinal(4) // Allocating Ordinal
 
-print(ordinal?.getDisplayString())
-// Optional("4th")
+print(ordinal?.getDisplayString()) // Optional("4th")
 
-ordinal = nil
-// Deallocating Ordinal
+ordinal = nil // Deallocating Ordinal
 ```
 
 > Notice how when we define `self` as a weak reference, `self` becomes an optional. This is because weak references have the possibility of being set to `nil` so they have to be optional.
@@ -446,19 +438,17 @@ We could also resolve the strong reference cycle by using an unowned reference t
 
 ```swift
 lazy var getDisplayString: () -> String = { [unowned self] in
-    let lastDigit = self.number % 10
-    // ... Remainder of closure
+    let suffix = getSuffix(for: self.number)
+    return "\(self.number)\(suffix)"
 }
 ```
 
 ```
-var ordinal: Ordinal? = Ordinal(4)
+var ordinal: Ordinal? = Ordinal(4) // Allocating Ordinal
 
-print(ordinal?.getDisplayString())
-// Optional("4th")
+print(ordinal?.getDisplayString()) // Optional("4th")
 
-ordinal = nil
-// Deallocating Ordinal
+ordinal = nil // Deallocating Ordinal
 ```
 > Unowned references are expected to always hold a value, so they are non-optional
 
