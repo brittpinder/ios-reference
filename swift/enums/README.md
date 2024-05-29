@@ -265,7 +265,7 @@ Functions can be added to enums like so
 
 ```swift
 enum Season: String {
-    case sprint
+    case spring
     case summer
     case autumn
     case winter
