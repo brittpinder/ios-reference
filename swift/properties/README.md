@@ -195,7 +195,7 @@ See Also: [Overriding Properties](https://github.com/brittpinder/ios-reference/t
 ## Lazy Stored Properties
 A *lazy stored property* is a property whose initial value isn't calculated until the first time it's used. It is indicated by using the `lazy` modifier before its declaration.
 
-Lazy properties are useful when the initial value for a property is dependent on outside factors whose values aren’t known until after an instance’s initialization is complete. They are also useful when the initial value for a property requires complex or computationally expensive setup that shouldn’t be performed unless or until it’s needed. In the following example, `oldest` is only calculated once it's referenced.
+Lazy properties are useful when the initial value for a property is dependent on outside factors whose values aren’t known until after an instance’s initialization is complete. They are also useful when the initial value for a property requires complex or computationally expensive setup that shouldn’t be performed unless or until it’s needed. In the following example, `youngest` is only calculated once it's referenced.
 
 ```swift
 struct Person {
@@ -207,7 +207,7 @@ struct Family {
     let members: [Person]
 
     lazy var youngest: Person? = {
-        print("Youngest initialized")
+        print("youngest initialized")
         return members.min(by: {$0.age < $1.age})
     }()
 
@@ -217,14 +217,14 @@ struct Family {
     }
 }
 
-var family = Family(members: [Person(name: "Dianne", age: 60),
-                              Person(name: "Harry", age: 58),
-                              Person(name: "Brittany", age: 33),
-                              Person(name: "Warren", age: 31)]) // Prints: "Family initialized"
+var family = Family(members: [Person(name: "Homer", age: 36),
+                              Person(name: "Marge", age: 34),
+                              Person(name: "Bart", age: 10),
+                              Person(name: "Lisa", age: 8)]) // Prints: "Family initialized"
 
 print(family.youngest)
 // Prints: "Youngest initialized"
-// Prints: "Person(name: "Warren", age: 31)"
+// Prints: "Person(name: "Lisa", age: 8)"
 ```
 An advantage of using lazy stored properties is that if the property is never used, you can avoid unnecessary allocation and computation.
 
@@ -252,20 +252,20 @@ struct Family {
     }
 }
 
-var family = Family(members: [Person(name: "Dianne", age: 62),
-                              Person(name: "Harry", age: 60),
-                              Person(name: "Brittany", age: 33),
-                              Person(name: "Warren", age: 31)]) // Prints: "Family initialized"
+var family = Family(members: [Person(name: "Homer", age: 36),
+                              Person(name: "Marge", age: 34),
+                              Person(name: "Bart", age: 10),
+                              Person(name: "Lisa", age: 8)]) // Prints: "Family initialized"
 
 print(family.youngest)
 // Prints: "Youngest initialized"
-// Prints: "Person(name: "Warren", age: 31)"
+// Prints: "Person(name: "Lisa", age: 8)"
 
-family.members.append(Person(name: "Baby", age: 1))
+family.members.append(Person(name: "Maggie", age: 1))
 print(family.youngest)
-// Prints: "Person(name: "Warren", age: 31)"
+// Prints: "Person(name: "Lisa", age: 8)"
 ```
-After adding "Baby" with an age of 1, you would expect `youngest` to return "Baby". However, as `youngest` has already been initialized before the mutation took place, the stored value is set to Warren with age 31. In this scenario a computed property would be more appropriate.
+After adding "Maggie" with an age of 1, you would expect `youngest` to return "Maggie". However, as `youngest` has already been initialized before the mutation took place, the stored value is set to Lisa with age 8. In this scenario a computed property would be more appropriate.
 
 <br/>
 
