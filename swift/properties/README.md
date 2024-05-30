@@ -383,14 +383,76 @@ Now, our struct simply needs to prefix the `firstName` and `lastName` properties
 struct Person {
     @Capitalized var firstName: String
     @Capitalized var lastName: String
-
-    var fullName: String {
-        "\(firstName) \(lastName)"
-    }
 }
 
 var person = Person(firstName: "taylor", lastName: "swift") // Taylor Swift
 person.firstName = "austin" // Austin Swift
+```
+<br/>
+
+### Projected Values
+
+In addition to wrapping a value, a property wrapper can expose additional functionality by defining a *projected value*. This projected value can be of any type and represent any information you want. Projected values are defined within a property wrapper using the name `projectedValue` and are accessed outside of the property wrapper using `$`.
+
+For example, we could add a projected value to our `@Capitalized` property wrapper to store the original string that was passed in, before being capitalized:
+
+```swift
+@propertyWrapper struct Capitalized {
+    var originalValue: String
+
+    var wrappedValue: String {
+        didSet {
+            originalValue = wrappedValue
+            wrappedValue = wrappedValue.capitalized
+        }
+    }
+
+    init(wrappedValue: String) {
+        self.originalValue = wrappedValue
+        self.wrappedValue = wrappedValue.capitalized
+    }
+
+    var projectedValue: String {
+        return originalValue
+    }
+}
+```
+
+Now if we create an instance of a person, we can access the original names by using `$` to get the projected value of the property wrappers:
+
+```swift
+var person = Person(firstName: "stanley", lastName: "hudson")
+print(person.firstName) // Stanley
+print(person.$firstName) // stanley
+print(person.lastName) // Hudson
+print(person.$lastName) // hudson
+```
+
+Alternatively, we could have the projected value return `self` to provide access to the property wrapper itself rather than the value it encapsulates:
+
+```swift
+@propertyWrapper struct Capitalized {
+    var wrappedValue: String {
+        didSet {
+            wrappedValue = wrappedValue.capitalized
+        }
+    }
+
+    init(wrappedValue: String) {
+        self.wrappedValue = wrappedValue.capitalized
+    }
+
+    var projectedValue: Capitalized {
+        return self
+    }
+
+    func printValue() { // This function is only accessible through the property wrapper's projectedValue, using '$'
+        print(wrappedValue)
+    }
+}
+
+var person = Person(firstName: "michael", lastName: "scott")
+person.$firstName.printValue() // Michael
 ```
 
 <br/>

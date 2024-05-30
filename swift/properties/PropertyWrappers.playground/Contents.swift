@@ -41,6 +41,14 @@ print(person.fullName)
     init(wrappedValue: String) {
         self.wrappedValue = wrappedValue.capitalized
     }
+
+    var projectedValue: Capitalized {
+        return self
+    }
+
+    func printValue() {
+        print(wrappedValue)
+    }
 }
 
 
@@ -58,3 +66,8 @@ print(person1.fullName)
 
 person1.firstName = "austin"
 print(person1.fullName)
+
+
+var person2 = Person1(firstName: "stanley", lastName: "hudson")
+print(person2.firstName) // Stanley
+person2.$firstName.printValue() // Stanley
