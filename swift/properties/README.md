@@ -328,7 +328,7 @@ A property wrapper is a type that wraps a given value in order to attach additio
 
 The advantages of property wrappers can be best explained with the following example. Suppose we had the following struct that represents a person with a first and last name:
 
-```
+```swift
 struct Person {
     var firstName: String
     var lastName: String
@@ -337,7 +337,7 @@ struct Person {
 
 If we wanted to ensure that the first and last names were always capitalized, we could use the `didSet` property observer and a custom initializer:
 
-```
+```swift
 struct Person {
     var firstName: String {
         didSet {
@@ -363,7 +363,7 @@ person.firstName = "george" // George Weasley
 
 However, this introduces some repetition which could explode if we require more properties to be capitalized in the future. We can remove this repetition by encapsulating this capitalization logic within a property wrapper like so:
 
-```
+```swift
 @propertyWrapper struct Capitalized {
     var wrappedValue: String {
         didSet {
@@ -379,7 +379,7 @@ However, this introduces some repetition which could explode if we require more 
 
 Now, our struct simply needs to prefix the `firstName` and `lastName` properties with the `@Capitalized` property wrapper and they will maintain the capitalization behaviour.
 
-```
+```swift
 struct Person {
     @Capitalized var firstName: String
     @Capitalized var lastName: String
