@@ -321,8 +321,83 @@ doSomething(strength: &hero.strength)
 
 <br/>
 
+## Property Wrappers
+
+
+A property wrapper is a type that wraps a given value in order to attach additional functionality or behaviour to it. They are very useful in reducing repetitive code; Instead of writing getter and setter methods for common property functionalities (like data validation or persistence), you can define the logic in a reusable property wrapper.
+
+The advantages of property wrappers can be best explained with the following example. Suppose we had the following struct that represents a person with a first and last name:
+
+```
+struct Person {
+    var firstName: String
+    var lastName: String
+}
+```
+
+If we wanted to ensure that the first and last names were always capitalized, we could use the `didSet` property observer and a custom initializer:
+
+```
+struct Person {
+    var firstName: String {
+        didSet {
+            firstName = firstName.capitalized
+        }
+    }
+    var lastName: String {
+        didSet {
+            lastName = lastName.capitalized
+        }
+    }
+
+    init(firstName: String, lastName: String) {
+        self.firstName = firstName.capitalized
+        self.lastName = lastName.capitalized
+    }
+}
+
+var person = Person(firstName: "fred", lastName: "flinstone") // Fred Flinstone
+person.lastName = "weasley" // Fred Weasley
+person.firstName = "george" // George Weasley
+```
+
+However, this introduces some repetition which could explode if we require more properties to be capitalized in the future. We can remove this repetition by encapsulating this capitalization logic within a property wrapper like so:
+
+```
+@propertyWrapper struct Capitalized {
+    var wrappedValue: String {
+        didSet {
+            wrappedValue = wrappedValue.capitalized
+        }
+    }
+
+    init(wrappedValue: String) {
+        self.wrappedValue = wrappedValue.capitalized
+    }
+}
+```
+
+Now, our struct simply needs to prefix the `firstName` and `lastName` properties with the `@Capitalized` property wrapper and they will maintain the capitalization behaviour.
+
+```
+struct Person {
+    @Capitalized var firstName: String
+    @Capitalized var lastName: String
+
+    var fullName: String {
+        "\(firstName) \(lastName)"
+    }
+}
+
+var person = Person(firstName: "taylor", lastName: "swift") // Taylor Swift
+person.firstName = "austin" // Austin Swift
+```
+
+<br/>
+
 ## Links
 * [Swift Documentation](https://docs.swift.org/swift-book/LanguageGuide/Properties.html)
 * [SwiftLee - Computed Properties](https://www.avanderlee.com/swift/computed-property/)
 * [SwiftLee - Lazy Stored Properties](https://www.avanderlee.com/swift/lazy-var-property/)
+* [Property Wrappers in Swift](https://www.swiftbysundell.com/articles/property-wrappers-in-swift/)
 
