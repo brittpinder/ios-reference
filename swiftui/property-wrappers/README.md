@@ -1,6 +1,6 @@
 # SwiftUI Property Wrappers
 
-- @State
+- [@State](https://github.com/brittpinder/ios-reference/tree/main/swiftui/property-wrappers/State)
 - @Binding
 - @StateObject
 - @ObservedObject
