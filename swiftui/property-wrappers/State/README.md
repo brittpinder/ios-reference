@@ -82,4 +82,11 @@ struct ContentView: View {
 - If you pass a `@State` property to a subview, SwiftUI updates the subview any time the value changes in the container view, but the subview can’t modify the value. To enable the subview to modify the state’s stored value, pass a Binding instead.
 - `@State` is thread-safe and can be modified on non-main threads.
 
+<br/>
+
+## Links
+
+- [What is the State Property Wrapper](https://www.hackingwithswift.com/quick-start/swiftui/what-is-the-state-property-wrapper)
+- [Exploring Key Property Wrappers in SwiftUI](https://fatbobman.com/en/posts/exploring-key-property-wrappers-in-swiftui/)
+- [SwiftUI Property Wrappers](https://swiftuipropertywrappers.com/)
 
