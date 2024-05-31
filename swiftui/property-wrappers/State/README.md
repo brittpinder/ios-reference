@@ -38,8 +38,7 @@ struct ContentView: View {
 
 ![](images/1.gif)
 
-
-In SwiftUI, views are constantly being destroyed and recreated. Using `@State` allows you to persist data across recreations of a view. In this example, every time the 'Roll' button is pressed, `number` is assigned a new value and the body of the view is recalculated and redrawn to reflect this.
+Now, every time the 'Roll' button is pressed, `number` is assigned a new value and the body of the view is recalculated and redrawn to reflect this. In SwiftUI, views are constantly being destroyed and recreated to reflect changes within the app. Using `@State` allows you to persist data across recreations of a view.
 
 <br/>
 
@@ -49,7 +48,9 @@ It's important to note that a `@State` property isn't the value itself - it's a 
 
 ![](images/2.png)
 
-To access the binding of a `@State` property rather than the value it manages, add `$` in front of the property name. Here we have a `@State` property called `name` of type `String`. If we use `$` to access its binding we can pass it to a `TextField` and its value will update every time the text within the `TextField` changes:
+To access the binding of a `@State` property rather than the value it manages, add `$` in front of the property name.
+
+Here we have a `@State` property called `name` of type `String`. If we use `$` to access its binding we can pass it to a `TextField` and its value will update every time the text within the `TextField` changes:
 
 ```swift
 struct ContentView: View {
