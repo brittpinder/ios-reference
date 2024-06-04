@@ -112,10 +112,97 @@ struct ContentView: View {
 
 <br/>
 
+## How to Initialize @Binding
+
+If you create a view that has a @Binding and you need to implement a custom initializer for that view, you might run into a few problems. First, the compiler will complain that you need to initialize all stored properties (ie: you need to initialize the @Binding).
+
+```swift
+struct RollButton: View {
+    @Binding var number: Int
+
+    init() {
+        print("Custom initializer")
+    } // Error: Return from initializer without initializing all stored properties
+
+    var body: some View {
+        Button("Roll") {
+            number = Int.random(in: 1...6)
+        }
+    }
+}
+```
+
+Before we can initialize the @Binding, we need to declare it as one of the constructor parameters. When doing this, the wrapped value of a Binding needs to be explicitly specified, like `Binding<String>`:
+
+```swift
+init(number: Binding<Int>) {
+    print("Custom initializer")
+}
+```
+
+We might then try to initialize our Binding like so:
+
+```swift
+init(number: Binding<Int>) {
+    self.number = number
+    print("Custom initializer")
+}
+```
+But this produces another error: "Cannot assign value of type 'Binding<Int>' to type 'Int'". This is because `self.number` refers to the *value* of the Binding, not the Binding itself. To access the Binding itself, we need to prefix `number` with an underscore `_` like so:
+
+```swift
+init(number: Binding<Int>) {
+    self._number = number
+    print("Custom initializer")
+}
+```
+
+Now our view with a binding and a custom initializer compiles and works as intended:
+
+```swift
+struct RollButton: View {
+    @Binding var number: Int
+
+    init(number: Binding<Int>) {
+        self._number = number
+        print("Custom initializer")
+    }
+
+    var body: some View {
+        Button("Roll") {
+            number = Int.random(in: 1...6)
+        }
+    }
+}
+```
+
+<br/>
+
+## Difference between `$` and `_`
+
+When managing state in SwiftUI, understanding what the dollar signs and underscores represent and when to use them can be quite confusing. They aren't anything unique to SwiftUI, they are actually part of the language feature called "[property wrappers](https://github.com/brittpinder/ios-reference/tree/main/swift/properties#property-wrappers)".
+
+Given the following property declaration `@Binding var number: Int`, you can access three variables:
+
+1. `_number` - This is the storage of the `Binding<Int>` property wrapper instance
+2. `number` - This is the value that the property wrapper holds and is equivalent to `self._number.wrappedValue`
+3. `$number` - This is the 'projected value' of the property wrapper which in the case of @Binding, refers to `self` (`Binding<Int>`) and is equivalent to `self._number.projectedValue`
+
+In this scenario, `_number` and `$number` seem relatively the same since they both refer to `Binding<Int>`. The difference lies in their access level; `_number` can be modified where as `$number` is read-only.
+
+
+<br/>
+
 ## Considerations when using @Binding
 
 - `@Binding` is suitable for situations where you need to directly modify the data in a parent view from a child view
 - In complex view hierarchies, passing `@Binding` through multiple levels can make data flow hard to track, in which case other state management methods should be considered
 - `@Binding` should not be used in cases where a child view only needs read access. If this is the case, simply pass the `@State` variable to the child without the `$`
 - `@Binding` does not hold the data directly but provides a wrapper for read and write access to other data sources
-- When declaring constructor parameters, the wrapped value type of Binding needs to be explicitly specified, like `Binding<String>`
+- When defining a custom initializer that takes a binding, the wrapped value type of the binding needs to be explicitly specified in the constructor parameters and the binding needs to be initialized using an underscore
+
+<br/>
+
+## Links
+
+- [How to initialize @Binding in SwiftUI](https://sarunw.com/posts/binding-initialization/)

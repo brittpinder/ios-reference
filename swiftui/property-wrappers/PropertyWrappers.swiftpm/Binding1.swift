@@ -12,7 +12,7 @@ struct Binding1: View {
 
     var body: some View {
         NumberDisplay(number: number)
-        RollButton(number: $number)
+        RollButton1(number: $number)
     }
 }
 
@@ -26,6 +26,22 @@ struct NumberDisplay: View {
 
 struct RollButton: View {
     @Binding var number: Int
+
+    var body: some View {
+        Button("Roll") {
+            number = Int.random(in: 1...6)
+        }
+        .buttonStyle(.borderedProminent)
+    }
+}
+
+struct RollButton1: View {
+    @Binding var number: Int
+
+    init(number: Binding<Int>) {
+        self._number = number
+        print("Custom initializer")
+    }
 
     var body: some View {
         Button("Roll") {
