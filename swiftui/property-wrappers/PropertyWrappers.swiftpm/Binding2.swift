@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct State2: View {
+struct Binding2: View {
 
     @State private var name: String = ""
 

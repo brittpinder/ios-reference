@@ -11,8 +11,16 @@ struct Binding1: View {
     @State var number: Int = 1
 
     var body: some View {
-        Text("\(number)")
+        NumberDisplay(number: number)
         RollButton(number: $number)
+    }
+}
+
+struct NumberDisplay: View {
+    var number: Int
+
+    var body: some View {
+        Text("\(number)")
     }
 }
 

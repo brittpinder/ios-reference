@@ -1,6 +1,6 @@
 # [@State](https://developer.apple.com/documentation/swiftui/state)
 
-Suppose we wanted to create a button that would roll a die and have the resulting number displayed on screen. We might attempt something like this:
+The `@State` property wrapper allows you to manage the state of a property that is local to a view and its subviews. For example, suppose we wanted to create a button that would roll a die and have the resulting number displayed on screen. We might attempt something like this:
 
 ```swift
 struct ContentView: View {
@@ -42,36 +42,6 @@ Now, every time the 'Roll' button is pressed, `number` is assigned a new value a
 
 <br/>
 
-## Accessing the Binding of @State
-
-It's important to note that a `@State` property isn't the value itself - it's a means of reading and writing the value (a binding). This becomes evident when working with certain UI controls like `TextField` which require you to pass a type of `Binding<String>`:
-
-![](images/2.png)
-
-To access the binding of a `@State` property rather than the value it manages, add `$` in front of the property name.
-
-Here we have a `@State` property called `name` of type `String`. If we use `$` to access its binding we can pass it to a `TextField` and its value will update every time the text within the `TextField` changes:
-
-```swift
-struct ContentView: View {
-
-    @State private var name: String = ""
-
-    var body: some View {
-        TextField("Name", text: $name)
-
-        Text("\(name)")
-            .font(.title)
-    }
-}
-```
-
-![](images/3.gif)
-
-> The dollar sign accesses the '[projected value](https://github.com/brittpinder/ios-reference/tree/main/swift/properties#projected-values)' of a property wrapper which in the case of `@State` is the binding itself.
-
-<br/>
-
 
 ## Considerations when using @State
 
@@ -81,6 +51,7 @@ struct ContentView: View {
 - Declare a `@State` property as private in the highest view in the view hierarchy that needs access to the value. Then share the state with any subviews that also need access, either directly for read-only access, or as a binding for read-write access.
 - If you pass a `@State` property to a subview, SwiftUI updates the subview any time the value changes in the container view.
 - `@State` is thread-safe and can be modified on non-main threads.
+- It's important to note that a `@State` property isn't the value itself - it's a means of reading and writing the value (a binding).
 
 <br/>
 
