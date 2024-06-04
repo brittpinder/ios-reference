@@ -50,6 +50,8 @@ Notice how when `number` is passed to `RollButton` it is prefixed with a dollar 
 
 <br/>
 
+## When to use @Binding
+
 `@Binding` should only be used in cases where a child view needs write access to a `@State` property in a parent view. If a child view only needs read access, simply pass the property to the child without using `$`. For example, if we wanted to extract the text display of the rolled number to a separate view, we could do something like this:
 
 ```swift
