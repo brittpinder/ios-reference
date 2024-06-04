@@ -2,9 +2,8 @@
 
 - [@State](https://github.com/brittpinder/ios-reference/tree/main/swiftui/property-wrappers/State)
 - [@Binding](https://github.com/brittpinder/ios-reference/tree/main/swiftui/property-wrappers/Binding)
-- @StateObject
+- [@StateObject](https://github.com/brittpinder/ios-reference/tree/main/swiftui/property-wrappers/StateObject)
 - @ObservedObject
-- @Published
 - @EnvironmentObject
 - @Environment
 - @AppStorage
