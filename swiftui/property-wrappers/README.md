@@ -1,7 +1,7 @@
 # SwiftUI Property Wrappers
 
 - [@State](https://github.com/brittpinder/ios-reference/tree/main/swiftui/property-wrappers/State)
-- @Binding
+- [@Binding](https://github.com/brittpinder/ios-reference/tree/main/swiftui/property-wrappers/Binding)
 - @StateObject
 - @ObservedObject
 - @Published
