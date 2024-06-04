@@ -17,7 +17,7 @@ struct ContentView: View {
 }
 ```
 
-However, this would result in a compiler error. This is because in SwiftUI, all views are structs, and structs are immutable which means their properties cannot be modified.
+However, this would result in a compiler error: "Cannot assign to property: 'self' is immutable". This is because in SwiftUI, all views are structs, and structs are immutable which means their properties cannot be modified.
 
 We can resolve this by prefixing the `number` property with the `@State` property wrapper:
 
@@ -79,7 +79,7 @@ struct ContentView: View {
 - The `@State` property wrapper should be used to manage the state of a property that is local to a view and its subviews. Data that requires complex cross-view sharing should not use `@State`.
 - `@State` is well suited for value-type data (strings, integers, enums, small structs) but not large amounts of data or complex data models. In these cases, consider using `@StateObject` instead.
 - Declare a `@State` property as private in the highest view in the view hierarchy that needs access to the value. Then share the state with any subviews that also need access, either directly for read-only access, or as a binding for read-write access.
-- If you pass a `@State` property to a subview, SwiftUI updates the subview any time the value changes in the container view, but the subview can’t modify the value. To enable the subview to modify the state’s stored value, pass a Binding instead.
+- If you pass a `@State` property to a subview, SwiftUI updates the subview any time the value changes in the container view.
 - `@State` is thread-safe and can be modified on non-main threads.
 
 <br/>
