@@ -27,7 +27,7 @@ struct ContentView: View {
 }
 ```
 
-However, something peculiar happens. Every time the 'Increase Score' button is pressed, we can see the updated score value printed to the console, but it is not reflected in the Text view - it remains as 0.
+However, something peculiar happens. Every time the 'Increase Score' button is pressed, we can see the updated score value printed to the console, but it is not reflected in the Text view - it remains at 0.
 
 ![](images/1.gif)
 
@@ -69,7 +69,7 @@ struct ContentView: View {
 }
 ```
 
-By using @StateObject, we are letting our view know that whenever any of the @Published properties within the ObservableObject change, we want the view to re-render. So now, whenever the 'Increase Score' button is pressed, our Text view updates accordingly. We don’t face the same issue as when using @State, because we are no longer simply watching the object itself, but rather listening for changes to any of its marked @Published properties.
+By using @StateObject, we are letting our view know that whenever any of the @Published properties within the ObservableObject change, we want the view to re-render. So now, whenever the 'Increase Score' button is pressed, our Text view updates accordingly. We don’t face the same issue as when using @State, because we are no longer simply watching the object itself, but rather listening for changes to any of its @Published properties.
 
 ![](images/2.gif)
 
