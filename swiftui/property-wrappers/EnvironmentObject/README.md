@@ -1,5 +1,9 @@
 # [@EnvironmentObject](https://developer.apple.com/documentation/swiftui/environmentobject)
 
+> Note: If targeting iOS17 and above, consider using the [observation framework](https://github.com/brittpinder/ios-reference/tree/main/swiftui/observation) instead.
+
+<br/>
+
 The `@EnvironmentObject` property wrapper is used to create a connection between the current view and an `ObservableObject` instance passed down through the environment from a higher-level view. It is similar to `@ObservedObject` except that the `ObservableObject` does not need to be passed directly from its parent view. `@EnvironmentObject` can capture and reference ObservableObjects declared higher up in the view hiearchy without the need to pass them down through each child view.
 
 For example, suppose we had an `ObservableObject` class that represented app settings like whether notifications are enabled or the accent color of the app. 

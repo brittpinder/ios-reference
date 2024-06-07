@@ -1,5 +1,9 @@
 # [@StateObject](https://developer.apple.com/documentation/swiftui/stateobject)
 
+> Note: If targeting iOS17 and above, consider using the [observation framework](https://github.com/brittpinder/ios-reference/tree/main/swiftui/observation) instead.
+
+<br/>
+
 The [@State](https://github.com/brittpinder/ios-reference/tree/main/swiftui/property-wrappers/State) property wrapper is great for managing the state of simple pieces of data like ints, strings or small structs, but it doesn't work as expected when used with more complex types like classes.
 
 Suppose we had the following class that represented a game with a score property:

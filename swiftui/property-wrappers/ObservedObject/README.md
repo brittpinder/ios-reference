@@ -1,5 +1,9 @@
 # [@ObservedObject](https://developer.apple.com/documentation/swiftui/observedobject)
 
+> Note: If targeting iOS17 and above, consider using the [observation framework](https://github.com/brittpinder/ios-reference/tree/main/swiftui/observation) instead.
+
+<br/>
+
 `@ObservedObject` is a property wrapper used to establish a connection between a view and an instance of an `ObservableObject` owned by another view. It enables the view to reactively update whenever there are changes to the ObservableObject's properties marked with `@Published`.
 
 For example, suppose we had the following ObservableObject class that represented a person with a name and an age:
