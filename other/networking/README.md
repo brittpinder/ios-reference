@@ -22,7 +22,7 @@ Regardless of the way in which you choose to make your network requests, you wil
 
 ## [URLSession](https://developer.apple.com/documentation/foundation/urlsession)
 
-Suppose we wanted to create a simple application that fetched jokes from the internet and displayed them on screen with the click of a button:
+Suppose we wanted to create a simple application that fetches a joke from the internet ([Official Joke API](https://github.com/15Dkatz/official_joke_api)) and displays it on screen with the click of a button:
 
 ![](images/1.png)
 
@@ -41,14 +41,12 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            VStack {
-                if let joke {
-                    Text(joke.setup)
-                    Text(joke.punchline)
-                }
-                Button("Tell me a joke") {
-                    fetchJoke()
-                }
+            if let joke {
+                Text(joke.setup)
+                Text(joke.punchline)
+            }
+            Button("Tell me a joke") {
+                fetchJoke()
             }
         }
     }
@@ -122,7 +120,7 @@ struct Joke: Decodable {
 ```
 When defining a model, you only need to include the properties of the JSON object that you need. In our case we are only interested in `setup` and `punchline` so we can exclude `type` and `id`.
 
-It is also important that the property names within your model exactly match those within the JSON object - otherwise your retrieved data won't be able to be decoded. If you want to have different property names than those within the JSON object, you can specify different names by using `CodingKeys`.
+It is also important that the property names within your model exactly match those within the JSON object - otherwise your retrieved data won't be able to be decoded. If you want to have different property names than those within the JSON object, you can do this by using `CodingKeys`.
 
 Lastly, the struct must conform to `Decodable` (or `Codable` if you want to adopt the `Encodable` protocol as well) so that a `JSONDecoder` can convert raw JSON data into an instance of your struct.
 
@@ -145,7 +143,7 @@ guard let url = URL(string: "https://official-joke-api.appspot.com/jokes/random"
 
 ### 3. Configure the URLRequest
 
-This step is often not required, especially if you are making a simple GET request in which case a URLSession will automatically create a URLRequest for you under the hood. However, if you need to make a different type of http request (ex: POST) or you need to specify any headers or body data, you will need to initialize a URLRequest manually:
+If you are making a simple GET request, you can often skip this step as URLSession will automatically create a URLRequest for you. However, if you need to make a different type of http request (ex: POST) or you need to specify any headers or body data, you will need to initialize a URLRequest manually:
 
 ```swift
 let request = URLRequest(url: url)
@@ -172,7 +170,7 @@ let task = URLSession.shared.dataTask(with: request) { data, response, error in
 task.resume() // Trigger the network call
 ```
 <br/>
-> Note: If we do not need to configure a `URLRequest`, we can pass a `URL` into `dataTask` instead:
+> Note: If you do not need to configure a `URLRequest`, you can pass a `URL` into `dataTask` instead:
 
 >```swift
 let task = URLSession.shared.dataTask(with: url) { data, response, error in
@@ -211,7 +209,7 @@ let task = URLSession.shared.dataTask(with: request) { data, response, error in
 
 #### error
 
-If the network request succeeded then `error` will be `nil`. If it failed, then `error` will hold an `Error` object indicating why (ex: no internet connection, timed out, no permissions etc.). Here we check if `error` holds a value and if so, we print the description and exit out of the completion handler.
+If the network request is successful then `error` will be `nil`. If it fails, then `error` will hold an `Error` object indicating why (no internet connection, timed out, no permissions etc.). Here we check if `error` holds a value and if so, we print the description and exit out of the completion handler.
 
 ```swift
 if let error = error {
@@ -264,10 +262,157 @@ do {
 }
 ```
 
-It is important to note that the completion handler is asynchronous; it runs on a background thread when the network request returns. All UI operations *must* be performed on the main thread, so when we assign our decoded data to our @State property `self.joke` (triggering a refresh of the UI), this must be wrapped with `DispatchQueue.main.async` so that it occurs on the main thread.
+It is important to note that the completion handler from `URLSession.shared.dataTask` is asynchronous; it runs on a background thread when the network request returns. All UI operations must be performed on the main thread, so when we assign our decoded data to our @State property `self.joke` (triggering a refresh of the UI), this must be wrapped with `DispatchQueue.main.async` so that it occurs on the main thread.
 
 <br/>
 
-## Better Error Handling
+### Using Completion Callbacks
+
+The function `fetchJoke()` above is currently responsible for *a lot* of things: making the network request, printing errors and assigning the data to the `joke` @State property. In larger applications it is common to separate these concerns through the use of completion callbacks.
+
+For example, suppose we wanted to extract the logic for making the network request into a separate class called `NetworkService`. We could do this by passing a function to be executed once the network request comes back. Since a network request can either succeed or fail, it is common to make use of the [`Result`](https://developer.apple.com/documentation/swift/result) type in this callback function.
+
+Now, the `fetchJoke()` function doesn't have to worry about printing errors or assigning the joke value. It can simply call the completion callback with 'success' and the resulting data or 'failure' with the resulting error.
+
+```swift
+enum JokeError: String, Error {
+    case invalidURL = "Failed to create URL"
+    case networkError = "Network request failed"
+    case badResponse = "Bad response received from the server"
+    case noDataReceived = "Failed to retreive data"
+    case decodingError = "Failed to decode data"
+}
+
+class NetworkService {
+    func fetchJoke(completion: @escaping (Result<Joke, JokeError>) -> Void) {
+        guard let url = URL(string: "https://official-joke-api.appspot.com/jokes/random") else {
+            completion(Result.failure(.invalidURL))
+            return
+        }
+
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error {
+                completion(Result.failure(.networkError))
+                return
+            }
+
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                completion(Result.failure(.badResponse))
+                return
+            }
+
+            guard let data = data else {
+                completion(Result.failure(.noDataReceived))
+                return
+            }
+
+            do {
+                let decodedData = try JSONDecoder().decode(Joke.self, from: data)
+                completion(Result.success(decodedData))
+            } catch {
+                completion(Result.failure(.decodingError))
+                return
+            }
+        }
+
+        task.resume()
+    }
+}
+```
+
+Additionally, our call site no longer has to concern itself with the details of making the network request and can instead focus on handling the result of that network request:
+
+```swift
+class JokeFetcher: ObservableObject {
+    @Published var joke: Joke?
+    private var networkService = NetworkService()
+
+    func fetchJoke() {
+        networkService.fetchJoke { [weak self] result in
+            switch result {
+            case .success(let joke):
+                DispatchQueue.main.async {
+                    self?.joke = joke
+                }
+            case .failure(let error):
+                print(error.rawValue)
+            }
+        }
+    }
+}
+
+struct ContentView: View {
+    @StateObject var jokeFetcher = JokeFetcher()
+
+    var body: some View {
+        VStack {
+            if let joke = jokeFetcher.joke {
+                Text(joke.setup)
+                Text(joke.punchline)
+            }
+            Button("Tell me a joke") {
+                jokeFetcher.fetchJoke()
+            }
+        }
+    }
+}
+```
+
+<br/>
 
 ## Swift Concurrency (async/await)
+
+Introducing completion callback functions has allowed us to decouple our networking code but it has introduced some new problems:
+
+- We must remember to call the completion handler at each of the appropriate times because the compiler won't complain if we forget
+- The code has become harder to follow because it is now dealing with multiple asynchronous callback functions
+- Retain cycles now need to be avoided by using weak references
+
+Fortunately, with the introduction of `async`/`await` in Swift 5.5, we can eliminate these problems and make the code much simpler:
+
+```swift
+class NetworkService {
+    func fetchJoke() async throws -> Joke {
+        guard let url = URL(string: "https://official-joke-api.appspot.com/jokes/random") else {
+            throw JokeError.invalidURL
+        }
+
+        let (data, response) = try await URLSession.shared.data(from: url)
+
+        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+            throw JokeError.badResponse
+        }
+
+        do {
+            return try JSONDecoder().decode(Joke.self, from: data)
+        } catch {
+            throw JokeError.decodingError
+        }
+    }
+}
+
+struct ContentView: View {
+    @State private var joke: Joke?
+    private var networkService = NetworkService()
+
+    var body: some View {
+        VStack {
+            if let joke {
+                Text(joke.setup)
+                Text(joke.punchline)
+            }
+            Button("Tell me a joke") {
+                Task {
+                    do {
+                        joke = try await networkService.fetchJoke()
+                    } catch {
+                        print("Error: \(error.localizedDescription)")
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+Using `async`/`await` allows you to write asynchronous code that looks and behaves like synchronous code. Instead of using the Result type to invoke a callback function, the `fetchJoke()` function simply returns a `Joke` instance if it is successful or throws if it encounters an error.

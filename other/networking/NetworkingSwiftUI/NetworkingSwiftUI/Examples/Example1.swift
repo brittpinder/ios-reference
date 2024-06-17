@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  Example1.swift
 //  NetworkingSwiftUI
 //
 //  Created by Brittany Petrova on 2024-06-14.
@@ -7,28 +7,23 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct Example1: View {
     @State private var joke: Joke?
 
     var body: some View {
-        VStack {
-            VStack(spacing: 20) {
-                if let joke {
-                    Text(joke.setup)
-                        .font(.title)
-                        .multilineTextAlignment(.center)
-                    Text(joke.punchline)
-                }
-                Button("Tell me a joke") {
-                    fetchJoke()
-//                    Task {
-//                        joke = try await fetchJokeAsync()
-//                    }
-                }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.large)
-                .padding()
+        VStack(spacing: 20) {
+            if let joke {
+                Text(joke.setup)
+                    .font(.title)
+                    .multilineTextAlignment(.center)
+                Text(joke.punchline)
             }
+            Button("Tell me a joke") {
+                fetchJoke()
+            }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.large)
+            .padding()
         }
         .padding()
     }
@@ -75,32 +70,10 @@ struct ContentView: View {
         // 4. Execute the Network Call
         task.resume()
     }
-
-    func fetchJokeAsync() async throws -> Joke? {
-        guard let url = URL(string: "https://official-joke-api.appspot.com/jokes/random") else {
-            print("Failed to create URL!")
-            return nil
-        }
-
-        let (data, response) = try await URLSession.shared.data(from: url)
-
-        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            print("Error retrieving data!")
-            return nil
-        }
-
-        do {
-            let joke = try JSONDecoder().decode(Joke.self, from: data)
-            return joke
-        } catch {
-            print("Error decoding response: \(error.localizedDescription)")
-            return nil
-        }
-    }
 }
 
 #Preview {
-    ContentView()
+    Example1()
 }
 
 
