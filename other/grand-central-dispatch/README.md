@@ -78,6 +78,8 @@ As mentioned above, tasks can be scheduled onto a queue either synchronously or 
 This can be demonstrated with the following example:
 
 ```swift
+let queue = DispatchQueue(label: "example")
+
 print("before scheduling")
 queue.async {
     for i in 1...3 {
@@ -141,7 +143,7 @@ queue.sync {
 
 ## Main and Global Dispatch Queues
 
-The examples thus far have used custom, created queues, however iOS provides five dispatch queues for you to use: One serial queue (Main) and four concurrent queues (Global) of varying prioirty. You can still create your own dispatch queues if necessary, but usually the provided ones are enough.
+The examples thus far have used custom, created queues, however iOS provides five dispatch queues for you to use: One serial queue (Main) and four concurrent queues (Global) of varying priority. You can still create your own dispatch queues if necessary, but usually the provided ones are enough.
 
 <br/>
 
@@ -190,6 +192,7 @@ DispatchQueue.global().async {
 There are four global dispatch queues of varying priority: high, default, low and background. Tasks on a higher priority queue are more likely to be completed sooner than tasks on a lower priority queue (although this is not guaranteed).
 
 <br/>
+
 #### [Quality-of-service (QoS)](https://developer.apple.com/documentation/dispatch/dispatchqos)
 
 When scheduling a task on global concurrent queues, you can specify the priority of your task by using the enum [`DispatchQoS.QoSClass`](https://developer.apple.com/documentation/dispatch/dispatchqos/qosclass). There are six different DispatchQoS values, listed below in order from highest priority to lowest.
