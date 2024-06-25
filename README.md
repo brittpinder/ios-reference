@@ -1,5 +1,7 @@
 # iOS Development Documentation
 
+A collection of notes and examples I've written to help me learn certain iOS development topics.
+
 <br/>
 
 ## Swift
