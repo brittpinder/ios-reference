@@ -103,3 +103,51 @@ Button("Check Weather") {
 Now, whenever we press the "Check Weather" button, our UI no longer freezes and we are free to interact with the other button while the `fetchTemperature()` function performs its work.
 
 ![](images/3.gif)
+
+<br/>
+
+### Where asynchronous functions can be called
+
+Because code written with `await` needs to be able to suspend execution, there are only certain places where asynchronous functions can be called:
+
+1. From another asynchronous function
+2. From the static main() method of a structure, class or enumeration that's marked with @main
+3. From an unstructured child task
+
+<br/>
+
+### Calling asynchronous functions from asynchronous functions
+
+Asynchronous functions can call other asynchronous functions and doing so is quite straight-forward. Suppose we wanted to build an app that created thumbnails by fetching images from a server, resizing them and then uploading them back to the server. These three actions might take some time so we could put them in separate asynchronous functions and then call them in sequence from another asynchronous function, `createThumbnails()`:
+
+```swift
+func fetchImages() async -> [UIImage] {
+    print("Fetching images...")
+    sleep(3)
+    return [UIImage(), UIImage(), UIImage()]
+}
+
+func resizeImages(_ images: [UIImage]) async -> [UIImage] {
+    print("Resizing images...")
+    sleep(3)
+    return images
+}
+
+func uploadImages(_ images: [UIImage]) async -> String {
+    print("Uploading images...")
+    sleep(3)
+    return "OK"
+}
+
+func createThumbnails() async -> String {
+    let images = await fetchImages()
+    let resizedImages = await resizeImages(images)
+    let result = await uploadImages(resizedImages)
+    return result
+}
+
+let result = await createThumbnails()
+print(result)
+```
+
+Each of the `await` calls inside `createThumbnails()` is a potential suspension point which is why they are explicitly marked. Swift will run each of the `await` calls in sequence, waiting for the previous one to complete. While `createThumbnails()` is waiting for each call to complete, the thread it is running on is free to do other work.
