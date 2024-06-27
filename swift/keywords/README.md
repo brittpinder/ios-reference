@@ -26,6 +26,22 @@
 
 <br/>
 
+### [`async`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency#Defining-and-Calling-Asynchronous-Functions)
+
+* Used to define an asynchronous function
+* An asynchronous function is one that can be suspended partway through its execution, allowing other work to take place
+* Referenced in [Swift Concurrency](https://github.com/brittpinder/ios-reference/tree/main/other/concurrency/swift-concurrency#asyncawait)
+
+<br/>
+
+### [`await`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency#Defining-and-Calling-Asynchronous-Functions)
+
+* Used to call an asynchronous function
+* It marks a point where execution might suspend, allowing other work to take place until the asynchronous function returns
+* Referenced in [Swift Concurrency](https://github.com/brittpinder/ios-reference/tree/main/other/concurrency/swift-concurrency#asyncawait)
+
+<br/>
+
 ### [`class`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures)
 
 * A custom data type that allows you to define a collection of related properties and methods
@@ -332,9 +348,8 @@
 
 ## To Add
 * `_`
+* `actor`
 * `associativity`
-* `async`
-* `await`
 * `defer`
 * `dynamic`
 * `enum`
