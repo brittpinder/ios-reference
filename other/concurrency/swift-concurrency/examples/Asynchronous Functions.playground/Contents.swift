@@ -57,3 +57,28 @@ func fetchNews() async throws -> Data? {
 Task.detached {
     let data = try await fetchNews()
 }
+
+// Async let
+func downloadBook(name: String) async -> String {
+    print("Downloading \(name)...")
+    sleep(2)
+    return ("Contents of \(name)")
+}
+
+Task.detached {
+    let book1 = await downloadBook(name: "Harry Potter")
+    let book2 = await downloadBook(name: "The Hobbit")
+    let book3 = await downloadBook(name: "Catch-22")
+
+    let books = [book1, book2, book3]
+    print(books)
+}
+
+Task.detached {
+    async let book1 = downloadBook(name: "Harry Potter")
+    async let book2 = downloadBook(name: "The Hobbit")
+    async let book3 = downloadBook(name: "Catch-22")
+
+    let books = await [book1, book2, book3]
+    print(books)
+}

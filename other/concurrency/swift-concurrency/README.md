@@ -169,3 +169,57 @@ func fetchNews() async throws -> Data? {
 
 let data = try await fetchNews()
 ```
+
+<br/>
+
+### Calling asynchronous functions in parallel
+
+Calling an asynchronous function with `await` only executes one piece of code at a time - the caller waits for that code to finish before moving on to run the next line of code.
+
+For example, suppose we wanted to download three books and store them in an array like so:
+
+```swift
+func downloadBook(name: String) async -> String {
+    print("Downloading \(name)...")
+    sleep(2)
+    return ("Contents of \(name)")
+}
+
+let book1 = await downloadBook(name: "Harry Potter")
+let book2 = await downloadBook(name: "The Hobbit")
+let book3 = await downloadBook(name: "Catch-22")
+
+let books = [book1, book2, book3]
+print(books)
+```
+As can be seen from the print statements that appear one at a time, each book is being downloaded completely before the next one starts downloading.
+
+![](images/4.gif)
+
+However, there is no need for these operations to wait for each other - each book can download independently or even at the same time. To call an asynchronous function and let it run in parallel with code around it, write `async` in front of `let` when you define a constant, and then write `await` each time you use the constant.
+
+If we change our code accordingly,
+
+```swift
+async let book1 = downloadBook(name: "Harry Potter")
+async let book2 = downloadBook(name: "The Hobbit")
+async let book3 = downloadBook(name: "Catch-22")
+
+let books = await [book1, book2, book3]
+print(books)
+```
+
+we can see that all three books start downloading at the same time, but our code doesn't continue execution until all of the books have been successfully downloaded.
+
+![](images/5.gif)
+
+> Note: Using `async let`, doesn't guarantee that asynchronous tasks will be run in parallel - this will only happen if there are enough system resources available. Also, using `async let` doesn't guarantee the order in which the tasks are completed.
+
+<br/>
+
+#### When to use `await` vs. `async let`
+
+- Call asynchronous functions with `await` when the code on the following line depends on that function’s result. This creates work that is carried out sequentially.
+- Call asynchronous functions with `async let` when you don’t need the result until later in your code. This creates work that can be carried out in parallel.
+
+<br/>
