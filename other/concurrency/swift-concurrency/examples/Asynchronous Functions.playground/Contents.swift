@@ -47,4 +47,13 @@ Task.detached {
     print(result)
 }
 
+// Asynchronous Throwing Function
+func fetchNews() async throws -> Data? {
+    let url = URL(string: "https://hws.dev/news-1.json")!
+    let (data, _) = try await URLSession.shared.data(from: url)
+    return data
+}
 
+Task.detached {
+    let data = try await fetchNews()
+}

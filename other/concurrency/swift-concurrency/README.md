@@ -151,3 +151,21 @@ print(result)
 ```
 
 Each of the `await` calls inside `createThumbnails()` is a potential suspension point which is why they are explicitly marked. Swift will run each of the `await` calls in sequence, waiting for the previous one to complete. While `createThumbnails()` is waiting for each call to complete, the thread it is running on is free to do other work.
+
+<br/>
+
+### Asynchronous throwing functions
+
+Using `async` and `await` when calling asynchronous functions is very similar to using `throws` and `try` when calling throwing functions - both keywords need to be used and you cannot have one without the other. When you have a function that is both asynchronous and throwing, you need to use all four keywords and when doing so, `async` always comes before `throws` and `try` always comes before `await`.
+
+For example, the following function is both asynchronous and throwing because it performs a network request using `URLSession` which can fail and throw an error. So we mark the function with `async throws` and call it with `try await`:
+
+```swift
+func fetchNews() async throws -> Data? {
+    let url = URL(string: "https://hws.dev/news-1.json")!
+    let (data, _) = try await URLSession.shared.data(from: url)
+    return data
+}
+
+let data = try await fetchNews()
+```
