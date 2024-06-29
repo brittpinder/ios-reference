@@ -4,7 +4,7 @@ Swift 5.5 introduced a new approach for writing asynchronous code that provides 
 
 <br/>
 
-## async/await
+## [async/await](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/#Defining-and-Calling-Asynchronous-Functions)
 
 ### Synchronous vs. Asynchronous Functions
 
@@ -118,7 +118,7 @@ Because code written with `await` needs to be able to suspend execution, there a
 
 ### Calling asynchronous functions from asynchronous functions
 
-Asynchronous functions can call other asynchronous functions and doing so is quite straight-forward. Suppose we wanted to build an app that created thumbnails by fetching images from a server, resizing them and then uploading them back to the server. These three actions might take some time so we could put them in separate asynchronous functions and then call them in sequence from another asynchronous function, `createThumbnails()`:
+Asynchronous functions can call other asynchronous functions and doing so is quite straightforward. Suppose we wanted to build an app that created thumbnails by fetching images from a server, resizing them and then uploading them back to the server. These three actions might take some time so we could put them in separate asynchronous functions and then call them in sequence from another asynchronous function, `createThumbnails()`:
 
 ```swift
 func fetchImages() async -> [UIImage] {
@@ -156,7 +156,7 @@ Each of the `await` calls inside `createThumbnails()` is a potential suspension 
 
 ### Asynchronous throwing functions
 
-Using `async` and `await` when calling asynchronous functions is very similar to using `throws` and `try` when calling throwing functions - both keywords need to be used and you cannot have one without the other. When you have a function that is both asynchronous and throwing, you need to use all four keywords and when doing so, `async` always comes before `throws` and `try` always comes before `await`.
+Using `async` and `await` when calling asynchronous functions is very similar to using `throws` and `try` when calling throwing functions - both keywords need to be used and you cannot have one without the other. When you have a function that is both asynchronous and throwing, you need to use all four keywords, with `async` placed before `throws` and `try` placed before `await`.
 
 For example, the following function is both asynchronous and throwing because it performs a network request using `URLSession` which can fail and throw an error. So we mark the function with `async throws` and call it with `try await`:
 
@@ -223,3 +223,71 @@ we can see that all three books start downloading at the same time, but our code
 - Call asynchronous functions with `async let` when you don’t need the result until later in your code. This creates work that can be carried out in parallel.
 
 <br/>
+
+## [Tasks](https://developer.apple.com/documentation/swift/task)
+
+In our earlier example where we had a button that fetched the temperature asynchronously, we wrapped our asynchronous function call in something called a `Task`:
+
+```swift
+Button("Check Weather") {
+    Task {
+        temperature = await fetchTemperature()
+    }
+}
+```
+
+If we were to remove the task and try to call `fetchTemperature()` directly, we would get a compiler error:
+
+![](images/6.png)
+
+This is because asynchronous code cannot run directly in a synchronous function. However, tasks create concurrent environments that allow asynchronous code to be triggered from synchronous functions.
+
+Tasks are essentially units of work that can be run asynchronously. In fact, all asynchronous code runs as part of some task. In our earlier example where we used `let async` to download books, each `let async` implicitly created a task.
+
+<br/>
+
+### Task Initialization
+
+Tasks are initialized by passing a closure containing the code that will be executed by a given task.
+
+```swift
+Task {
+    print("Hello World")
+}
+```
+
+Tasks start running as soon as they are created - they do not need to be explicitly started - and carry on running until completion.
+
+<br/>
+
+### Creating Multiple Tasks
+
+A task itself only does one thing at a time, but when you create multiple tasks, Swift can schedule them to run simultaneously. For example, suppose we had the following asynchronous function to download an album:
+
+```swift
+func downloadAlbum(name: String) async {
+    print("Downloading \(name)...")
+    try? await Task.sleep(nanoseconds: UInt64(Int.random(in: 1_000_000_000...3_000_000_000))) // Simulate network delay
+    print("Finished downloading \(name)")
+}
+```
+> Note: `Task.sleep()` causes a task to sleep for the specificed number of nanoseconds. It can throw an error which is why it must be marked with `try`. Unlike `sleep()`, `Task.sleep()` does *not* block the underlying thread, allowing it to pick up work from elsewhere if needed.
+
+If we then triggered three separate tasks, we can see based on the timing of the print statements that all three tasks are started at once and run at the same time.
+
+```swift
+Task {
+    await downloadAlbum(name: "folklore")
+}
+
+Task {
+    await downloadAlbum(name: "reputation")
+}
+
+Task {
+    await downloadAlbum(name: "1989")
+}
+```
+![](images/7.gif)
+
+Notice how even though all of the tasks are running at the same time, the order in which they start and finish is not guaranteed and can be different every time.
