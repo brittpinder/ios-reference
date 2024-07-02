@@ -47,5 +47,5 @@ A collection of notes and examples I've written to help me learn certain iOS dev
 
 ## Other
 * [Application Life Cycle](https://github.com/brittpinder/ios-reference/tree/main/other/application-lifecycle)
-* [Grand Central Dispatch](https://github.com/brittpinder/ios-reference/tree/main/other/grand-central-dispatch)
+* [Concurrency](https://github.com/brittpinder/ios-reference/tree/main/other/concurrency)
 * [Networking](https://github.com/brittpinder/ios-reference/tree/main/other/networking)
