@@ -248,7 +248,7 @@ Tasks are essentially units of work that can be run asynchronously. In fact, all
 
 ### Task Initialization
 
-Tasks are initialized by passing a closure containing the code that will be executed by a given task.
+Tasks are initialized by passing a closure containing the code that will be executed by a given task. After this code has run to completion, the task has finished, resulting in either a failure or result value.
 
 ```swift
 Task {
@@ -256,13 +256,13 @@ Task {
 }
 ```
 
-Tasks start running as soon as they are created - they do not need to be explicitly started - and carry on running until completion. When a task finishes, it returns a result which holds either a value or an error.
+> Note: Tasks start running as soon as they are created - they do not need to be explicitly started.
 
 <br/>
 
 ### Task Return Values
 
-As mentioned above, tasks can return values. To read the returned value of a task, you need to store a reference to the task and access its `value` property using `await`:
+It is possible for tasks to return values. To read the returned value of a task, you need to store a reference to the task and access its `value` property using `await`:
 
 ```swift
 let task = Task {
