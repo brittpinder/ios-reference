@@ -15,14 +15,14 @@ struct BasicTask: View {
             Text("\(temperature)°")
                 .font(.title)
         }
-//        .task {
-//            await fetchTemperature()
-//        }
-        .onAppear {
-            Task {
-                await fetchTemperature()
-            }
+        .task {
+            await fetchTemperature()
         }
+//        .onAppear {
+//            Task {
+//                await fetchTemperature()
+//            }
+//        }
     }
 
     func fetchTemperature() async {

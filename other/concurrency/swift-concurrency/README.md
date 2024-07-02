@@ -338,6 +338,63 @@ Notice how even though all of the tasks are running at the same time, the order 
 
 <br/>
 
+### Tasks in SwiftUI
+
+In SwiftUI, it is very common to start a task as soon as a view appears by creating a task within the `.onAppear` closure:
+
+```swift
+struct ContentView: View {
+    @State private var temperature: Int = 0
+
+    var body: some View {
+        VStack {
+            Text("\(temperature)°")
+        }
+        .onAppear {
+            Task {
+                await fetchTemperature()
+            }
+        }
+    }
+
+    func fetchTemperature() async {
+        sleep(2)
+        temperature = Int.random(in: -20...30)
+    }
+}
+```
+
+This functionality is so common that iOS15 introduced the [`.task()`](https://developer.apple.com/documentation/swiftui/view/task(priority:_:)) modifier which adds an asynchronous task to perform before a view appears. Using this new modifier, we could rewrite the above code as follows:
+
+```swift
+struct ContentView: View {
+    @State private var temperature: Int = 0
+
+    var body: some View {
+        VStack {
+            Text("\(temperature)°")
+        }
+        .task {
+            await fetchTemperature()
+        }
+    }
+
+    func fetchTemperature() async {
+        sleep(2)
+        temperature = Int.random(in: -20...30)
+    }
+}
+```
+
+The `.task()` modifier has some added benefits that make it preferable over adding a task to `.onAppear()`:
+
+- Asynchronous work can be performed directly within a `.task()` modifier - you do not need to create a `Task`
+- `.task()` will automatically cancel the task if the view is destroyed
+- `.task()` can take an `id` parameter that allows you to cancel and restart the task when the value of `id` changes
+- `.task()` can take a priority parameter that allows you to specify the priority of the task relative to other tasks
+
+<br/>
+
 ## Task Cancellation
 
 Tasks in Swift use *cooperative cancellation*, which means that not only do we need to request that a task be cancelled, but the task itself must also check if it has been cancelled and respond accordingly.
@@ -468,3 +525,9 @@ func downloadFile() {
 It is important to be aware of these automatic cancellation checks and to provide your own where appropriate to prevent expensive operations from continuing to run after a task has been cancelled.
 
 <br/>
+
+## Links
+
+- [Hacking with Swift Concurrency Guide](https://www.hackingwithswift.com/quick-start/concurrency)
+- [Async Await in Swift Explained with Code Examples](https://www.avanderlee.com/swift/async-await/)
+- [SwiftUI task vs. onAppear](https://byby.dev/swiftui-task-vs-onappear)
