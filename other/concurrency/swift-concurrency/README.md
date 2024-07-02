@@ -337,3 +337,134 @@ Task {
 Notice how even though all of the tasks are running at the same time, the order in which they start and finish is not guaranteed and can be different every time.
 
 <br/>
+
+## Task Cancellation
+
+Tasks in Swift use *cooperative cancellation*, which means that not only do we need to request that a task be cancelled, but the task itself must also check if it has been cancelled and respond accordingly.
+
+For example, suppose we created an app with two buttons, one to download a file and another to cancel the download operation.
+
+![](images/8.png)
+
+Our code might like something like this:
+
+```swift
+struct ContentView: View {
+    @State private var task: Task<Void, Error>?
+
+    var body: some View {
+        HStack {
+            Button("Download File") {
+                downloadFile()
+            }
+
+            Button("Cancel") {
+                cancelDownload()
+            }
+        }
+    }
+
+    func downloadFile() {
+        task = Task {
+            for i in 1...100 {
+                usleep(50_000)
+                print("\(i)%")
+            }
+        }
+    }
+
+    func cancelDownload() {
+        task?.cancel()
+    }
+}
+```
+
+<br/>
+
+The `downloadFile()` function, creates a task that prints the numbers from 1 to 100, sleeping for a fraction of a second between each in order to simulate downloading a file over a period of time. We store a reference to this task so that it can be cancelled if the 'Cancel' button is pressed.
+
+However, when we press the 'Cancel' button, the task doesn't stop - it continues running:
+
+![](images/9.gif)
+
+By calling `.cancel()` on the task, we're essentially setting a boolean flag, but the task itself isn't checking this value so it just keeps on executing.
+
+<br/>
+
+### Handling Task Cancellation
+
+There are two ways that a task can check for cancellation and stop running:
+
+- Calling the `Task.checkCancellation()` method
+- Reading the `Task.isCancelled` property
+
+<br/>
+
+#### Task.checkCancellation()
+
+Calling `Task.checkCancellation()` checks if the task has been cancelled and if so, stops the task by throwing a `CancellationError`. If we insert this method in the for-loop of the `downloadFile()` function, we can check for cancellation before every sleep cycle.
+
+```swift
+func downloadFile() {
+    task = Task {
+        do {
+            for i in 1...100 {
+                try Task.checkCancellation()
+                usleep(50_000)
+                print("\(i)%")
+            }
+        } catch is CancellationError {
+            print("Task was cancelled")
+        }
+    }
+}
+```
+Now when the 'Cancel' button is pressed, `Task.checkCancellation()` throws an error and the task is stopped:
+
+![](images/10.gif)
+
+<br/>
+
+#### Task.isCancelled
+
+If you require more flexibility or need to perform clean-up work before stopping a task (ex: closing network connections or deleting temporary files), you can check the `Task.isCancelled` property instead. When checking the `Task.isCancelled` property, you must cancel the task manually. In this example, we cancel the task by returning:
+
+```swift
+func downloadFile() {
+    task = Task {
+        for i in 1...100 {
+            if Task.isCancelled {
+                print("Performing cleanup")
+                return
+            }
+            usleep(50_000)
+            print("\(i)%")
+        }
+    }
+}
+```
+
+![](images/11.gif)
+
+<br/>
+
+### Automatic Cancellation
+
+Some parts of Foundation automatically check for task cancellation and will throw their own cancellation error without your input. For example, `Task.sleep()` checks for cancellation and will automatically terminate the sleep and throw a `CancellationError`:
+
+```swift
+func downloadFile() {
+    task = Task {
+        for i in 1...100 {
+            try await Task.sleep(nanoseconds: 50_000_000)
+            print("\(i)%")
+        }
+    }
+}
+```
+
+![](images/12.gif)
+
+It is important to be aware of these automatic cancellation checks and to provide your own where appropriate to prevent expensive operations from continuing to run after a task has been cancelled.
+
+<br/>

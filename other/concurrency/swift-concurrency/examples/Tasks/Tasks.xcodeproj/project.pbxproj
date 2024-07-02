@@ -11,8 +11,8 @@
 		E10848642C3082DB00AF3144 /* BasicTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10848632C3082DB00AF3144 /* BasicTask.swift */; };
 		E10848662C3082DF00AF3144 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E10848652C3082DF00AF3144 /* Assets.xcassets */; };
 		E10848692C3082DF00AF3144 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E10848682C3082DF00AF3144 /* Preview Assets.xcassets */; };
-		E10848702C30874A00AF3144 /* TaskCancellation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E108486F2C30874900AF3144 /* TaskCancellation.swift */; };
 		E10848722C3088A500AF3144 /* MultipleTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10848712C3088A500AF3144 /* MultipleTasks.swift */; };
+		E10848742C34326900AF3144 /* TaskCancellation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10848732C34326900AF3144 /* TaskCancellation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,8 +21,8 @@
 		E10848632C3082DB00AF3144 /* BasicTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTask.swift; sourceTree = "<group>"; };
 		E10848652C3082DF00AF3144 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E10848682C3082DF00AF3144 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		E108486F2C30874900AF3144 /* TaskCancellation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskCancellation.swift; path = ../../TaskCancellation/TaskCancellation/TaskCancellation.swift; sourceTree = "<group>"; };
 		E10848712C3088A500AF3144 /* MultipleTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleTasks.swift; sourceTree = "<group>"; };
+		E10848732C34326900AF3144 /* TaskCancellation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCancellation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +58,7 @@
 				E10848612C3082DB00AF3144 /* TasksApp.swift */,
 				E10848632C3082DB00AF3144 /* BasicTask.swift */,
 				E10848712C3088A500AF3144 /* MultipleTasks.swift */,
-				E108486F2C30874900AF3144 /* TaskCancellation.swift */,
+				E10848732C34326900AF3144 /* TaskCancellation.swift */,
 				E10848652C3082DF00AF3144 /* Assets.xcassets */,
 				E10848672C3082DF00AF3144 /* Preview Content */,
 			);
@@ -144,8 +144,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E10848722C3088A500AF3144 /* MultipleTasks.swift in Sources */,
+				E10848742C34326900AF3144 /* TaskCancellation.swift in Sources */,
 				E10848642C3082DB00AF3144 /* BasicTask.swift in Sources */,
-				E10848702C30874A00AF3144 /* TaskCancellation.swift in Sources */,
 				E10848622C3082DB00AF3144 /* TasksApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
