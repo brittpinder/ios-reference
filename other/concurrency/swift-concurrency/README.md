@@ -72,13 +72,13 @@ struct ContentView: View {
 
 <br/>
 
-Notice how the `fetchTemperature()` function sleeps for 3 seconds, simulating the delay that a network request might make. When we trigger this function by pressing the "Check Weather" button, our UI freezes up and we can't interact with the other button to increment the count. This is because `fetchTemperature()` is a synchronous function - it blocks the current thread until it has finished all of its work.
+Notice how the `fetchTemperature()` function sleeps for 3 seconds, simulating the delay that a network request might make. When we trigger this function by pressing the "Check Weather" button, our UI freezes up and we can't interact with the other button to increment the count. This is because `fetchTemperature()` is a *synchronous* function - it blocks the current thread until it has finished all of its work.
 
 ![](images/2.gif)
 
 <br/>
 
-We can improve this by changing `fetchTemperature()` to an asynchronous function:
+We can improve this by changing `fetchTemperature()` to an *asynchronous* function:
 
 ```swift
 func fetchTemperature() async -> Int {
@@ -242,7 +242,7 @@ If we were to remove the task and try to call `fetchTemperature()` directly, we 
 
 This is because asynchronous code cannot run directly in a synchronous function. However, tasks create concurrent environments that allow asynchronous code to be triggered from synchronous functions.
 
-Tasks are essentially units of work that can be run asynchronously. In fact, all asynchronous code runs as part of some task. In our earlier example where we used `let async` to download books, each `let async` implicitly created a task.
+Tasks are essentially units of work that can be run asynchronously. In fact, all asynchronous code runs as part of some task. In our earlier example where we used `async let` to download books, each `async let` implicitly created a task.
 
 <br/>
 
