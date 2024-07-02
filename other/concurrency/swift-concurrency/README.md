@@ -256,7 +256,51 @@ Task {
 }
 ```
 
-Tasks start running as soon as they are created - they do not need to be explicitly started - and carry on running until completion.
+Tasks start running as soon as they are created - they do not need to be explicitly started - and carry on running until completion. When a task finishes, it returns a result which holds either a value or an error.
+
+<br/>
+
+### Task Return Values
+
+As mentioned above, tasks can return values. To read the returned value of a task, you need to store a reference to the task and access its `value` property using `await`:
+
+```swift
+let task = Task {
+    return Int.random(in: 1...10)
+}
+
+let number = await task.value
+print(number)
+```
+
+> Note: Tasks will be created, started and run to completion regardless of whether you store a reference to them. If you don't care about the result of a task, you can simply create it and let it run in a "fire and forget" manner.
+
+<br/>
+
+### Task Errors
+
+Tasks can also throw errors. Here we have a task that can randomly fail, so we use a `do-catch` block along with `try await` to access the value returned by the task:
+
+```swift
+enum FetchError: Error {
+    case failed
+}
+
+let task = Task {
+    if Bool.random() {
+        throw FetchError.failed
+    }
+
+    return Int.random(in: 1...10)
+}
+
+do {
+    let number = try await task.value
+    print(number)
+} catch {
+    print(error)
+}
+```
 
 <br/>
 
@@ -291,3 +335,5 @@ Task {
 ![](images/7.gif)
 
 Notice how even though all of the tasks are running at the same time, the order in which they start and finish is not guaranteed and can be different every time.
+
+<br/>
