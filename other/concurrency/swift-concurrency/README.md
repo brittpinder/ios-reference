@@ -311,7 +311,7 @@ A task itself only does one thing at a time, but when you create multiple tasks,
 ```swift
 func downloadAlbum(name: String) async {
     print("Downloading \(name)...")
-    try? await Task.sleep(nanoseconds: UInt64(Int.random(in: 1_000_000_000...3_000_000_000))) // Simulate network delay
+    try? await Task.sleep(nanoseconds: UInt64.random(in: 1_000_000_000...3_000_000_000)) // Simulate network delay
     print("Finished downloading \(name)")
 }
 ```
@@ -523,6 +523,191 @@ func downloadFile() {
 ![](images/12.gif)
 
 It is important to be aware of these automatic cancellation checks and to provide your own where appropriate to prevent expensive operations from continuing to run after a task has been cancelled.
+
+<br/>
+
+## Task Groups
+
+Task groups allow you to combine multiple parallel tasks together and wait for the result when all the tasks have finished. They are a more advanced version of `async let` and allow you to dynamically add tasks at runtime. Child tasks may run in parallel or in serial, but the task group will only be marked as finished once all of its child tasks are done. Each task inside the group must return the same kind of data.
+
+<br/>
+
+### Creating a Task Group
+
+Task groups are created using the `withTaskGroup(of:)` function where the `of` argument refers to the data type that each task in the group will return. Within the body of the `withTaskGroup` closure, we pass the code for the group to execute including calls to `addTask()` for each task to add to the group. Finally, because task groups execute asynchronously, they must be called with `await`.
+
+For example, the following task group has three tasks which don't return anything, so we pass in `Void.self`:
+
+```swift
+ await withTaskGroup(of: Void.self) { group in
+    group.addTask {
+        print("Task 1")
+    }
+
+    group.addTask {
+        print("Task 2")
+    }
+
+    group.addTask {
+        print("Task 3")
+    }
+}
+```
+
+<br/>
+
+The three child tasks above are very simple and don't take any significant time so they will likely be executed in order, however the order in which child tasks start and finish is not guaranteed. We can see this behaviour if we increase the amount of time each child task takes:
+
+```swift
+print("Starting task group...")
+
+await withTaskGroup(of: Void.self) { group in
+    group.addTask {
+        print("Task 1 started")
+        try? await Task.sleep(nanoseconds: UInt64.random(in: 1_000_000_000...3_000_000_000))
+        print("Task 1 finished")
+    }
+
+    group.addTask {
+        print("Task 2 started")
+        try? await Task.sleep(nanoseconds: UInt64.random(in: 1_000_000_000...3_000_000_000))
+        print("Task 2 finished")
+    }
+
+    group.addTask {
+        print("Task 3 started")
+        try? await Task.sleep(nanoseconds: UInt64.random(in: 1_000_000_000...3_000_000_000))
+        print("Task 3 finished")
+    }
+}
+
+print("Finished task group")
+```
+
+![](images/13.gif)
+
+As we can see from the print statements, all three tasks are started at the same time but finish in a different order. The final print statement, "Finished task group", isn't executed until the task group has completed.
+
+<br/>
+
+### Dynamically Adding Tasks to a Group
+
+In the examples above, the number of child tasks is known at compile time and they are added to the group in a similar way that we would use `async let` to create child tasks. One big advantage of task groups is the ability to add tasks dynamically. For example, we could rewrite the code above to add a random number of tasks using a for-loop:
+
+```swift
+await withTaskGroup(of: Void.self) { group in
+    for i in 1...Int.random(in: 2...5) {
+        group.addTask {
+            print("Task \(i) started")
+            try? await Task.sleep(nanoseconds: UInt64.random(in: 1_000_000_000...3_000_000_000))
+            print("Task \(i) finished")
+        }
+    }
+}
+```
+<br/>
+
+### Returning Values from Task Groups
+
+So far we have just seen task groups that execute some code but don't return anything. However, it is very common when working with task groups for each child task to return a value and to have those values aggregated into a single value that gets returned from the task group itself.
+
+For example, suppose we had the following function for downloading an image:
+
+```swift
+func downloadImage(name: String) async -> UIImage {
+    print("Downloading image called \(name)...")
+    try? await Task.sleep(nanoseconds: UInt64.random(in: 1_000_000_000...3_000_000_000))
+    return UIImage()
+}
+```
+
+We could then create a task group that downloads multiple images and returns them in an array like so:
+
+```swift
+let imageNames = ["beach.jpg", "desert.png", "mountain.jpg"]
+
+let images = await withTaskGroup(of: UIImage.self) { group in
+    for name in imageNames {
+        group.addTask {
+            return await downloadImage(name: name)
+        }
+    }
+
+    var allImages = [UIImage]()
+    for await image in group {
+        allImages.append(image)
+    }
+
+    return allImages
+}
+
+print("Successfully downloaded \(images.count) images")
+```
+
+Notice how we pass `UIImage.self` when creating the task group to indicate that each child task will return a `UIImage`. After creating the child tasks, we can add their returned values (images) to an array one by one as each child task completes, using `for await`. Finally, once all child tasks have completed, we can return the array of images from the task group.
+
+<br/>
+
+#### Implicit vs Explicit Return Types
+
+The return type of the task group above (`[UIImage]`) is implicit, but it is often a good idea to explicitly declare the return type in order to improve readability. This can be done in one of two ways:
+
+Declaring the return type as part of the closure:
+
+```swift
+let images = await withTaskGroup(of: UIImage.self) { group -> [UIImage] in
+```
+Or using the `returning` argument of `withTaskGroup()`:
+
+```swift
+let images = await withTaskGroup(of: UIImage.self, returning: [UIImage].self) { group in
+```
+
+<br/>
+
+### Throwing Task Groups
+
+Any child tasks created with `withTaskGroup()` cannot throw errors. If you want child tasks to be able to throw errors that bubble upwards to be handled outside the task group, you can use `withThrowingTaskGroup()` instead.
+
+For example, the `downloadImage()` function could fail to fetch the image from the server. We could simulate this by making it a throwing function that throws 20% of the time:
+
+```swift
+enum DownloadError: Error {
+    case failure
+}
+
+func downloadImage(name: String) async throws -> UIImage {
+    print("Downloading image called \(name)...")
+    if Int.random(in: 1...5) == 5 {
+        throw DownloadError.failure
+    }
+    try? await Task.sleep(nanoseconds: UInt64.random(in: 1_000_000_000...3_000_000_000))
+    return UIImage()
+}
+```
+Then we call `withThrowingTaskGroup` with `try await` and wrap it in a do-catch block to catch any errors if they occur.
+
+```swift
+let imageNames = ["beach.jpg", "desert.png", "mountain.jpg"]
+do {
+    let images = try await withThrowingTaskGroup(of: UIImage.self) { group in
+        for name in imageNames {
+            group.addTask {
+                return try await downloadImage(name: name)
+            }
+        }
+
+        var allImages = [UIImage]()
+        for try await image in group {
+            allImages.append(image)
+        }
+        return allImages
+    }
+    print("Successfully downloaded \(images.count) images")
+} catch {
+    print("Error downloading images")
+}
+```
 
 <br/>
 

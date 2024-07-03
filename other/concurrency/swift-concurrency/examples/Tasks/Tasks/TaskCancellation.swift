@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-enum CustomError: Error {
-    case failure
-}
-
 struct TaskCancellation: View {
     @State private var task: Task<Void, Error>?
 

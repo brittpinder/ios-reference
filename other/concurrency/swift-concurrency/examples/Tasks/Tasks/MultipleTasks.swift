@@ -26,7 +26,7 @@ struct MultipleTasks: View {
 
     func downloadAlbum(name: String) async {
         print("Downloading \(name)...")
-        try? await Task.sleep(nanoseconds: UInt64(Int.random(in: 1_000_000_000...3_000_000_000)))
+        try? await Task.sleep(nanoseconds: UInt64.random(in: 1_000_000_000...3_000_000_000))
         print("Finished downloading \(name)")
     }
 }
