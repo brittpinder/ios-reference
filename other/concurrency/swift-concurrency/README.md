@@ -526,7 +526,7 @@ It is important to be aware of these automatic cancellation checks and to provid
 
 <br/>
 
-## Task Groups
+## [Task Groups](https://developer.apple.com/documentation/swift/taskgroup?ref=blixt-dev)
 
 Task groups allow you to combine multiple parallel tasks together and wait for the result when all the tasks have finished. They are a more advanced version of `async let` and allow you to dynamically add tasks at runtime. Child tasks may run in parallel or in serial, but the task group will only be marked as finished once all of its child tasks are done. Each task inside the group must return the same kind of data.
 
