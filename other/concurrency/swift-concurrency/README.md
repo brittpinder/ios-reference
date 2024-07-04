@@ -711,8 +711,144 @@ do {
 
 <br/>
 
+## [Actors](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/#Actors)
+
+Tasks allow you to break your program up into isolated, concurrent pieces that are safe to run at the same time. However, when multiple tasks need to share or access the same information, this can lead to data races. Actors aim to solve this issue completely by only allowing synchronized access to their isolated data.
+
+To better explain actors, let's first demonstrate the problem that they solve. Suppose we had the following class that represents a bank account:
+
+```swift
+class BankAccount {
+    private(set) var balance: Double = 0.0
+
+    init(balance: Double) {
+        self.balance = balance
+    }
+
+    func deposit(_ amount: Double) {
+        balance += amount
+    }
+
+    func withdraw(_ amount: Double) -> Bool {
+        if balance >= amount {
+            balance -= amount
+            return true
+        }
+        return false
+    }
+}
+```
+
+If we had an instance of a bank account with a balance of \$100 and two separate threads attempted to withdraw some money at the same time (\$50 and \$75 respectively), we could end up in a situation where both transactions go through and we are left with a negative balance of -\$25. But we are checking that the balance is greater or equal to the amount to withdraw so how could this happen? Let's break it down:
+
+1. We have a bank account with a balance of 100
+2. Thread one checks if `balance >= amount`. 100 is greather than 50 so we move inside the if statement
+3. Thread two checks if `balance >= amount`. Thread one hasn't yet deducted its amount so the balance is still 100. 100 is greater than 75 so thread two moves inside the if statement.
+4. Thread one performs `balance -= amount`. 50 is subtracted from 100, leaving a balance of 50.
+5. Thread two performs `balance -= amount`. 75 is subtracted from 50, leaving a balance of -25.
+
+This is an example of a data race - when the same memory is accessed from multiple threads without synchronization and at least one access is a write.
+
+We can simulate this problem like so:
+
+```swift
+let account = BankAccount(balance: 100)
+
+await withTaskGroup(of: Void.self) { group in
+    group.addTask {
+        account.withdraw(50)
+    }
+
+    group.addTask {
+        account.withdraw(75)
+    }
+}
+print(account.balance)
+```
+
+The resulting balance might be 50, it might be 25 or it might be -25. By adding a short delay after checking the balance within the `withdraw` function, we can increase the likelihood of a data race occurring:
+
+```swift
+func withdraw(_ amount: Double) -> Bool {
+    if balance >= amount {
+        usleep(UInt32.random(in: 100_000...500_000))
+        balance -= amount
+        return true
+    }
+    return false
+}
+```
+
+<br/>
+
+### Using Actors to Prevent Data Races
+
+Before actors were introduced, the problem above would have to be prevented using locks or other synchronization methods to only allow one thread to have access to the bank account instance at a time. Actors take care of all this work for us by only allowing one task to have access to its mutable state at a time. If a task requests access to an actor while it is already in use, the task will be suspended while it waits for access to be granted.
+
+To create an actor, simply use the `actor` keyword to define a type, just as you would a `struct` or a `class`:
+
+```swift
+actor BankAccount {
+    private(set) var balance: Double = 0.0
+
+    init(balance: Double) {
+        self.balance = balance
+    }
+
+    func deposit(_ amount: Double) {
+        balance += amount
+    }
+
+    func withdraw(_ amount: Double) -> Bool {
+        if balance >= amount {
+            usleep(UInt32.random(in: 100_000...200_000))
+            balance -= amount
+            return true
+        }
+        return false
+    }
+}
+```
+
+<br/>
+
+This change now creates some compiler errors where we attempt to access the bank account instance:
+
+![](images/14.png)
+
+<br/>
+
+This is because `account` is now an actor and when accessing any mutable properties or functions of an actor, you must use `await`:
+
+```swift
+let account = BankAccount(balance: 100)
+
+await withTaskGroup(of: Void.self) { group in
+    group.addTask {
+        await account.withdraw(50)
+    }
+
+    group.addTask {
+        await account.withdraw(75)
+    }
+}
+await print(account.balance)
+```
+
+<br/>
+
+Now only one task can have access to the bank account at a time, ensuring that read and write operations are not interleaved between threads and only valid bank transactions go through.
+
+> Note: By using an actor we have removed the possibility of a data race (ending up with a balance of -25) but we technically still have what is called a 'race condition', where the correctness of a program depends on the unpredictable order of events. The task group above has two tasks that each make a withdrawal but we have no control over which task will be executed first, leaving our balance in a non-deterministic state (either a balance of 50 or a balance of 25).
+
+<br/>
+
+
 ## Links
 
 - [Hacking with Swift Concurrency Guide](https://www.hackingwithswift.com/quick-start/concurrency)
 - [Async Await in Swift Explained with Code Examples](https://www.avanderlee.com/swift/async-await/)
 - [SwiftUI task vs. onAppear](https://byby.dev/swiftui-task-vs-onappear)
+- [Actors in Swift: How to use and prevent data races](https://www.avanderlee.com/swift/actors/)
+- [Data Race vs Race Condition in Swift](https://byby.dev/data-race-vs-race-condition)
+- [Isolated vs Nonisolated](https://byby.dev/swift-actor-isolation)
