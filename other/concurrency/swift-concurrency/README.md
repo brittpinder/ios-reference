@@ -843,6 +843,134 @@ Now only one task can have access to the bank account at a time, ensuring that r
 
 <br/>
 
+### Actor Isolation
+
+The process whereby Swift guarantees that only code running on an actor can access that actor's local state is known as *actor isolation*. By default, all properties and methods of an actor are isolated to that actor, which means they can only be accessed from within the actor or by using `await` from outside the actor. However one exception to this rule is accessing immutable state.
+
+For example, suppose we added an id to BankAccount as a `let` constant:
+
+```swift
+actor BankAccount {
+    let id = UUID()
+    private(set) var balance: Double = 0.0
+
+    init(balance: Double) {
+        self.balance = balance
+    }
+
+    // ...
+}
+```
+
+Since this piece of data is not mutable, it can be safely accessed from any thread at any time, so we don't need to use `await` when accessing it:
+
+```swift
+let account = BankAccount(balance: 100)
+print(account.id)
+```
+
+<br/>
+
+#### Using `nonisolated`
+
+Suppose we added a function, `printDetails()` that printed the bank account id like so:
+
+```swift
+actor BankAccount {
+    let id = UUID()
+    private(set) var balance: Double = 0.0
+
+    init(balance: Double) {
+        self.balance = balance
+    }
+
+    func printDetails() {
+        print("ID: \(id)")
+    }
+
+    // ...
+}
+```
+
+If we try to call this function from outside the actor, the compiler requires us to use `await`:
+
+```swift
+let account = BankAccount(balance: 100)
+await account.printDetails()
+```
+
+However, this function is only accessing immutable properties so it should be perfectly fine to call without using `await`. We can help the compiler recognize this by marking the function with the keyword `nonisolated`:
+
+```swift
+nonisolated func printDetails() {
+    print("ID: \(id)")
+}
+```
+
+Now we can call this function without using `await`:
+
+```swift
+let account = BankAccount(balance: 100)
+account.printDetails()
+```
+
+<br/>
+
+#### Using `isolated`
+
+All properties and methods that belong to an actor are isolated to that actor. You can allow external functions to have access to the isolated state of an actor without needing to use `await` by using the `isolated` keyword.
+
+For example, suppose we had the following class that represented a bank teller, with a function that withdraws an amount of money from a bank account:
+
+```swift
+class BankTeller {
+    func withdraw(_ amount: Double, from account: BankAccount) async -> Bool {
+        if await account.withdraw(amount) {
+            return true
+        }
+        return false
+    }
+}
+```
+
+In order to provide isolated access to the bank account instance from within the `withdraw` function and remove the need to use `await`, we can simply add the `isolated` keyword to the function parameter:
+
+```swift
+func withdraw(_ amount: Double, from account: isolated BankAccount) async -> Bool {
+    if account.withdraw(amount) {
+        return true
+    }
+    return false
+}
+```
+<br/>
+
+It is important to note that the `isolated` keyword can only be used on function parameters that are actor types. Also, any given function cannot have more than one isolated parameter. For example, suppose we wanted to add a "transfer" function to our BankTeller class to transfer money from one account to another. We might try to write something like this:
+
+```swift
+func transfer(_ amount: Double, from account1: isolated BankAccount, to account2: isolated BankAccount) async -> Bool {
+    if account1.withdraw(amount) {
+        account2.deposit(amount)
+        return true
+    }
+
+    return false
+}
+```
+
+This would cause a compiler error because we have two `isolated` function parameters. We can solve this by removing `isolated` from one of the function parameters, ensuring that only one is marked as `isolated`:
+
+```swift
+func transfer(_ amount: Double, from account1: isolated BankAccount, to account2: BankAccount) async -> Bool {
+    if account1.withdraw(amount) {
+        await account2.deposit(amount)
+        return true
+    }
+
+    return false
+}
+```
+<br/>
 
 ## Links
 
