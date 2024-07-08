@@ -1,5 +1,12 @@
 # Swift Keywords
 
+### [`actor`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/#Actors)
+
+* A reference type that protects its mutable state from data races by ensuring only one task can access or modify its state at a time
+* Referenced in [Swift Concurrency](https://github.com/brittpinder/ios-reference/tree/main/other/concurrency/swift-concurrency#actors)
+
+<br/>
+
 ### `any`
 
 * Used to define an existential type
@@ -161,6 +168,14 @@
 
 <br/>
 
+### `isolated`
+
+* Used on function parameters that are actor types to allow isolated (synchronized) access to that actor without having to use `await`
+* Only one function parameter can be marked as `isolated`
+* Referenced in [Swift Concurrency](https://github.com/brittpinder/ios-reference/tree/main/other/concurrency/swift-concurrency#actor-isolation)
+
+<br/>
+
 ### [`lazy`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/properties/#Lazy-Stored-Properties)
 
 * Indicates that a stored property's initial value isn't calculated until the first time it's used
@@ -186,6 +201,14 @@
 
 * Represents the absence of a valid object
 * Referenced in [Optionals](https://github.com/brittpinder/ios-reference/tree/main/swift/optionals)
+
+<br/>
+
+### `nonisolated`
+
+* Allows a property or method of an actor to be accessed from any context without isolation (without having to use `await`)
+* Useful when the property or method does not depend on or affect the mutable state of the actor
+* Referenced in [Swift Concurrency](https://github.com/brittpinder/ios-reference/tree/main/other/concurrency/swift-concurrency#actor-isolation)
 
 <br/>
 
@@ -348,7 +371,6 @@
 
 ## To Add
 * `_`
-* `actor`
 * `associativity`
 * `defer`
 * `dynamic`
