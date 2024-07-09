@@ -325,16 +325,22 @@ print("Continue execution right away")
 
 <br/>
 
-## To Cover
+## Other Topics to Cover
+
 * Other scheduling methods
 	* asyncAfter
 	* asyncAndWait
 	* concurrentPerform
-* Common Multithreading Problems
+* Common concurrency problems
 	* Race conditions
 	* Data Races
 	* Deadlocks
 	* Thread explosion
+* Preventing concurrency problems
+	* Locks
+	* Dispatch Barriers
+	* Atomic properties
+	* Semaphores
 
 <br/>
 
