@@ -972,6 +972,17 @@ func transfer(_ amount: Double, from account1: isolated BankAccount, to account2
 ```
 <br/>
 
+## Other Topics to Cover
+
+- AsyncSequence
+- Task priorities
+- Task hierarchies
+- Task.yield()
+- @MainActor
+- Sendable types
+
+<br/>
+
 ## Links
 
 - [Hacking with Swift Concurrency Guide](https://www.hackingwithswift.com/quick-start/concurrency)
