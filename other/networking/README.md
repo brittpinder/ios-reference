@@ -170,9 +170,10 @@ let task = URLSession.shared.dataTask(with: request) { data, response, error in
 task.resume() // Trigger the network call
 ```
 <br/>
+
 > Note: If you do not need to configure a `URLRequest`, you can pass a `URL` into `dataTask` instead:
 
->```swift
+```swift
 let task = URLSession.shared.dataTask(with: url) { data, response, error in
     // Handle errors
     // Check the response
